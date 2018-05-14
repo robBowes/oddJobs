@@ -36,6 +36,7 @@ class Login extends Component {
         method: 'POST',
         body: JSON.stringify({
             token: response.accessToken,
+<<<<<<< HEAD
             id: response.id,
         })
         .then((x)=>x.json())
@@ -46,6 +47,19 @@ class Login extends Component {
     );
 
     this.setState({loading: false});
+=======
+            id: response.id
+        })})
+        .then(x=>x.json())
+        .then(y=>{
+                console.log('hurrah')
+        })
+    
+    
+    
+    this.setState({loading: false})
+    
+>>>>>>> cfca9f451db4a91c24ce2913525566c334e6d2cd
     }
     // anything else you want to do(save to localStorage)...
   }

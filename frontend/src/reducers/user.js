@@ -1,7 +1,8 @@
 export default (state = {
     username: null,
     picture: null,
-    token: null
+    id: null,
+    loggedIn: false
 }
 , action) => {
     console.log(state, action)
@@ -9,7 +10,8 @@ export default (state = {
     if (action.type === 'USER_INFO') {
         newState.username = action.username;
         newState.picture = action.picture;
-        newState.token = action.token;
+        newState.tid = action.id;
+        newState.loggedIn = action.loggedIn
 
     }
     return newState;

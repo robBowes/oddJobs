@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 //left will have a button to reject the current job
 
 class SwipeNav extends Component {
-  render() {}
+  render() {
+      return (<div>SWIPE NAV TOOLS</div>)
+  }
 }
 
 const mapStateToProps = state => ({

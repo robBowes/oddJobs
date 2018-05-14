@@ -10,7 +10,11 @@ import { connect } from "react-redux";
 //The Swiper will interact with SwipeNav through props
 
 class Swiper extends Component {
-  render() {}
+  render() {
+      return (
+          <div>SWIPER</div>
+      )
+  }
 }
 
 const mapStateToProps = state => ({

@@ -20,18 +20,34 @@ class Login extends Component {
   componentWillReceiveProps = props => {
       this.setState({
           image: this.props.picture,
-          token: this.props.token,
+          id: this.props.id,
           username: this.props.username
               })
   }
   responseFacebook=(response)=> {
     console.log(response);
-    this.props.dispatch({
+    if(response.id){
+            this.props.dispatch({
         type: 'USER_INFO', picture: response.picture.data.url, 
         token: response.accessToken,
-        username:response.name})
+        username:response.name,
+    loggedIn: true})
+    fetch('/login',{
+        method: 'POST',
+        body: JSON.stringify({
+            token: response.accessToken,
+            id: response.id
+        })
+        .then(x=>x.json())
+        .then(y=>{
+                console.log('hurrah')
+        })
+    }
+    )
+    
     this.setState({loading: false})
-
+    
+    }
     //anything else you want to do(save to localStorage)...
   }
 
@@ -60,7 +76,7 @@ const mapStateToProps = state => ({
   //redux props import
   picture: state.user.picture,
   username: state.user.username,
-  token: state.user.token
+  id: state.user.id
 });
 
 export default connect(mapStateToProps)(Login);

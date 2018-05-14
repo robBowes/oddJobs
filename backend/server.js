@@ -4,6 +4,7 @@ const oddJobs = require('./oddJobs');
 const r = require('./utils.js');
 const testData = require('./testData.json');
 
+
 // console.log(testData);
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json({type: 'application/json'}));
 
 app.post('/login', (req, res)=>{
     res.set('Set-Cookie', 12345);
+    conosle.log(req.body);
     res.json({'status': true, 'user': testData.testUser});
 });
 

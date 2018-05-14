@@ -5,6 +5,14 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# user data
+/data
+data/
+/data
+data/
+backend/data
+
+
 # Runtime data
 pids
 *.pid

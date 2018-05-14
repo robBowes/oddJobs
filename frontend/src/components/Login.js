@@ -37,13 +37,13 @@ class Login extends Component {
         body: JSON.stringify({
             token: response.accessToken,
             id: response.id
-        })
+        })})
         .then(x=>x.json())
         .then(y=>{
                 console.log('hurrah')
         })
-    }
-    )
+    
+    
     
     this.setState({loading: false})
     

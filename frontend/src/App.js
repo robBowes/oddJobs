@@ -23,9 +23,10 @@ class App extends Component {
       <BrowserRouter>
       <div className="App">
       {!this.props.loggedIn?<Landing/>:<Swipe/>}
-      </div>
       <Settings style={{'display':this.state.currentPage==='settings'?'block':'none'}}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>
+      
+      </div>
       </BrowserRouter>
     );
   }

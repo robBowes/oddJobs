@@ -3,23 +3,30 @@ const bodyParser = require('body-parser');
 const oddJobs = require('./oddJobs');
 const r = require('./utils.js');
 const testData = require('./testData.json');
+const fetch = require('node-fetch');
 
 
 // console.log(testData);
 
 const app = express();
 
-app.use(express.json({type: 'application/json'}));
+// app.use(express.json({type: 'application/json'}));
+app.use(express.json({type: '*/*'}));
 // app.use(bodyParser.raw({type: '*/*'}));
 
 app.post('/login', (req, res)=>{
-    res.set('Set-Cookie', 12345);
     console.log(req.body);
+    res.cookie('token', '456', {maxAge: 900000, httpOnly: false});
+    // res.cookie('Set-Cookie', '243242');
     res.json({'status': true, 'user': testData.testUser});
+    // res.send(req.body);
 });
 
 app.put('/register', (req, res)=>{
-    res.set('Set-Cookie', 12345);
+    console.log(req.body);
+    // res.set('Set-Cookie', 12345);
+    let accessToken = req.body.token;
+    fetch('https://graph.facebook.com/v2.11/'+accessToken).then((res)=>res.text()).then((data)=>console.log(data));
     res.json({
         'status': true,
         'user': testData.emptyUser,

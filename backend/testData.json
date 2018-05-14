@@ -1,0 +1,94 @@
+{
+    "testUser": {
+        "54555": {
+            "id": "5455",
+            "accessToken": "a5sf54sf45as65f4a4f5a5sdf45ad5",
+            "first_name": "bob",
+            "last_name": "bob",
+            "picture": "sdfsdf.jpg",
+            "jobsListed": [23423],
+            "pairs": [23424234234, 2342342],
+            "currentJob": 2390428930,
+            "jobsDeclined": [234234, 23424342],
+            "jobsCompleted": [23423423],
+            "signupDate": 12546845,
+            "description": "this is my profile, it is a string",
+            "lastLoginDate": 175654646,
+            "categories": ["plumbing"],
+            "currentLocation": "LocationObj",
+            "maxDistance": "25",
+            "priceRange": "500",
+            "statistics": {
+                "jobsAccepted": 0,
+                "jobsCompleted": 0,
+                "jobsCanceled": 0
+            },
+            "jobInProgress": false,
+            "welcomeStage": 3
+        }
+    },
+    "emptyUser": {
+        "12345": {
+            "id": "12345",
+            "accessToken": "a5sf54sf45as65f4a4f5a5sdf45ad5",
+            "first_name": "bob",
+            "last_name": "bob",
+            "picture": "sdfsdf.jpg",
+            "jobsListed": [],
+            "pairs": [],
+            "currentJob": null,
+            "jobsDeclined": [],
+            "jobsCompleted": [],
+            "signupDate": 123129312,
+            "description": "",
+            "lastLoginDate": 175654646,
+            "categories": [],
+            "currentLocation": "LocationObj",
+            "maxDistance": "",
+            "priceRange": "",
+            "statistics": {
+                "jobsAccepted": 0,
+                "jobsCompleted": 0,
+                "jobsCanceled": 0
+            },
+            "jobInProgress": false,
+            "welcomeStage": 1
+        }
+    },
+    "job": {
+        "54554": {
+            "status": "accepted",
+            "jobDescription": "sample",
+            "jobTitle": "some name",
+            "jobPay": 12312.12,
+            "patronId": 545445,
+            "Picture": "pic.jpg",
+            "helperId": 2342323,
+            "pairedHelper": [132123, 1231232],
+            "location": "LocationObj",
+            "listingDate": 1231123123,
+            "dealDate": 123123123123,
+            "completedDate": null,
+            "completedByPatron": false,
+            "completedByHelper": false,
+            "messages": {
+                "512312132": {
+                    "lastMessage": 234234,
+                    "messages": [{
+                            "user": "patron",
+                            "message": "hello"
+                        },
+                        {
+                            "user": "helper",
+                            "message": "goodbye"
+                        }
+                    ],
+                    "238429480": [{}, {}]
+                }
+
+
+            }
+        }
+
+    }
+}

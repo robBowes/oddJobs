@@ -14,7 +14,7 @@ app.use(express.json({type: 'application/json'}));
 
 app.post('/login', (req, res)=>{
     res.set('Set-Cookie', 12345);
-    conosle.log(req.body);
+    console.log(req.body);
     res.json({'status': true, 'user': testData.testUser});
 });
 

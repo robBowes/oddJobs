@@ -15,88 +15,139 @@ class Swiper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stack: null
+      stack: null,
+      cards: []
     };
   }
-  swipe = x => {
-    console.log(x);
-    // Swing Card Directions
-    console.log("Swing.DIRECTION", Swing.DIRECTION);
-
-    // Swing Component Childrens refs
-    const target = this.refs.stack.refs.card2;
+  swipeRight = x => {
+    const target = this.refs.stack.refs[this.state.cards[this.state.cards.length - 1].ref];
 
     // get Target Dom Element
     const el = ReactDOM.findDOMNode(target);
-
-    
 
     // stack.getCard
     const card = this.state.stack.getCard(el);
 
     // throwOut method call
-    card.throwOut(100, 200, Swing.DIRECTION.RIGHT);
+    card.throwOut(0, 0, Swing.DIRECTION.RIGHT);
   };
-  
-  removeCard = (e) => {
-      const target = e.target
+
+  swipeLeft = x =>{
+      // Swing Card Directions
+
+       // Swing Component Childrens refs
+       const target = this.refs.stack.refs[this.state.cards[this.state.cards.length-1].ref];
+
+       // get Target Dom Element
+       const el = ReactDOM.findDOMNode(target);
+
+       // stack.getCard
+       const card = this.state.stack.getCard(el);
+
+       // throwOut method call
+       card.throwOut(0, 0, Swing.DIRECTION.LEFT); 
+    //    let b = {}
+    //    b.target = target
+       //this.removeCard(b) 
+  }
+
+  removeCard = e => {
+    const target = e.target;
+    const el = ReactDOM.findDOMNode(target);
+    const card = this.state.stack.getCard(el);
+    //card.destroy();
+    console.log(target.id)
+    // el.remove()
+    this.setState({
+      cards: this.state.cards.filter((x, i) => {
+        return parseInt(x.key) !== this.state.cards.length - 1;
+      })
+    });
+  };
+  renderCards = () => {
+    let newStack = [];
+    for (let i = newStack.length; i < 10; i++) {
+      newStack = newStack.concat(
+        <div
+          key={i}
+          className={"card " + (parseInt(i) + 1)}
+          ref={"card" + (parseInt(i) + 1)}
+          id={i}
+        >
+          <img
+          draggable='false'
+            src={
+              "http://unsplash.it/" +
+              Math.round(Math.random() * (305 - 295) + 295) +
+              "/" +
+              Math.round(Math.random() * (255 - 245) + 245)
+            }
+          />
+          <div style={{'flex':'none','fontSize':'10pt','top':'5%','backgroundColor':'white','position':'absolute'}}>LMAO{i}</div>
+        </div>
+      );
+    }
+    this.props.dispatch({
+      type: "UPDATE_STACK",
+      payload: newStack
+    });
+    if (this.state.cards.length === 0) {
+      this.setState({ cards: newStack });
+    }
+    console.log(newStack);
+    return newStack;
+  };
+  componentWillMount = props => {
+    this.renderCards();
+  };
+  accept = (e) =>{
       console.log(e)
-      console.log(this.state.stack)
-      const el = ReactDOM.findDOMNode(target)
-      console.log(el);
-      const card = this.state.stack.getCard(el)
-      console.log(card)
-      card.destroy();
-      console.log(card)
-      el.remove()
+      console.log('YES THIS JOB')
+    }
+    
+    reject = (e) =>{
+        console.log(e)
+        console.log('NOT THIS JOB')
+
   }
 
   render() {
     console.log(Swing);
-    return <div className="swipeContainer">
+    return (
+      <div className="swipeContainer">
         SWIPER
-        <Swing className="stack" tagName="div" setStack={stack => this.setState(
-              { stack: stack }
-            )} ref="stack" throwout={this.removeCard}>
-          <div className="card clubs" ref="card1" throwout={e => console.log("card throwout", e)}>
-            <img src={//this.props.jobs[0].picture
-                "http://unsplash.it/300/250"} />
-          </div>
-          <div className="card diamonds" ref="card2">
-            <img src={//this.props.jobs[1].picture
-                "http://unsplash.it/301/250"} />
-          </div>
-          <div className="card diamonds" ref="card3">
-            <img src={//this.props.jobs[1].picture
-                "http://unsplash.it/299/250"} />
-          </div>
-          <div className="card diamonds" ref="card4">
-            <img src={//this.props.jobs[1].picture
-                "http://unsplash.it/300/248"} />
-          </div>
-          <div className="card diamonds" ref="card5">
-            <img src={//this.props.jobs[1].picture
-                "http://unsplash.it/301/249"} />
-          </div>
-          <div className="card diamonds" ref="card6">
-            <img src={//this.props.jobs[1].picture
-                "http://unsplash.it/298/250"} />
-          </div>
+        <Swing
+          className="stack"
+          tagName="div"
+          setStack={stack => this.setState({ stack: stack })}
+          ref="stack"
+          throwoutend={this.removeCard}
+          throwoutleft={this.reject}
+          throwoutright={this.accept}
+        >
+          {this.state.cards ? (
+            this.state.cards.map(x => {
+              return x;
+            })
+          ) : (
+            <div />
+          )}
         </Swing>
         <div>
-          <button type="button" onClick={this.swipe}>
+          <button type="button" name='accept' onClick={this.swipeRight}>
             ACCEPT
           </button>
-          <button type="button" onClick={this.swipe}>
+          <button type="button" onClick={this.swipeLeft}>
             Reject
           </button>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 
 const mapStateToProps = state => ({
-  //redux props import
+  cards: state.data.cards
 });
 
 export default connect(mapStateToProps)(Swiper);

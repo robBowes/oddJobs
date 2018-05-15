@@ -11,14 +11,14 @@ export default (state = {
     if (action.type === 'USER_INFO') {
         newState.username = action.username;
         newState.picture = action.picture;
-        newState.tid = action.id;
+        newState.id = action.id;
         newState.loggedIn = action.loggedIn;
-    }
-    if (action.type === 'INCREMENT_WELCOME'){
-        newState.welcomeStage = newState.welcomeStage + 1;
     }
     if (action.type === 'WELCOME_STATE'){
         newState.welcomeStage = action.payload;
+    }
+    if (action.type === 'USER_UPDATE') {
+        newState = {...newState, ...action.payload}; 
     }
     return newState;
 };

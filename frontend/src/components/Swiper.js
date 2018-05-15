@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import ReactDOM from 'react-dom'
+import ReactDOM from "react-dom";
 import { connect } from "react-redux";
-import Swing, {Stack, Card, Direction   } from 'react-swing'
+import Swing, { Stack, Card, Direction } from "react-swing";
 
 //The main function of the app
 //A constantly rotating pair of jobs giving the impression of continuous flow
@@ -18,8 +18,8 @@ class Swiper extends Component {
       stack: null
     };
   }
-  swipe = (x) => {
-      console.log(x)
+  swipe = x => {
+    console.log(x);
     // Swing Card Directions
     console.log("Swing.DIRECTION", Swing.DIRECTION);
 
@@ -29,7 +29,7 @@ class Swiper extends Component {
     // get Target Dom Element
     const el = ReactDOM.findDOMNode(target);
 
-    console.log(el)
+    
 
     // stack.getCard
     const card = this.state.stack.getCard(el);
@@ -37,6 +37,19 @@ class Swiper extends Component {
     // throwOut method call
     card.throwOut(100, 200, Swing.DIRECTION.RIGHT);
   };
+  
+  removeCard = (e) => {
+      const target = e.target
+      console.log(e)
+      console.log(this.state.stack)
+      const el = ReactDOM.findDOMNode(target)
+      console.log(el);
+      const card = this.state.stack.getCard(el)
+      console.log(card)
+      card.destroy();
+      console.log(card)
+      el.remove()
+  }
 
   render() {
     console.log(Swing);
@@ -44,7 +57,7 @@ class Swiper extends Component {
         SWIPER
         <Swing className="stack" tagName="div" setStack={stack => this.setState(
               { stack: stack }
-            )} ref="stack" throwout={e => console.log("throwout", e)}>
+            )} ref="stack" throwout={this.removeCard}>
           <div className="card clubs" ref="card1" throwout={e => console.log("card throwout", e)}>
             <img src={//this.props.jobs[0].picture
                 "http://unsplash.it/300/250"} />
@@ -55,16 +68,28 @@ class Swiper extends Component {
           </div>
           <div className="card diamonds" ref="card3">
             <img src={//this.props.jobs[1].picture
+                "http://unsplash.it/299/250"} />
+          </div>
+          <div className="card diamonds" ref="card4">
+            <img src={//this.props.jobs[1].picture
                 "http://unsplash.it/300/248"} />
+          </div>
+          <div className="card diamonds" ref="card5">
+            <img src={//this.props.jobs[1].picture
+                "http://unsplash.it/301/249"} />
+          </div>
+          <div className="card diamonds" ref="card6">
+            <img src={//this.props.jobs[1].picture
+                "http://unsplash.it/298/250"} />
           </div>
         </Swing>
         <div>
-        <button type="button" onClick={this.swipe}>
-          ACCEPT
-        </button>
-        <button type="button" onClick={this.swipe}>
-          Reject
-        </button>
+          <button type="button" onClick={this.swipe}>
+            ACCEPT
+          </button>
+          <button type="button" onClick={this.swipe}>
+            Reject
+          </button>
         </div>
       </div>;
   }

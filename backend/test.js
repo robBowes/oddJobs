@@ -4,10 +4,8 @@ const testData = require('./testData.json');
 const assert = require('assert');
 const mongoose = require('mongoose');
 
-
 const Schemas = require('./Shemas.js');
 const User = Schemas.User;
-
 
 mongoose.connect(r.uri, {autoIndex: false});
 const db = mongoose.connection;
@@ -23,9 +21,9 @@ dbTests = async () =>{
     let randomString = ['test1', 'test2', 'test3', 'test4', 'test5'][Math.floor(Math.random()*5)];
 
     // test valid request
-    await oddJobs.modify(user, {description: randomString});
+    await oddJobs.modify(user, {description: randomString, maxPrice: randomString, maxDistance: randomString});
     const user2 = await User.findOne({name: 'TEST'});
-    assert(user2.description===randomString);
+    assert(user2.description===randomString && user2.maxPrice === randomString);
 
     // test invalid request
     let reply = oddJobs.modify(user, {welcomeStage: randomString});

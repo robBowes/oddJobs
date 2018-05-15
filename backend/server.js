@@ -37,14 +37,11 @@ app.post('/login', async (req, res)=>{
     let appToken = req.cookies.token;
     let user = await findUser(appToken);
     if (user && user.appToken === appToken) {
-        // console.log('user token found!');
     } else if (await isValid) {
-        // console.log('finding user by id in database');
         user = await User.findOne({id: fb.id});
         appToken = sha1(Date.now());
     }
     if (!user) {
-        // console.log('making new User');
         user = new User(fb);
         appToken = sha1(Date.now());
     }

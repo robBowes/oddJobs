@@ -9,61 +9,121 @@ import { connect } from "react-redux";
 //They are never shown this page again
 
 class WelcomeStaging extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-       sliderValue: 50,
-       minPayValue: 0,
-       maxPayValue: 40,
-       categories: []
-    }
+      sliderValue: 50,
+      minPayValue: 0,
+      maxPayValue: 40,
+      categories: [],
+      boxCategories: ['general','lawncare','automotive','cleaning'
+      ,'plumbing','housekeeping','carpentry','pet care','it'],
+    };
   }
-  handleClickNext = (event) => {
+  handleClickNext = event => {
     event.preventDefault();
+    fetch('/modify', {
+      method: "PUT",
+      body: JSON.stringify({
+        minPrice: this.state.minPayValue,
+        maxPrice: this.state.maxPayValue,
+        maxDistance: this.state.sliderValue,
+        categories: this.state.categories,
+      })
+    })
+    .then(x => x.json())
+    .then(y => {
+      if (!y.state) throw new Error(y.reason)
+      this.props.dispatch({
+        type: 'USER_UPDATE',
+        payload: y.user,
+      })
+    })
     this.props.dispatch({
-      type: 'WELCOME_STATE',
-      payload: 2,
-  })
-  }
-  sliderChange = (event) => {
-    this.setState({sliderValue: event.target.value})
-  }
-  handleMinChange = (event) => {
+      type: "WELCOME_STATE",
+      payload: 2
+    });
+  };
+  sliderChange = event => {
+    this.setState({ sliderValue: event.target.value });
+  };
+  handleMinChange = event => {
     event.preventDefault();
-    this.setState({minPayValue: event.target.value})
-  }
-  handleMaxChange = (event) => {
+    this.setState({ minPayValue: event.target.value });
+  };
+  handleMaxChange = event => {
     event.preventDefault();
-    this.setState({maxPayValue: event.target.value})
+    this.setState({ maxPayValue: event.target.value });
+  };
+  handleSubmit = event => {
+    event.preventDefault();
+  };
+  tickChange = event => {
+    if (event.target.checked){
+      let newCategories = [...this.state.categories];
+      newCategories = newCategories.concat(event.target.name);
+      this.setState({categories: newCategories})
+      return
+    }
+    this.setState({categories: this.state.categories.filter(x => x !== event.target.name)})
   }
-  handleSubmit = (event) => {
-   event.preventDefault()
+  mapCheckBoxes = (categories) => {
+    return categories.map((x,i) => {
+    return (
+       <input onChange={this.tickChange} key ={i} className="categoryCheckBox" type="checkbox" name={x}/>
+  )
+    })
   }
   render() {
- return  (   <div className='welcomeStage1'>      
-      <h1 className='welcomeText'> Let's start by setting up your job preferences!</h1>
+    return (
+      <div className="welcomeStage1">
+        <h1 className="welcomeText">
+          {" "}
+          Let's start by setting up your job preferences!
+        </h1>
 
-      <form className='welcomeForm' onSubmit={this.handleSubmit}>
-       <h2 className='welcomeHeader'> Show Jobs Within: </h2>
-       <input type="range" min="1" max="100" value={this.state.sliderValue} onChange={this.sliderChange} className="kmSlider" id="welcomeSlider"/>
-       <h2 className='welcomeHeader'> Show Jobs Paying: </h2>
-       <input className='welcomeInputMinMax' value={this.state.minPayValue} onChange={this.handleMinChange} type="number" placeholder="from"/> 
-       - <input className='welcomeInputMinMax' value={this.state.maxPayValue} onChange={this.handleMaxChange} type="number" placeholder="to"/>
-        
+        <form className="welcomeForm" onSubmit={this.handleSubmit}>
+          <h2 className="welcomeHeader"> Show Jobs Within: </h2>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value={this.state.sliderValue}
+            onChange={this.sliderChange}
+            className="kmSlider"
+            id="welcomeSlider"
+          />
+          <h2 className="welcomeHeader"> Show Jobs Paying: </h2>
+          <input
+            className="welcomeInputMinMax"
+            value={this.state.minPayValue}
+            onChange={this.handleMinChange}
+            type="number"
+            placeholder="from"
+          />{" "}
+          -{" "}
+          <input
+            className="welcomeInputMinMax"
+            value={this.state.maxPayValue}
+            onChange={this.handleMaxChange}
+            type="number"
+            placeholder="to"
+          />
+          <h2 className="welcomeHeader"> I'm interested in: </h2>
+            
+            {this.mapCheckBoxes(this.state.boxCategories)}
 
-
-
-      <button 
-      type="sumbit"
-      className='welcomeButton'
-      onClick={this.handleClickNext}
-      >
-      Next
-      </button>
-      </form>
-    </div>
-  )
-}
+          <button
+            type="submit"
+            className="welcomeButton"
+            onClick={this.handleClickNext}
+          >
+            Next
+          </button>    
+        </form>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({

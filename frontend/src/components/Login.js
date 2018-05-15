@@ -34,18 +34,14 @@ class Login extends Component {
     loggedIn: true});
     fetch('/login', {
         method: 'POST',
-        body: JSON.stringify(
-          response
-        )})
-        .then(x=>x.json())
-        .then(y=>{
-                console.log(y)
-        })
-    
-    
-    
-    this.setState({loading: false})
-    
+        body: JSON.stringify(response)})
+        .then((x)=>x.json())
+        .then((y)=>{
+                console.log(y);
+        });
+
+
+    this.setState({loading: false});
     }
     // anything else you want to do(save to localStorage)...
   }

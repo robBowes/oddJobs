@@ -2,7 +2,7 @@ module.exports = {
     "extends": "google",
     // "parser": "babel-eslint",
     "parserOptions": {
-        "ecmaVersion": 7,
+        "ecmaVersion": 2017,
         "sourceType": "module",
     },
     "env" : {

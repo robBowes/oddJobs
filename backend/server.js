@@ -4,33 +4,48 @@ const oddJobs = require('./oddJobs');
 const r = require('./utils.js');
 const testData = require('./testData.json');
 const fetch = require('node-fetch');
-
-
-// console.log(testData);
-
+const mongoose = require('mongoose');
 const app = express();
+
+const Schemas = require('./Shemas.js');
+const User = Schemas.User;
+
+
+mongoose.connect(r.uri, {autoIndex: false});
+const db = mongoose.connection;
+
+
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', ()=>{
+    console.log('connected to mongoose server');
+    // let bob = new Schemas.User(testData.testUser.bob);
+    // bob.save();
+    // Schemas.User.findOne({id: '5455'})
+    // .then((err, data)=>{
+    //     console.log(err, data);
+    // });
+});
 
 // app.use(express.json({type: 'application/json'}));
 app.use(express.json({type: '*/*'}));
 // app.use(bodyParser.raw({type: '*/*'}));
 
-app.post('/login', (req, res)=>{
-    console.log(req.body);
-    res.cookie('token', '456', {maxAge: 900000, httpOnly: false});
-    // res.cookie('Set-Cookie', '243242');
-    res.json({'status': true, 'user': testData.testUser});
-    // res.send(req.body);
-});
 
-app.put('/register', (req, res)=>{
-    console.log(req.body);
-    // res.set('Set-Cookie', 12345);
-    let accessToken = req.body.token;
-    fetch('https://graph.facebook.com/v2.11/'+accessToken).then((res)=>res.text()).then((data)=>console.log(data));
-    res.json({
-        'status': true,
-        'user': testData.emptyUser,
-    });
+app.post('/login', async (req, res)=>{
+    let fb = req.body;
+    const isValid = await r.checkFbToken(fb);
+    // Users.findOne(fb.id)
+    // const user = new User(fb);
+    // user.save();
+    let user = await User.findOne({id: fb.id});
+    if (user) {
+    } else {
+        console.log('making new User');
+        user= new User(fb);
+        user.save();
+    }
+    console.log(user);
+    res.json({status: isValid, user: user});
 });
 
 app.put('/modify', (req, res)=>{

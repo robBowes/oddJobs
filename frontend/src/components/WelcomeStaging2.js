@@ -17,11 +17,16 @@ class WelcomeStaging extends Component {
   })
   }
   render() {
- return  (   <div className='welcomeStage1'>
-
-      <img src='logo.png' alt='oddjobs logo'/>
-      
+ return  (   <div className='welcomeStage1'>      
       <h1 className='welcomeText'> Let's start by setting up your job preferences!</h1>
+
+      <form className='welcomeForm'>
+       <h2 className='welcomeHeader'> Show Jobs Within: </h2>
+       <input type="range" min="1" max="100" value="50" className="kmSlider" id="welcomeSlider"/>
+
+
+
+
 
       <button 
       className='welcomeButton'
@@ -29,6 +34,7 @@ class WelcomeStaging extends Component {
       >
       Next
       </button>
+      </form>
     </div>
   )
 }

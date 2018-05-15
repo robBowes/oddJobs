@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { FacebookLogin } from "react-facebook-login-component";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {FacebookLogin} from 'react-facebook-login-component';
 
-const responseFacebook = response => {
+const responseFacebook = (response) => {
   console.log(response);
 };
 
@@ -14,37 +14,38 @@ class Login extends Component {
     this.state = {
       image: null,
       token: null,
-      username: null
+      username: null,
     };
   }
-  componentWillReceiveProps = props => {
+  componentWillReceiveProps = (props) => {
     this.setState({
       image: this.props.picture,
       id: this.props.id,
-      username: this.props.username
+      username: this.props.username,
     });
   };
-  responseFacebook = response => {
+  responseFacebook = (response) => {
     console.log(response);
     if (response.id) {
-      console.log("TRYING TO LOGIN")
-      fetch("/login", {
-        method: "POST",
-        credentials: "same-origin",
-        body: JSON.stringify(response)
+      console.log('TRYING TO LOGIN');
+      fetch('/login', {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: JSON.stringify(response),
       })
-        .then(x => x.json())
-        .then(y => {
+        .then((x) => x.json())
+        .then((y) => {
+          console.log(y);
           if (!y.status) {
-            throw new Error("FAILED LOGIN");
+            throw new Error('FAILED LOGIN');
           }
           this.props.dispatch({
-            type: "USER_UPDATE",
-            payload: y.user
+            type: 'USER_UPDATE',
+            payload: y.user,
           });
         });
 
-      this.setState({ loading: false });
+      this.setState({loading: false});
     }
     // anything else you want to do(save to localStorage)...
   };
@@ -68,11 +69,11 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   // redux props import
   picture: state.user.picture,
   username: state.user.username,
-  id: state.user.id
+  id: state.user.id,
 });
 
 export default connect(mapStateToProps)(Login);

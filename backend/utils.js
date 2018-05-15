@@ -16,9 +16,15 @@ const checkFbToken = async (fb) => {
     return json.data.is_valid && json.data.user_id === fb.id;
 };
 
+const findToken = (db) => async (token) =>{
+    let user = await db.findOne({appToken: token});
+    return user;
+};
+
 module.exports = {
     stringify,
     makeNewUser,
     checkFbToken,
     uri,
+    findToken,
 };

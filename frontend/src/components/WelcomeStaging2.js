@@ -24,25 +24,24 @@ class WelcomeStaging extends Component {
     event.preventDefault();
     fetch('/modify', {
       method: "PUT",
+      credentials: 'same-origin',
       body: JSON.stringify({
         minPrice: this.state.minPayValue,
         maxPrice: this.state.maxPayValue,
         maxDistance: this.state.sliderValue,
         categories: this.state.categories,
+        welcomeStage: 2
       })
     })
     .then(x => x.json())
     .then(y => {
-      if (!y.state) throw new Error(y.reason)
+      console.log(y)
+      if (!y.status) throw new Error(y.reason)
       this.props.dispatch({
         type: 'USER_UPDATE',
         payload: y.user,
       })
     })
-    this.props.dispatch({
-      type: "WELCOME_STATE",
-      payload: 2
-    });
   };
   sliderChange = event => {
     this.setState({ sliderValue: event.target.value });

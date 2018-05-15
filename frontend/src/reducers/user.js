@@ -19,6 +19,7 @@ export default (state = {
     }
     if (action.type === 'USER_UPDATE') {
         newState = {...newState, ...action.payload}; 
+        newState.loggedIn = true;
     }
     return newState;
 };

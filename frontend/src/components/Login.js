@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {FacebookLogin} from 'react-facebook-login-component';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { FacebookLogin } from "react-facebook-login-component";
 
-const responseFacebook = (response) => {
+const responseFacebook = response => {
   console.log(response);
 };
 
@@ -11,54 +11,43 @@ const responseFacebook = (response) => {
 class Login extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state={
-        image: null,
-        token: null,
-        username: null,
+    this.state = {
+      image: null,
+      token: null,
+      username: null
     };
   }
-  componentWillReceiveProps = (props) => {
-      this.setState({
-          image: this.props.picture,
-          id: this.props.id,
-          username: this.props.username,
-              });
-  }
-  responseFacebook=(response)=> {
+  componentWillReceiveProps = props => {
+    this.setState({
+      image: this.props.picture,
+      id: this.props.id,
+      username: this.props.username
+    });
+  };
+  responseFacebook = response => {
     console.log(response);
     if (response.id) {
-            this.props.dispatch({
-        type: 'USER_INFO', picture: response.picture.data.url,
-        token: response.accessToken,
-        username: response.name,
-        id: response.id,
-    loggedIn: true});
-    fetch('/login', {
-        method: 'POST',
-        credentials: 'same-origin',
-        body: JSON.stringify(response)})
-        .then((x)=>x.json())
-        .then((y)=>{
-                if (!y.welcomeState){
-                  this.props.dispatch({
-                    type: 'WELCOME_STATE',
-                    payload: 0,
-                  })
-                }
-                else {
-                  this.props.dispatch({
-                    type: 'WELCOME_STATE',
-                    payload: y.welcomeState,
-                  })
-                }
-                console.log(y);
+      console.log("TRYING TO LOGIN")
+      fetch("/login", {
+        method: "POST",
+        credentials: "same-origin",
+        body: JSON.stringify(response)
+      })
+        .then(x => x.json())
+        .then(y => {
+          if (!y.status) {
+            throw new Error("FAILED LOGIN");
+          }
+          this.props.dispatch({
+            type: "USER_UPDATE",
+            payload: y.user
+          });
         });
 
-
-    this.setState({loading: false});
+      this.setState({ loading: false });
     }
     // anything else you want to do(save to localStorage)...
-  }
+  };
 
   render() {
     return (
@@ -79,11 +68,11 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   // redux props import
   picture: state.user.picture,
   username: state.user.username,
-  id: state.user.id,
+  id: state.user.id
 });
 
 export default connect(mapStateToProps)(Login);

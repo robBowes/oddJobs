@@ -22,6 +22,9 @@ db.once('open', ()=>{
     console.log('connected to mongoose server');
 });
 
+
+const findUser = r.findToken(User);
+
 // app.use(express.json({type: 'application/json'}));
 app.use(express.json({type: '*/*'}));
 // app.use(bodyParser.raw({type: '*/*'}));
@@ -32,17 +35,16 @@ app.post('/login', async (req, res)=>{
     let fb = req.body;
     const isValid = r.checkFbToken(fb);
     let appToken = req.cookies.token;
-    // let user = await User.findOne({appToken: appToken});
-    let user = r.returnUser(User, appToken);
+    let user = await findUser(appToken);
     if (user && user.appToken === appToken) {
-        console.log('user token found!');
+        // console.log('user token found!');
     } else if (await isValid) {
-        console.log('finding user by id in database');
+        // console.log('finding user by id in database');
         user = await User.findOne({id: fb.id});
         appToken = sha1(Date.now());
     }
     if (!user) {
-        console.log('making new User');
+        // console.log('making new User');
         user = new User(fb);
         appToken = sha1(Date.now());
     }
@@ -54,8 +56,10 @@ app.post('/login', async (req, res)=>{
     res.json({status: isValid, user: user});
 });
 
-app.put('/modify', (req, res)=>{
-    res.json({'status': true, 'user': testData.testUser});
+app.put('/modify', async (req, res)=>{
+    let user = await findUser(req.cookies.token);
+    let reply = await oddJobs.modify(user, req.body);
+    res.json(reply);
 });
 
 app.post('/allJobs', (req, res)=>{

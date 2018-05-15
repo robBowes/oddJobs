@@ -90,5 +90,28 @@
             }
         }
 
+    },
+    "mongoUser": {
+        "_id": "5afb1b282187b2238cfcafaa",
+        "jobsListed": [],
+        "pairs": [],
+        "jobsDeclined": [],
+        "jobsCompleted": [],
+        "categories": [],
+        "welcomeStage": 0,
+        "id": "10160494170645473",
+        "email": "x52xk@unb.ca",
+        "name": "Randy Alexander",
+        "picture": {
+            "data": {
+                "height": 200,
+                "is_silhouette": false,
+                "url": "https://lookaside.facebook.com/platform/profilepic/?asid=10160494170645473&height=200&width=200&ext=1526665128&hash=AeQuH8SEGvHZq5aa",
+                "width": 200
+            }
+        },
+        "accessToken": "EAAB4R5FptqYBAGL8xho74Nt9jgoVDA7Sga4fdDdSqgdCQGEFguvZAr8Nrv6g1yuKNb7iZCVrJLolorj6we9TZCiJZCJ2t3CSyWPw7kVxFs8oiTwOM3IihiAUrwETiGxJjpNepX6HX9yBmvUuYM5LGgfinOA2cVRPVJQWJEmXIfZBJCDVDmn584fjetnRih7sudDzNm72KsAZDZD",
+        "appToken": "7346d6361bdbf5098a02f81eff7c92360fa0323a",
+        "__v": 0
     }
 }

@@ -7,16 +7,21 @@ import Swipe from './containers/Swipe';
 import Welcome from './containers/Welcome';
 import {BrowserRouter, Link, Route} from 'react-router-dom'
 import {connect} from 'react-redux'
+import WelcomeStaging from './components/WelcomeStaging';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state ={
-      loggedIn: false
+      loggedIn: false,
+      welcomeStage: 0,
     }
   }
   componentWillReceiveProps = props =>{
     this.setState({loggedIn: this.props.loggedIn})
+  }
+  componentWillMount = () => {
+
   }
   render() {
     return (
@@ -26,6 +31,8 @@ class App extends Component {
       <Settings style={{'display':this.state.currentPage==='settings'?'block':'none'}}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>
       
+       {this.state.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}  
+
       </div>
       </BrowserRouter>
     );
@@ -34,7 +41,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   example: state.example,
-  loggedIn: state.user.loggedIn
+  loggedIn: state.user.loggedIn,
+  welcomeStage: state.welcomeStage,
 });
 
 export default connect(mapStateToProps)(App);

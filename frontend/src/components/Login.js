@@ -32,34 +32,20 @@ class Login extends Component {
         token: response.accessToken,
         username: response.name,
     loggedIn: true});
-    fetch('/register', {
+    fetch('/login', {
         method: 'POST',
-        body: JSON.stringify({
-            token: response.accessToken,
-<<<<<<< HEAD
-            id: response.id,
-        })
-        .then((x)=>x.json())
-        .then((y)=>{
-                console.log('hurrah');
-        }),
-    }
-    );
-
-    this.setState({loading: false});
-=======
-            id: response.id
-        })})
+        body: JSON.stringify(
+          response
+        )})
         .then(x=>x.json())
         .then(y=>{
-                console.log('hurrah')
+                console.log(y)
         })
     
     
     
     this.setState({loading: false})
     
->>>>>>> cfca9f451db4a91c24ce2913525566c334e6d2cd
     }
     // anything else you want to do(save to localStorage)...
   }

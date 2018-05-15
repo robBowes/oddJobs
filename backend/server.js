@@ -33,7 +33,7 @@ app.post('/login', async (req, res)=>{
     const isValid = r.checkFbToken(fb);
     let appToken = req.cookies.token;
     let user = await User.findOne({appToken: appToken});
-    if (user) {
+    if (user.appToken === appToken) {
         console.log('user token found!');
     } else if (await isValid) {
         console.log('finding user by id in database');

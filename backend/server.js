@@ -57,7 +57,9 @@ app.post('/login', async (req, res)=>{
 });
 
 app.put('/modify', async (req, res)=>{
+    console.log(req.body)
     let user = await findUser(req.cookies.token);
+    console.log(user)
     let reply = await oddJobs.modify(user, req.body);
     res.json(reply);
 });

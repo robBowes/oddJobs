@@ -31,6 +31,7 @@ class Login extends Component {
         type: 'USER_INFO', picture: response.picture.data.url,
         token: response.accessToken,
         username: response.name,
+        id: response.id,
     loggedIn: true});
     fetch('/login', {
         method: 'POST',
@@ -38,6 +39,18 @@ class Login extends Component {
         body: JSON.stringify(response)})
         .then((x)=>x.json())
         .then((y)=>{
+                if (!y.welcomeState){
+                  this.props.dispatch({
+                    type: 'WELCOME_STATE',
+                    payload: 0,
+                  })
+                }
+                else {
+                  this.props.dispatch({
+                    type: 'WELCOME_STATE',
+                    payload: y.welcomeState,
+                  })
+                }
                 console.log(y);
         });
 

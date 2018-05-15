@@ -13,7 +13,7 @@ class WelcomeStaging extends Component {
     event.preventDefault();
     this.props.dispatch({
       type: 'WELCOME_STATE',
-      payload: 1,
+      payload: 2,
   })
   }
   render() {
@@ -21,13 +21,13 @@ class WelcomeStaging extends Component {
 
       <img src='logo.png' alt='oddjobs logo'/>
       
-      <h1 className='welcomeText'> Welcome! </h1>
+      <h1 className='welcomeText'> Let's start by setting up your job preferences!</h1>
 
       <button 
       className='welcomeButton'
       onClick={this.handleClick}
       >
-      Setup
+      Next
       </button>
     </div>
   )

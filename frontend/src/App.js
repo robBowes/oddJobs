@@ -21,6 +21,35 @@ class App extends Component {
     this.setState({loggedIn: this.props.loggedIn})
   }
   componentWillMount = () => {
+    let cookie = document.cookie;
+    let hasToken = cookie.search('token')!==-1;
+    if(hasToken) {
+    this.props.dispatch({
+      type: 'USER_INFO',
+      loggedIn: true,
+    }) 
+    fetch('/login', {
+      method: 'POST',
+      credentials: 'same-origin',
+    })
+    .then(x => x.json())
+    .then(y => {
+      if(y.status){
+      this.props.dispatch({
+        type: 'USER_UPDATE',
+        payload: y.user
+      })}
+      else {
+        this.props.dispatch({
+          type: 'USER_INFO',
+          loggedIn: false,
+        })
+      }
+    })
+    }
+  
+
+    console.log(cookie)
 
   }
   render() {
@@ -31,7 +60,7 @@ class App extends Component {
       <Settings style={{'display':this.state.currentPage==='settings'?'block':'none'}}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>
       
-       {this.state.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}  
+       {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}  
 
       </div>
       </BrowserRouter>
@@ -42,7 +71,7 @@ class App extends Component {
 const mapStateToProps = (state) => ({
   example: state.example,
   loggedIn: state.user.loggedIn,
-  welcomeStage: state.welcomeStage,
+  welcomeStage: state.user.welcomeStage,
 });
 
 export default connect(mapStateToProps)(App);

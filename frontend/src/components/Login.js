@@ -34,6 +34,7 @@ class Login extends Component {
     loggedIn: true});
     fetch('/login', {
         method: 'POST',
+        credentials: 'same-origin',
         body: JSON.stringify(response)})
         .then((x)=>x.json())
         .then((y)=>{

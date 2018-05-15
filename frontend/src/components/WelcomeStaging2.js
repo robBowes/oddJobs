@@ -75,7 +75,7 @@ class WelcomeStaging extends Component {
   }
   render() {
     return (
-      <div className="welcomeStage1">
+      <div className="welcomeStage2">
         <h1 className="welcomeText">
           {" "}
           Let's start by setting up your job preferences!

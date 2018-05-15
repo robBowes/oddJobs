@@ -6,7 +6,7 @@ class Swipe extends Component {
     render() {
         return (
             <div>
-                <Swiper/><br/>
+                <Swiper/>
                 <SwipeNav/>
 
             </div>

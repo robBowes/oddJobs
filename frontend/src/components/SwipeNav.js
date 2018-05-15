@@ -8,7 +8,8 @@ import { connect } from "react-redux";
 
 class SwipeNav extends Component {
   render() {
-      return (<div>SWIPE NAV TOOLS</div>)
+      return (<div>SWIPE NAV TOOLS<br/>
+      <button>NO</button><button>YES</button></div>)
   }
 }
 

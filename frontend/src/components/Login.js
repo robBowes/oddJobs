@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {FacebookLogin} from "react-facebook-login-component";
+import { FacebookLogin } from "react-facebook-login-component";
 
 const responseFacebook = response => {
   console.log(response);
@@ -11,45 +11,45 @@ const responseFacebook = response => {
 class Login extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state={
-        image: null,
-        token: null,
-        username: null
-    }
+    this.state = {
+      image: null,
+      token: null,
+      username: null
+    };
   }
   componentWillReceiveProps = props => {
-      this.setState({
-          image: this.props.picture,
-          id: this.props.id,
-          username: this.props.username
-              })
-  }
-  responseFacebook=(response)=> {
+    this.setState({
+      image: this.props.picture,
+      id: this.props.id,
+      username: this.props.username
+    });
+  };
+  responseFacebook = response => {
     console.log(response);
-    if(response.id){
-            this.props.dispatch({
-        type: 'USER_INFO', picture: response.picture.data.url, 
+    if (response.id) {
+      this.props.dispatch({
+        type: "USER_INFO",
+        picture: response.picture.data.url,
         token: response.accessToken,
-        username:response.name,
-    loggedIn: true})
-    fetch('/login',{
-        method: 'POST',
+        username: response.name,
+        loggedIn: true
+      });
+      fetch("/register", {
+        method: "PUT",
         body: JSON.stringify({
-            token: response.accessToken,
-            id: response.id
-        })})
-        .then(x=>x.json())
-        .then(y=>{
-                console.log('hurrah')
+          token: response.accessToken,
+          id: response.id
         })
-    
-    
-    
-    this.setState({loading: false})
-    
+      })
+        .then(x => x.json())
+        .then(y => {
+          console.log("hurrah");
+        });
+
+      this.setState({ loading: false });
     }
     //anything else you want to do(save to localStorage)...
-  }
+  };
 
   render() {
     return (
@@ -65,8 +65,6 @@ class Login extends Component {
           className="facebook-login"
           buttonText="Login With Facebook"
         />
-        {this.props.username}
-        <img width='300px' height='300px' src={this.props.picture}/>
       </div>
     );
   }

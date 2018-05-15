@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:4000",
   "dependencies": {
+    "eslint": "^4.19.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-facebook-login": "^4.0.1",
@@ -11,8 +12,10 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
+    "react-swing": "^1.0.2",
     "redux": "^4.0.0",
-    "styled-components": "^3.2.6"
+    "styled-components": "^3.2.6",
+    "swing": "^3.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

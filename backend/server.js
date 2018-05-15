@@ -6,6 +6,8 @@ const testData = require('./testData.json');
 const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 const app = express();
+const cookieParser = require('cookie-parser');
+const sha1 = require('sha1');
 
 const Schemas = require('./Shemas.js');
 const User = Schemas.User;
@@ -18,33 +20,34 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', ()=>{
     console.log('connected to mongoose server');
-    // let bob = new Schemas.User(testData.testUser.bob);
-    // bob.save();
-    // Schemas.User.findOne({id: '5455'})
-    // .then((err, data)=>{
-    //     console.log(err, data);
-    // });
 });
 
 // app.use(express.json({type: 'application/json'}));
 app.use(express.json({type: '*/*'}));
 // app.use(bodyParser.raw({type: '*/*'}));
+app.use(cookieParser());
 
 
 app.post('/login', async (req, res)=>{
     let fb = req.body;
-    const isValid = await r.checkFbToken(fb);
-    // Users.findOne(fb.id)
-    // const user = new User(fb);
-    // user.save();
-    let user = await User.findOne({id: fb.id});
+    const isValid = r.checkFbToken(fb);
+    let appToken = req.cookies.token;
+    let user = await User.findOne({appToken: appToken});
     if (user) {
+        console.log('user token found!');
+    } else if (await isValid) {
+        console.log('finding user by id in database');
+        user = await User.findOne({id: fb.id});
+        appToken = sha1(Date.now());
+        user.appToken = appToken;
+        user.save();
     } else {
         console.log('making new User');
-        user= new User(fb);
+        user = new User(fb);
+        appToken = sha1(Date.now());
         user.save();
     }
-    console.log(user);
+    res.cookie('token', appToken);
     res.json({status: isValid, user: user});
 });
 

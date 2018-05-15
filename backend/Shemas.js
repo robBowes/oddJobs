@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
     id: {type: String, unique: true, required: true},
     accessToken: String,
+    appToken: String,
     firstName: String,
     picture: Object,
     jobsListed: [Number],
@@ -23,7 +24,7 @@ const UserSchema = new mongoose.Schema({
         jobsCanceled: Number,
     },
     jobInProgress: Boolean,
-    welcomeStage: String,
+    welcomeStage: {type: Number, default: 0},
     name: String,
     email: String,
 });

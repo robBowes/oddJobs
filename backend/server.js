@@ -33,18 +33,20 @@ app.post('/login', async (req, res)=>{
     const isValid = r.checkFbToken(fb);
     let appToken = req.cookies.token;
     let user = await User.findOne({appToken: appToken});
-    if (user.appToken === appToken) {
+    if (user && user.appToken === appToken) {
         console.log('user token found!');
     } else if (await isValid) {
         console.log('finding user by id in database');
         user = await User.findOne({id: fb.id});
         appToken = sha1(Date.now());
-        user.appToken = appToken;
-        user.save();
-    } else {
+    }
+    if (!user) {
         console.log('making new User');
         user = new User(fb);
         appToken = sha1(Date.now());
+    }
+    if (user) {
+        user.appToken = appToken;
         user.save();
     }
     res.cookie('token', appToken);

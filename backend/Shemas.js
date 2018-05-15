@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema({
     id: {type: String, unique: true, required: true},
     accessToken: String,
     appToken: String,
-    firstName: String,
+    first_name: String,
     picture: Object,
     jobsListed: [Number],
     pairs: [Number],
@@ -37,16 +37,16 @@ UserSchema.methods.speak = function() {
 const User = mongoose.model('User', UserSchema);
 
 const JobSchema = new mongoose.Schema({
-    id: Number,
-    jobDescription: String,
-    jobTitle: String,
-    jobPay: String,
-    patronId: String,
+    id: {type: Number, required: true},
+    jobDescription: {type: String, required: true},
+    jobTitle: {type: String, required: true},
+    jobPay: {type: String, default: '0'},
+    patronId: {type: String, required: true},
     picture: String,
     helperId: String,
     pairedHelpers: [String],
     location: Object,
-    listingDate: Number,
+    listingDate: {type: String, default: Date.now()},
     dealDate: Number,
     completedDate: Number,
     completedByPatron: Boolean,
@@ -54,6 +54,9 @@ const JobSchema = new mongoose.Schema({
     messages: Object,
 });
 
+const Job = mongoose.model('Job', JobSchema);
+// const User = mongoose.model('User', UserSchema);
 
-module.exports = {User};
+
+module.exports = {User, Job};
 

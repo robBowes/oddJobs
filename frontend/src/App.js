@@ -8,6 +8,8 @@ import Welcome from './containers/Welcome';
 import {BrowserRouter, Link, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import WelcomeStaging from './components/WelcomeStaging';
+import WelcomeStaging2 from './components/WelcomeStaging2';
+
 
 class App extends Component {
   constructor(props) {
@@ -23,12 +25,7 @@ class App extends Component {
   componentWillMount = () => {
     let cookie = document.cookie;
     let hasToken = cookie.search('token')!==-1;
-    console.log(cookie);
-    if (hasToken) {
-    // this.props.dispatch({
-    //   type: 'USER_INFO',
-    //   loggedIn: true,
-    // })
+    if(hasToken) {
     fetch('/login', {
       method: 'POST',
       credentials: 'same-origin',
@@ -59,8 +56,15 @@ class App extends Component {
       {!this.props.loggedIn?<Landing/>:<Swipe/>}
       <Settings style={{'display': this.state.currentPage==='settings'?'block':'none'}}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>
+<<<<<<< HEAD
 
        {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}
+=======
+      
+       {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}
+       {this.props.loggedIn?(this.props.welcomeStage===1?<WelcomeStaging2/>:''):''}  
+  
+>>>>>>> 1d87c47b1ca0ac9e9cbc9c819ceedc853d8e3f65
 
       </div>
       </BrowserRouter>

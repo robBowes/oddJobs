@@ -3,27 +3,49 @@ const bodyParser = require('body-parser');
 const oddJobs = require('./oddJobs');
 const r = require('./utils.js');
 const testData = require('./testData.json');
-
-
-// console.log(testData);
-
+const fetch = require('node-fetch');
+const mongoose = require('mongoose');
 const app = express();
 
-app.use(express.json({type: 'application/json'}));
-// app.use(bodyParser.raw({type: '*/*'}));
+const Schemas = require('./Shemas.js');
+const User = Schemas.User;
 
-app.post('/login', (req, res)=>{
-    res.set('Set-Cookie', 12345);
-    console.log(req.body);
-    res.json({'status': true, 'user': testData.testUser});
+
+mongoose.connect(r.uri, {autoIndex: false});
+const db = mongoose.connection;
+
+
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', ()=>{
+    console.log('connected to mongoose server');
+    // let bob = new Schemas.User(testData.testUser.bob);
+    // bob.save();
+    // Schemas.User.findOne({id: '5455'})
+    // .then((err, data)=>{
+    //     console.log(err, data);
+    // });
 });
 
-app.put('/register', (req, res)=>{
-    res.set('Set-Cookie', 12345);
-    res.json({
-        'status': true,
-        'user': testData.emptyUser,
-    });
+// app.use(express.json({type: 'application/json'}));
+app.use(express.json({type: '*/*'}));
+// app.use(bodyParser.raw({type: '*/*'}));
+
+
+app.post('/login', async (req, res)=>{
+    let fb = req.body;
+    const isValid = await r.checkFbToken(fb);
+    // Users.findOne(fb.id)
+    // const user = new User(fb);
+    // user.save();
+    let user = await User.findOne({id: fb.id});
+    if (user) {
+    } else {
+        console.log('making new User');
+        user= new User(fb);
+        user.save();
+    }
+    console.log(user);
+    res.json({status: isValid, user: user});
 });
 
 app.put('/modify', (req, res)=>{

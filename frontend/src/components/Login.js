@@ -26,7 +26,7 @@ class Login extends Component {
     let lat;
     let lng;
     let getpos = async()=>{
-      let result = await navigator.geolocation.getCurrentPosition(x => {
+      let result = await navigator.geolocation.watchPosition(x => {
         console.log(x)
       lat =x.coords.latitude;
       lng =x.coords.longitude;

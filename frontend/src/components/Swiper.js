@@ -165,7 +165,10 @@ class Swiper extends Component {
       })
       .then(x=>x.json())
       .then(y=>{
-          console.log(y)
+          this.props.dispatch({
+              type: 'USER_UPDATE',
+              payload: y.user
+          })
       })
     console.log("YES THIS JOB");
   };

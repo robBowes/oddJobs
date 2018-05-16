@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+const geolib = require('geolib');
+
 
 const stringify = (obj) => JSON.stringify(obj);
 
@@ -22,10 +24,25 @@ const findToken = (db) => async (token) =>{
     return user;
 };
 
+const distanceBetween = (obj1, obj2) => {
+    console.log(obj1.location, obj2.location);
+    geolib.getDistance(
+        {
+            latitude: parseFloat(obj1.location.lat),
+            longitude: parseFloat(obj1.location.lng),
+        },
+        {
+            latitude: parseFloat(obj2.location.lat),
+            longitude: parseFloat(obj2.location.lng),
+        }
+    );
+};
+
 module.exports = {
     stringify,
     makeNewUser,
     checkFbToken,
     uri,
     findToken,
+    distanceBetween,
 };

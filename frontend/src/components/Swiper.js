@@ -87,12 +87,10 @@ class Swiper extends Component {
           jobid={this.props.jobs[i].id}
         >
           <img
+            style={{'max-width':'100%','height':'auto'}}
             draggable="false"
             src={
-              "http://unsplash.it/" +
-              Math.round(Math.random() * (305 - 295) + 295) +
-              "/" +
-              Math.round(Math.random() * (255 - 245) + 245)
+              this.props.jobs[i].picture
             }
           />
           <div

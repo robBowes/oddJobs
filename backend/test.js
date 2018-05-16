@@ -319,9 +319,6 @@ describe('Server', () => {
             {
                 method: 'PUT',
                 body: JSON.stringify({id: '472999'}),
-                headers: {
-                    cookie,
-                },
                 credentials: 'same-origin',
             });
             json = await login.json();

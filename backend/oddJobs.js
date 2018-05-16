@@ -128,6 +128,8 @@ const allJobs = (Job) => async (user, location) => {
 const pairJob = (Job) => async (user, jobId) =>{
     if (!user) return {status: false, reason: 'no user information'};
     if (!jobId.id) return {status: false, reason: 'no job information'};
+    let job = await Job.find(jobId);
+    console.log(job);
 };
 
 module.exports = {

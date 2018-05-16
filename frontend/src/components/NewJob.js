@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {BrowserRouter, Redirect, Route} from 'react-router-dom';
-
 
 /* global google */
 
@@ -84,9 +82,8 @@ class NewJob extends Component {
   getGeocode = () => {
     this.getGoogleMaps().then((google) => {
       let geocoder = new google.maps.Geocoder();
-      let code = {}
       geocoder.geocode( { 'address': this.state.jobAddress}, (results, status) => {
-        if (status == 'OK') {
+        if (status === 'OK') {
           let lat = results[0].geometry.location.lat()
           let lng = results[0].geometry.location.lng()
           this.setState({geolocation: {lat,lng}, locationHasLoaded: true, errorMessage: ''})

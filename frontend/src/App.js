@@ -76,6 +76,9 @@ class App extends Component {
   renderSettings = () => {
     return <Settings/>
   }
+  renderPairsList = () => {
+    return <Pairs/>
+  }
   render() {
     return (
       <BrowserRouter>
@@ -86,6 +89,7 @@ class App extends Component {
       <Route exact={true} path='/settings' render={this.renderSettings}/>
       <Route exact={true} path="/user:id" render={this.renderUserDetails} />
       <Route exact={true} path="/job:id" render={this.renderJobDetails} />
+      <Route exact={true} path="/currentjobs" render={this.renderPairsList} />
        {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===1?<WelcomeStaging2/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===2?<WelcomeStaging3/>:''):''}

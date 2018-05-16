@@ -10,11 +10,42 @@ import { connect } from "react-redux";
 //placeholder text/image will appear
 
 class PairsList extends Component {
-  render() {}
+  constructor(props){
+    super(props)
+    this.state = {
+    }
+  }
+  removeJob = (event) => {
+
+  }
+  goToChats = (event) => {
+
+  }
+  mapListedJobs = () => {
+    let listedJobs = [...this.props.user.jobsListed]
+    console.log(listedJobs)
+    return listedJobs.map(x => {
+      return (
+        <div className="listedJobCard">
+           <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
+           <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Patron" }</h3>
+           <h2 className="jobTitleHeader">{x.jobTitle+"\n"}{x.dealMade?"(In Progress)":"(Pending)"}}</h2>
+           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>></button>
+        </div>
+      )
+    })
+  }
+  render() {
+    return !this.props.user.loggedIn?<div>LOADING</div>:(
+      <div className="pairsPage">
+        {this.mapListedJobs()}
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = state => ({
-  //redux props import
+  user: state.user
 });
 
 export default connect(mapStateToProps)(PairsList);

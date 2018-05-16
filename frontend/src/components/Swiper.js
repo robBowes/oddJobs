@@ -8,10 +8,7 @@ import { MoonLoader } from "react-spinners";
 //The main function of the app
 //A constantly rotating pair of jobs giving the impression of continuous flow
 //users will select yes or no, swiping left or right on jobs
-//2 jobs loaded at a time, a job currently shown and a next job loaded to show the user
-//when a decision is made on the top level job, the second job will move to the front
-//and the frontend wll request a second job from the server
-//The Swiper will interact with SwipeNav through props
+
 
 class Swiper extends Component {
   constructor(props) {
@@ -80,7 +77,7 @@ class Swiper extends Component {
   };
   renderCards = () => {
     let newStack = [];
-    for (let i = newStack.length; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       newStack = newStack.concat(
         <div
           key={i}
@@ -100,9 +97,8 @@ class Swiper extends Component {
           />
           <div
             style={{
-              flex: "none",
               fontSize: "10pt",
-              top: "5%",
+              top: "0%",
               backgroundColor: "white",
               position: "absolute"
             }}
@@ -155,8 +151,8 @@ class Swiper extends Component {
   render() {
     console.log(Swing);
     return this.state.loading ? (
-      <div style={{ left: "40vw",top:'30vh', position: "absolute" }}>
-        <MoonLoader color="#000000" loading={this.state.loading} />
+      <div style={{ left: "40vw", top: "30vh", position: "absolute" }}>
+        <MoonLoader color="#05ff05" loading={this.state.loading} />
       </div>
     ) : (
       <div className="swipeContainer">

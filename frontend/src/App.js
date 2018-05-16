@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Landing from './containers/Landing';
 import Pairs from './containers/Pairs';
-import Settings from './containers/Settings';
+import Settings from './containers/Settings.js';
 import Swipe from './containers/Swipe';
 import Welcome from './containers/Welcome';
 import Job from './containers/Job'
@@ -30,7 +30,6 @@ class App extends Component {
   componentWillMount = () => {
     let cookie = document.cookie;
     let hasToken = cookie.search('token')!==-1;
-    console.log(hasToken);
     if (hasToken) {
     fetch('/login', {
       method: 'POST',
@@ -51,7 +50,6 @@ class App extends Component {
       }
     });
     }
-    console.log(cookie);
   }
   renderUserDetails=(x)=>{
     return <User id={x.match.params.id}/>
@@ -75,12 +73,14 @@ class App extends Component {
   renderJobDetails =(x)=>{
     return <Job id={x.match.params.id}/>
   }
+  renderSettings = () => {
+    return <Settings/>
+  }
   render() {
     return (
       <BrowserRouter>
       <div className="App">
       <button onClick={this.resetWelcome}> Reset Welcome </button>   
-      <Settings style={{'display': this.state.currentPage==='settings'?'block':'none'}}/>      
       <Route exact={true} path='/' render={this.renderHome}/>
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>

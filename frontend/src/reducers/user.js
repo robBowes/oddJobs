@@ -4,9 +4,9 @@ export default (state = {
     id: null,
     loggedIn: false,
     welcomeStage: 0,
+    location: {},
 }
 , action) => {
-    console.log(state, action)
     let newState = {...state};
     if (action.type === 'USER_INFO') {
         newState.username = action.username;
@@ -20,6 +20,12 @@ export default (state = {
     if (action.type === 'USER_UPDATE') {
         newState = {...newState, ...action.payload}; 
         newState.loggedIn = true;
+    }
+    if (action.type === 'UPDATE_LOCATION'){
+        newState.location.lat = action.payload.coords.latitude;
+        newState.location.lng = action.payload.coords.longitude;
+
+
     }
     return newState;
 };

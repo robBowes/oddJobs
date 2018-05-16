@@ -10,7 +10,7 @@ import {Link} from "react-router-dom"
 class SwipeNav extends Component {
   render() {
       return (<div>SWIPE NAV TOOLS<br/>
-      <button>SETTINGS</button><button>CHAT</button>
+      <Link to='/settings'><button>SETTINGS</button></Link><button>CHAT</button>
       <br/>
       <Link to={'/user'+this.props.id}><button>user</button></Link>
       </div>)

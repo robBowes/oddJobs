@@ -91,7 +91,7 @@ class WelcomeStaging extends Component {
             onChange={this.sliderChange}
             className="kmSlider"
             id="welcomeSlider"
-          />
+          /><p className="distanceReadout">{this.state.sliderValue+"km"}</p>
           <h2 className="welcomeHeader"> Show Jobs Paying: </h2>
           <input
             className="welcomeInputMinMax"

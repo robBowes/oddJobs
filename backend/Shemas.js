@@ -69,7 +69,7 @@ const JobSchema = new mongoose.Schema({
     completedByPatron: {type: Boolean, default: false},
     completedByHelper: {type: Boolean, default: false},
     messages: [{
-        jobId: {type: String, required: true},
+        // jobId: {type: String, required: true},
         lastMessage: Number,
         userId: {type: Number, required: true},
         messages: [{

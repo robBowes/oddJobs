@@ -99,7 +99,7 @@ describe('Server', () => {
                 'login without cookie or facebook access token should fail'
             );
         });
-        it('login with test cookie returns test user', async () => {
+        it('logs in with test cookie', async () => {
             login = await fetch('http://localhost:4000/login',
             {
                 method: 'POST',
@@ -111,7 +111,8 @@ describe('Server', () => {
             json = await login.json();
             assert(json.status && json.user.name === 'TEST',
             'test cookie should return test user' );
-            assert.isArray(json.user.messages, 'user messages should be included in user object');
+            assert.isArray(json.user.pairs, 'user pairs should be included in user object');
+            assert.isArray(json.user.jobsListed, 'user pairs should be included in user object');
         });
     });
     describe('add job', () => {
@@ -312,6 +313,35 @@ describe('Server', () => {
             assert.isFalse(json.status, 'should return false');
             assert.isOk(json.reason, 'should include reason');
             assert.isNotOk(json.job, 'should not include job');
+        });
+        it('returns false if not receiving user info', async () =>{
+            login = await fetch('http://localhost:4000/pair',
+            {
+                method: 'PUT',
+                body: JSON.stringify({id: '472999'}),
+                headers: {
+                    cookie,
+                },
+                credentials: 'same-origin',
+            });
+            json = await login.json();
+            assert.isFalse(json.status, 'should return false');
+            assert.isOk(json.reason, 'should include reason');
+            assert.isNotOk(json.job, 'should not include job');
+        });
+        it('returns true and job with good information', async () =>{
+            login = await fetch('http://localhost:4000/pair',
+            {
+                method: 'PUT',
+                body: JSON.stringify({id: '472999'}),
+                headers: {
+                    cookie,
+                },
+                credentials: 'same-origin',
+            });
+            json = await login.json();
+            assert.isTrue(json.status, 'should return false');
+            assert.isOk(json.job, 'should include reason');
         });
     });
 });

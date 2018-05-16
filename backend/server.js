@@ -30,7 +30,7 @@ const pairJob = oddJobs.pairJob(Job);
 const login = oddJobs.login(Job);
 
 // app.use(express.json({type: 'application/json'}));
-app.use(bodyParser.raw({type: 'image/*'}));
+app.use(bodyParser.raw({type: 'image/*', limit: '20mb'}));
 app.use(express.json({type: '*/*'}));
 app.use(cookieParser());
 app.use(express.static('data/images'));

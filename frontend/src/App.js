@@ -5,6 +5,7 @@ import Pairs from './containers/Pairs';
 import Settings from './containers/Settings';
 import Swipe from './containers/Swipe';
 import Welcome from './containers/Welcome';
+import Job from './containers/Job'
 import {BrowserRouter, Link, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import WelcomeStaging from './components/WelcomeStaging';
@@ -67,6 +68,9 @@ class App extends Component {
   renderHome = () => {
     return (this.props.loggedIn?(this.props.welcomeStage===3?<Swipe/>:''):<Landing/>)
   }
+  renderJobDetails =(x)=>{
+    return <Job id={x.match.params.id}/>
+  }
   render() {
     return (
       <BrowserRouter>
@@ -77,6 +81,7 @@ class App extends Component {
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>
       <Route exact={true} path="/user:id" render={this.renderUserDetails} />
+      <Route exact={true} path="/job:id" render={this.renderJobDetails} />
        {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===1?<WelcomeStaging2/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===2?<WelcomeStaging3/>:''):''}

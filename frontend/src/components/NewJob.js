@@ -25,7 +25,7 @@ class NewJob extends Component {
       body: JSON.stringify({
         jobName: this.state.jobTitle,
         jobDescription: this.state.jobDetails,
-        location: {},
+        location: this.state.geolocation,
         price: this.state.jobPay,
         filename: '',
       })
@@ -81,18 +81,40 @@ class NewJob extends Component {
   getGeocode = () => {
     this.getGoogleMaps().then((google) => {
       let geocoder = new google.maps.Geocoder();
-      geocoder.geocode( { 'address': this.state.jobAddress}, function(results, status) {
+      let code = {}
+      geocoder.geocode( { 'address': this.state.jobAddress}, (results, status) => {
         if (status == 'OK') {
-          console.log(results[0].geometry.location);
+          let lat = results[0].geometry.location.lat()
+          let lng = results[0].geometry.location.lng()
+          this.setState({geolocation: {lat,lng}, locationHasLoaded: true})
         } else {
-          alert('Geocode was not successful for the following reason: ' + status);
+          console.log('Geocode was not successful for the following reason: ' + status);
         }
       });
     })
   }
+  uploadPicture = (event) => {
+    let image = event.target.files[0]
+    let filename = image.name
+    let extension = filename.split('.').pop();
+    fetch('/uploadImage?ext=' + extension, {
+      method: 'PUT',
+      credentials: 'same-origin',
+      body: image,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.status) {
+          alert('Error!');
+          return new Error('upload');
+        }
+        console.log(data);
+        this.setState({filename: data.name});
+      })
+      .catch((e) => console.log(e));
+  }
   componentWillMount = () => {
     // Start Google Maps API loading since we know we'll soon need it
-    console.log("test")
     this.getGoogleMaps();
   }
   render() {
@@ -144,7 +166,12 @@ class NewJob extends Component {
           />
 
           <h2 className="formHeader"> Details: </h2>
-          <input type="file" name="pic" accept="image/*"/>
+          <input 
+          type="file" 
+          name="pic" 
+          className="uploadButton"
+          onChange={this.uploadPicture}
+          accept="image/*"/>
 
           <button
             type="submit"

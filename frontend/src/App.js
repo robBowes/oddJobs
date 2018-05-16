@@ -66,7 +66,11 @@ class App extends Component {
     return (<NewJob/>)
   }
   renderHome = () => {
-    return (this.props.loggedIn?(this.props.welcomeStage===3?<Swipe/>:''):<Landing/>)
+    return (<div>
+  {this.props.loggedIn?(this.props.welcomeStage===3?
+  <Link to = "/listjob"><button className="addJobButton">+</button></Link>:''):''}  
+  {this.props.loggedIn?(this.props.welcomeStage===3?<Swipe/>:''):<Landing/>}
+  </div>)
   }
   renderJobDetails =(x)=>{
     return <Job id={x.match.params.id}/>
@@ -75,7 +79,6 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div className="App">
-      <Link to = "/listjob"><button className="addJobButton">+</button></Link>   
       <button onClick={this.resetWelcome}> Reset Welcome </button>   
       <Settings style={{'display': this.state.currentPage==='settings'?'block':'none'}}/>      
       <Route exact={true} path='/' render={this.renderHome}/>

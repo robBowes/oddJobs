@@ -67,7 +67,6 @@ class Swiper extends Component {
     const el = ReactDOM.findDOMNode(target);
     const card = this.state.stack.getCard(el);
     //card.destroy();
-    console.log(target.id);
     // el.remove()
     this.setState({
       cards: this.state.cards.filter((x, i) => {
@@ -116,7 +115,6 @@ class Swiper extends Component {
     if (this.state.cards.length === 0) {
       this.setState({ cards: newStack });
     }
-    console.log(newStack);
     return newStack;
   };
   componentWillMount = props => {
@@ -127,7 +125,6 @@ class Swiper extends Component {
     })
       .then(x => x.json())
       .then(y => {
-        console.log(y);
         this.props.dispatch({
           type: "UPDATE_JOBS",
           payload: y.content
@@ -137,17 +134,14 @@ class Swiper extends Component {
       });
   };
   accept = e => {
-    console.log(e);
     console.log("YES THIS JOB");
   };
 
   reject = e => {
-    console.log(e);
     console.log("NOT THIS JOB");
   };
 
   render() {
-    console.log(Swing);
     return this.state.loading ? (
       <div style={{ left: "40vw", top: "30vh", position: "absolute" }}>
         <MoonLoader color="#05ff05" loading={this.state.loading} />

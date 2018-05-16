@@ -14,8 +14,16 @@ class JobDetails extends Component {
         }
     }
     componentDidMount=()=>{
-        this.setState({loading:false})
+        this.setState({
+          loading: false,
+          job: this.props.jobs.filter(x => {
+            return x.id === this.props.id
+          })[0]
+        });
     }
+    // componentDidMount = () =>{
+    //     !this.state.job?this.setState({loading:true}):this.setState({loading:false})
+    // }
   render() {
       return this.state.loading?
      <div>
@@ -30,24 +38,24 @@ class JobDetails extends Component {
           <br />
           {
              // this.props.jobs[this.props.id].jobTitle
-                this.props.jobs.jobTitle
+                this.props.jobs?this.state.job.jobTitle:null
               }
           <br />
-          <img src="http://unsplash.it/220/220" />
+          <img style={{'maxWidth':'300px'}} src={this.props.jobs?this.state.job.picture:''} />
           <br />
           DESCRIPTION:{
               //this.props.jobs[this.props.id].jobDescription
-              this.props.jobs.jobDescription
+              this.props.jobs?this.state.job.jobDescription:null
               }
           <br />
           PAY: {
               //this.props.jobs[this.props.id].jobPay
-            this.props.jobs.jobPay
+            this.props.jobs?'$'+this.state.job.jobPay:'FREE'
         }
           <br />
           SELLER ID:{
               //this.props.jobs[this.props.id].patronId
-            this.props.jobs.patronId
+            this.props.jobs?this.state.job.patronId:null
             }
           <br />
           {this.props.id}

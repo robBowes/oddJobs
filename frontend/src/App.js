@@ -30,7 +30,6 @@ class App extends Component {
   componentWillMount = () => {
     let cookie = document.cookie;
     let hasToken = cookie.search('token')!==-1;
-    console.log(hasToken);
     if (hasToken) {
     fetch('/login', {
       method: 'POST',
@@ -51,7 +50,6 @@ class App extends Component {
       }
     });
     }
-    console.log(cookie);
   }
   renderUserDetails=(x)=>{
     return <User id={x.match.params.id}/>

@@ -37,7 +37,7 @@ UserSchema.methods.speak = function() {
 const User = mongoose.model('User', UserSchema);
 
 const JobSchema = new mongoose.Schema({
-    id: {type: Number, required: true},
+    id: {type: String, required: true},
     jobDescription: {type: String, required: true},
     jobTitle: {type: String, required: true},
     jobPay: {type: String, default: '0'},

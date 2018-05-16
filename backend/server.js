@@ -26,6 +26,7 @@ db.once('open', ()=>{
 
 const findUser = r.findToken(User);
 const createNewJob = oddJobs.newJob(Job);
+const findJob = oddJobs.findJob(Job);
 
 // app.use(express.json({type: 'application/json'}));
 app.use(express.json({type: '*/*'}));
@@ -79,8 +80,9 @@ app.post('/user', (req, res)=>{
     res.json({'status': true, 'user': testData.testUser});
 });
 
-app.post('/job', (req, res)=>{
-    res.json({'status': true, 'job': testData.job});
+app.post('/job', async (req, res)=>{
+    let ret = await findJob(req.body);
+    res.json(ret);
 });
 
 app.put('/sendMessage', (req, res)=>{

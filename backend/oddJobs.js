@@ -15,7 +15,9 @@ const modify = async (user, newProps) =>{
 };
 
 const login = async (fb, cookie, User) => {
-    if (!fb.id || !fb.name || !fb.accessToken) return {status: false, reason: 'no facebook data'};
+    if (!fb.id ||
+        !fb.name ||
+        !fb.accessToken) return {status: false, reason: 'no facebook data'};
     let fbIsValid;
     if (fb) fbIsValid = r.checkFbToken(fb);
     let user = await User.findOne({id: fb.id});
@@ -32,19 +34,28 @@ const newJob = (Job) => async (user, jobDetails = {}) => {
     let status = true;
     let reason;
     jobDetails.patronId = user.id;
-    let job;
     try {
         job = await new Job(jobDetails);
         await job.save();
     } catch (error) {
+        // console.log(error.message);
         status = false;
         reason = 'Invalid job details';
+        job = null;
     }
-    return {status, job};
+    return {status, job, reason};
+};
+
+const findJob = (Job) => async (body) => {
+    if (!body.jobId) return {status: false, reason: 'no body included'};
+    const job = await Job.findOne({id: body.jobId});
+    if (job) return {status: true, job};
+    else return {status: false, reason: 'job could not be found'};
 };
 
 module.exports = {
     modify,
     newJob,
     login,
+    findJob,
 };

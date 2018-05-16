@@ -66,7 +66,63 @@ dbTests = async () =>{
 
     login = await fetch('http://localhost:4000/login', {method: 'POST', headers: {cookie}, credentials: 'same-origin'});
     json = await login.json();
-    assert(json.user.name==='TEST');
+    assert(json.status && json.user.name==='TEST', 'test cookie should return test user');
+
+    // test add job endpoint with good data
+    login = await fetch('http://localhost:4000/addJob', {
+        method: 'PUT',
+        body: JSON.stringify({jobDescription: 'test', jobTitle: 'test', id: 0}),
+        headers: {cookie},
+        credentials: 'same-origin',
+    });
+    json = await login.json();
+    assert(json.status, 'test add Job should succeed');
+    assert(json.job.patronId && json.job.listingDate, 'test add Job should return job');
+
+    // test add job endpoint with bad data
+    login = await fetch('http://localhost:4000/addJob', {
+        method: 'PUT',
+        body: JSON.stringify({}),
+        headers: {cookie},
+        credentials: 'same-origin'});
+    json = await login.json();
+    assert(!json.status, 'test addJob should fail');
+    assert(!json.job, 'test addJob should not return job');
+
+    // test /job endpoint
+    login = await fetch('http://localhost:4000/job', {
+        method: 'POST',
+        body: JSON.stringify({}),
+        headers: {cookie},
+        credentials: 'same-origin'});
+    json = await login.json();
+    assert(!json.status, 'test /job with no jobId should fail');
+    assert(json.status === false, 'test /job with no jobId should fail with false reason');
+    assert(!json.job, 'test /job should not return job');
+    assert(json.reason.length > 4, 'reason should be included');
+
+    // test /job with valid data
+    login = await fetch('http://localhost:4000/job', {
+        method: 'POST',
+        body: JSON.stringify({jobId: '12345'}),
+        headers: {cookie},
+        credentials: 'same-origin'}).catch((e)=>console.log(e));
+    json = await login.json();
+    assert(json.status, 'test /job should succeed');
+    assert(json.status === true, 'status should be true');
+    assert(json.job, 'test /job should return job');
+    assert(json.job.listingDate, 'jobs must have listing date');
+
+    // test /job with non existing job id
+    login = await fetch('http://localhost:4000/job', {
+        method: 'POST',
+        body: JSON.stringify({jobId: '5afb702ad3049a09a0994d94'}),
+        headers: {cookie},
+        credentials: 'same-origin'}).catch((e)=>console.log(e));
+    json = await login.json();
+    assert(json.status === false, 'should not find non existing job id');
+    assert(json.reason, 'failiure should include reason');
+
 
     console.log('server tests passed!!!!');
 })();

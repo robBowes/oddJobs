@@ -26,7 +26,7 @@ const findToken = (db) => async (token) =>{
 
 const distanceBetween = (obj1, obj2) => {
     console.log(obj1.location, obj2.location);
-    geolib.getDistance(
+    return geolib.getDistance(
         {
             latitude: parseFloat(obj1.location.lat),
             longitude: parseFloat(obj1.location.lng),

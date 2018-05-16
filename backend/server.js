@@ -61,6 +61,7 @@ app.post('/allJobs', async (req, res)=>{
 app.put('/pair', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
     let job = await pairJob(user, req.body);
+    console.log(job);
     res.json(job);
 });
 

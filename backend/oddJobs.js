@@ -131,7 +131,9 @@ const pairJob = (Job) => async (user, jobId) =>{
     let job = await Job.findOne(jobId);
     job.addHelper(user.id);
     await job.save();
-    return {status: true, job, user: await deepUser(Job, user)};
+    let newUser = await deepUser(Job, user);
+    console.log(newUser);
+    return {status: true, job, user: newUser};
 };
 
 const offerDeal = (Job) => async (user, jobId) =>{

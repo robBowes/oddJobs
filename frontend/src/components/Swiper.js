@@ -76,15 +76,15 @@ class Swiper extends Component {
     });
   };
   renderCards = () => {
-    let newStack = [];
-    for (let i = 0; i < 10; i++) {
+    let newStack = []
+    for (let i = 0; i < this.props.jobs.length; i++) {
       newStack = newStack.concat(
         <div
           key={i}
           className={"card " + (parseInt(i) + 1)}
           ref={"card" + (parseInt(i) + 1)}
           id={i}
-          jobid={54554}
+          jobid={this.props.jobs[i].id}
         >
           <img
             draggable="false"
@@ -103,10 +103,10 @@ class Swiper extends Component {
               position: "absolute"
             }}
           >
-            <Link to={"/job" + Object.keys(this.props.jobs)[0]}>
+            <Link to={"/job" + this.props.jobs[i].id}>
               <button>details</button>
             </Link>
-            LMAO{i}
+            {this.props.jobs[i].jobTitle}
           </div>
         </div>
       );
@@ -125,7 +125,7 @@ class Swiper extends Component {
     fetch("/allJobs", {
       method: "POST",
       credentials: "same-origin",
-      body: ""
+      body: JSON.stringify({location:{lat:'123',lng:'456'}})
     })
       .then(x => x.json())
       .then(y => {

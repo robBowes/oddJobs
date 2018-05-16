@@ -28,15 +28,27 @@ class JobDetails extends Component {
       <div>
           test
           <br />
-          {this.props.jobs[this.props.id].jobTitle}
+          {
+             // this.props.jobs[this.props.id].jobTitle
+                this.props.jobs.jobTitle
+              }
           <br />
           <img src="http://unsplash.it/220/220" />
           <br />
-          DESCRIPTION:{this.props.jobs[this.props.id].jobDescription}
+          DESCRIPTION:{
+              //this.props.jobs[this.props.id].jobDescription
+              this.props.jobs.jobDescription
+              }
           <br />
-          PAY: {this.props.jobs[this.props.id].jobPay}
+          PAY: {
+              //this.props.jobs[this.props.id].jobPay
+            this.props.jobs.jobPay
+        }
           <br />
-          SELLER ID:{this.props.jobs[this.props.id].patronId}
+          SELLER ID:{
+              //this.props.jobs[this.props.id].patronId
+            this.props.jobs.patronId
+            }
           <br />
           {this.props.id}
         </div>;

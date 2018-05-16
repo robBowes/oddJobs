@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema({
     id: {type: String, unique: true, required: true},
     accessToken: String,
     appToken: String,
-    firstName: String,
+    first_name: String,
     picture: Object,
     jobsListed: [Number],
     pairs: [Number],
@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema({
     currentLocation: Object,
     maxDistance: String,
     maxPrice: String,
+    minPrice: String,
     statistics: {
         jobsAccepted: Number,
         jobsCompleted: Number,
@@ -34,5 +35,28 @@ UserSchema.methods.speak = function() {
 };
 
 const User = mongoose.model('User', UserSchema);
-module.exports = {User};
+
+const JobSchema = new mongoose.Schema({
+    id: {type: String, required: true},
+    jobDescription: {type: String, required: true},
+    jobTitle: {type: String, required: true},
+    jobPay: {type: String, default: '0'},
+    patronId: {type: String, required: true},
+    picture: String,
+    helperId: String,
+    pairedHelpers: [String],
+    location: Object,
+    listingDate: {type: String, default: Date.now()},
+    dealDate: Number,
+    completedDate: Number,
+    completedByPatron: Boolean,
+    completedByHelper: Boolean,
+    messages: Object,
+});
+
+const Job = mongoose.model('Job', JobSchema);
+// const User = mongoose.model('User', UserSchema);
+
+
+module.exports = {User, Job};
 

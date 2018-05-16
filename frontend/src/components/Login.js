@@ -25,7 +25,18 @@ class Login extends Component {
     });
   };
   responseFacebook = (response) => {
+    let lat;
+    let lng;
+    navigator.geolocation.getCurrentPosition(x => {
+      console.log(x);
+      lat =x.coords.latitude;
+      lng =x.coords.longitude;
+      ;
+    });
     console.log(response);
+    response.location={}
+    response.location.lat=lat
+    response.location.lng=lng
     if (response.id) {
       console.log('TRYING TO LOGIN');
       fetch('/login', {
@@ -50,6 +61,9 @@ class Login extends Component {
     }
     // anything else you want to do(save to localStorage)...
   };
+  componentWillMount = () =>{
+    
+  }
 
   render() {
     return (

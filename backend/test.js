@@ -295,14 +295,22 @@ describe('Server', () => {
             assert.isArray(json.content, 'content is array');
         });
     });
-    // test /uploadImage with non existing job id
-    // login = await fetch('http://localhost:4000/uploadImage?ext=jpg', {
-    //     method: 'PUT',
-    //     body: JSON.stringify({image: '234234234'}),
-    //     headers: {cookie},
-    //     credentials: 'same-origin'}).catch((e)=>console.log(e));
-    //     json = await login.json();
-    // assert(json.status === true, 'upload should work');
-    // assert(json.name, 'upload should include string');
+    describe('pair endpoint', () =>{
+        it('returns false if not given a job ID', async () =>{
+            login = await fetch('http://localhost:4000/pair',
+            {
+                method: 'PUT',
+                body: JSON.stringify({}),
+                headers: {
+                    cookie,
+                },
+                credentials: 'same-origin',
+            });
+            json = await login.json();
+            assert.isFalse(json.status, 'should return false');
+            assert.isOk(json.reason, 'should include reason');
+            assert.isNotOk(json.job, 'should not include job');
+        });
+    });
 });
 

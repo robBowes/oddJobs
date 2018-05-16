@@ -8,7 +8,13 @@ const deepUser = async (Job, user) => {
     let userIsPatron = await Job.find({patronId: user.id});
     let userIsPair = await Job.find({pairedHelpers: user.id});
     let returnUser = {...user.toObject()};
-    returnUser.pairs = userIsPair;
+    let cleanPairs = userIsPair.map((job)=>{
+        job.messages = job.messages.filter((messageObj)=>{
+            return messageObj.userId === user.id;
+        });
+        return job;
+    });
+    returnUser.pairs = cleanPairs;
     returnUser.jobsListed = userIsPatron;
     return returnUser;
 };

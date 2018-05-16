@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import Swing, { Stack, Card, Direction } from "react-swing";
+import {Link} from 'react-router-dom'
 
 //The main function of the app
 //A constantly rotating pair of jobs giving the impression of continuous flow
@@ -16,9 +17,13 @@ class Swiper extends Component {
     super(props);
     this.state = {
       stack: null,
-      cards: []
+      cards: [],
+      loading:true
     };
   }
+  componentWillReceiveProps=props=>{
+    //
+                        }
   swipeRight = x => {
       if(this.state.cards.length>0){
     const target = this.refs.stack.refs[
@@ -80,6 +85,7 @@ class Swiper extends Component {
           className={"card " + (parseInt(i) + 1)}
           ref={"card" + (parseInt(i) + 1)}
           id={i}
+          jobid={54554}
         >
           <img
             draggable="false"
@@ -99,10 +105,15 @@ class Swiper extends Component {
               position: "absolute"
             }}
           >
+          <Link to={'/job'+Object.keys(this.props.jobs)[0]
+          }>
+          <button>details</button>
+          </Link>
             LMAO{i}
           </div>
         </div>
       );
+      
     }
     this.props.dispatch({
       type: "UPDATE_STACK",
@@ -115,7 +126,22 @@ class Swiper extends Component {
     return newStack;
   };
   componentWillMount = props => {
-    this.renderCards();
+      fetch("/allJobs", {
+        method: "POST",
+        credentials: "same-origin",
+        body: ""
+      })
+        .then(x => x.json())
+        .then(y => {
+          console.log(y);
+          this.props.dispatch({
+            type: "UPDATE_JOBS",
+            payload: y.content
+        });
+        this.renderCards();
+        this.setState({ loading: false })
+        })
+    
   };
   accept = e => {
     console.log(e);
@@ -129,7 +155,9 @@ class Swiper extends Component {
 
   render() {
     console.log(Swing);
-    return (
+    return this.state.loading?
+    (<div>Loading...</div>)
+    :(
       <div className="swipeContainer">
         SWIPER
         <Swing
@@ -164,7 +192,8 @@ class Swiper extends Component {
 }
 
 const mapStateToProps = state => ({
-  cards: state.data.cards
+  cards: state.data.cards,
+  jobs: state.data.jobs
 });
 
 export default connect(mapStateToProps)(Swiper);

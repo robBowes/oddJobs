@@ -44,6 +44,7 @@ class Login extends Component {
             payload: y.user,
           });
         });
+        
 
       this.setState({loading: false});
     }

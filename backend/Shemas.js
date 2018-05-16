@@ -68,7 +68,15 @@ const JobSchema = new mongoose.Schema({
     completedDate: {type: Number, default: 0},
     completedByPatron: {type: Boolean, default: false},
     completedByHelper: {type: Boolean, default: false},
-    messages: Object,
+    messages: [{
+        jobId: {type: String, required: true},
+        lastMessage: Number,
+        userId: {type: Number, required: true},
+        messages: [{
+            user: String,
+            message: String,
+        }],
+    }],
 });
 
 const Job = mongoose.model('Job', JobSchema);

@@ -39,7 +39,7 @@ const login = (Job)=> async (fb, cookie, User, user) => {
         user.appToken = sha1(Date.now());
         user.save();
     }
-    // deepUser(Job, user);
+    deepUser(Job, user);
     return {status: true, user};
 };
 

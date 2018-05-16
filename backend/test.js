@@ -111,6 +111,7 @@ describe('Server', () => {
             json = await login.json();
             assert(json.status && json.user.name === 'TEST',
             'test cookie should return test user' );
+            assert.isArray(json.user.messages, 'user messages should be included in user object');
         });
     });
     describe('add job', () => {

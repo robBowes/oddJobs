@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { MoonLoader } from "react-spinners"
 
 //The PairsList component will render a given users pairs
 //Pairs for jobs posted and jobs applied for will appear in different colors
@@ -36,7 +37,7 @@ class PairsList extends Component {
     })
   }
   render() {
-    return !this.props.user.loggedIn?<div>LOADING</div>:(
+    return !this.props.user.loggedIn?<div><MoonLoader color="#05FF05"/></div>:(
       <div className="pairsPage">
         {this.mapListedJobs()}
       </div>

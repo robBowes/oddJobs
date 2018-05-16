@@ -123,6 +123,16 @@ dbTests = async () =>{
     assert(json.status === false, 'should not find non existing job id');
     assert(json.reason, 'failiure should include reason');
 
+    // test /uploadImage with non existing job id
+    login = await fetch('http://localhost:4000/uploadImage?ext=jpg', {
+        method: 'PUT',
+        body: JSON.stringify({image: '234234234'}),
+        headers: {cookie},
+        credentials: 'same-origin'}).catch((e)=>console.log(e));
+        json = await login.json();
+    assert(json.status === true, 'upload should work');
+    assert(json.name, 'upload should include string');
+
 
     console.log('server tests passed!!!!');
 })();

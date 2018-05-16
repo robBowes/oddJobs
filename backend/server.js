@@ -90,7 +90,8 @@ app.put('/sendMessage', (req, res)=>{
 });
 
 app.put('/uploadImage', (req, res)=>{
-    res.json({'status': true, 'name': '234234234.jpg'});
+    let ret = oddJobs.uploadImage(req);
+    res.json(ret);
 });
 
 app.listen(4000, ()=>{

@@ -25,10 +25,11 @@ const userFromToken = r.findToken(User);
 const createNewJob = oddJobs.newJob(Job);
 const findJob = oddJobs.findJob(Job);
 const findUser = oddJobs.findUser(User);
+const allJobs = oddJobs.allJobs(Job);
 
 // app.use(express.json({type: 'application/json'}));
+app.use(bodyParser.raw({type: 'image/*'}));
 app.use(express.json({type: '*/*'}));
-// app.use(bodyParser.raw({type: '*/*'}));
 app.use(cookieParser());
 app.use(express.static('data/images'));
 
@@ -48,8 +49,10 @@ app.put('/modify', async (req, res)=>{
     res.json(reply);
 });
 
-app.post('/allJobs', (req, res)=>{
-    res.json({'status': true, 'content': testData.job});
+app.post('/allJobs', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
+    let reply = await allJobs(user, req.body.location);
+    res.json(reply);
 });
 
 app.put('/pair', (req, res)=>{
@@ -79,7 +82,6 @@ app.post('/user', async (req, res)=>{
     let ret;
     if (user.id ===req.body.userId) ret = {status: true, user};
     else ret = await findUser(req.body);
-    console.log(ret);
     res.json(ret);
 });
 

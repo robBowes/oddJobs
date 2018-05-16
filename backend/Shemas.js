@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     currentJob: Number,
     jobsDeclined: [Number],
     jobsCompleted: [Number],
-    signupDate: Number,
+    signupDate: {type: Number, default: Date.now()},
     description: String,
     lastLoginDate: Number,
     categories: [String],
@@ -34,6 +34,20 @@ UserSchema.methods.speak = function() {
     console.log(this.id);
 };
 
+UserSchema.methods.clean = function() {
+    let dirtyUser = {...this.toObject()};
+    let cleanUser = {};
+    cleanUser.id = dirtyUser.id;
+    cleanUser.name = dirtyUser.name;
+    cleanUser.picture = dirtyUser.picture;
+    cleanUser.signupDate = dirtyUser.signupDate;
+    cleanUser.description = dirtyUser.description;
+    cleanUser.lastLoginDate = dirtyUser.lastLoginDate;
+    cleanUser.statistics = dirtyUser.statistics;
+    cleanUser.jobInProgress = dirtyUser.lastLoginDate;
+    return cleanUser;
+};
+
 const User = mongoose.model('User', UserSchema);
 
 const JobSchema = new mongoose.Schema({
@@ -45,7 +59,10 @@ const JobSchema = new mongoose.Schema({
     picture: String,
     helperId: String,
     pairedHelpers: [String],
-    location: Object,
+    location: {
+        lat: String,
+        lng: String,
+    },
     listingDate: {type: String, default: Date.now()},
     dealDate: Number,
     completedDate: Number,

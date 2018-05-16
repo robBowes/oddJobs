@@ -72,8 +72,17 @@ const uploadImage = (req) => {
 
 const findUser = (User) =>async (params) => {
     let user = await User.findOne(params);
-    if (user) return {status: true, user};
-    else return {status: false, reason: 'No user found'};
+    if (!user) return {status: false, reason: 'No user found'};
+    let cleanUser = user.clean();
+    return {status: true, user: cleanUser};
+};
+
+const allJobs = (Job) => async (user, location) => {
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!location ||
+        !location.lng ||
+        !location.lat
+    ) return {status: false, reason: 'no location information'};
 };
 
 module.exports = {
@@ -83,6 +92,7 @@ module.exports = {
     findJob,
     uploadImage,
     findUser,
+    allJobs,
 };
 
 

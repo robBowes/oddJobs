@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {BrowserRouter, Redirect, Route} from 'react-router-dom';
+
 
 /* global google */
 
@@ -15,6 +17,7 @@ class NewJob extends Component {
       geolocation: {},
       locationHasLoaded: false,
       imageHasLoaded: false,
+      errorMessage: '',
     };
   }
   handleClickSubmit = event => {
@@ -23,18 +26,18 @@ class NewJob extends Component {
       method: "PUT",
       credentials: 'same-origin',
       body: JSON.stringify({
-        jobName: this.state.jobTitle,
+        jobTitle: this.state.jobTitle,
         jobDescription: this.state.jobDetails,
         location: this.state.geolocation,
-        price: this.state.jobPay,
-        filename: '',
+        jobPay: this.state.jobPay,
+        picture: this.state.image,
       })
     })
     .then(x => x.json())
     .then(y => {
-      console.log(y)
       if (!y.status) throw new Error(y.reason)
     })
+    window.history.back();
   };
   handleTitleChange = event => {
     event.preventDefault();
@@ -86,8 +89,9 @@ class NewJob extends Component {
         if (status == 'OK') {
           let lat = results[0].geometry.location.lat()
           let lng = results[0].geometry.location.lng()
-          this.setState({geolocation: {lat,lng}, locationHasLoaded: true})
+          this.setState({geolocation: {lat,lng}, locationHasLoaded: true, errorMessage: ''})
         } else {
+          this.setState({errorMessage: "Invalid Address"})
           console.log('Geocode was not successful for the following reason: ' + status);
         }
       });
@@ -109,7 +113,7 @@ class NewJob extends Component {
           return new Error('upload');
         }
         console.log(data);
-        this.setState({filename: data.name});
+        this.setState({image: data.name, imageHasLoaded: true});
       })
       .catch((e) => console.log(e));
   }
@@ -121,6 +125,7 @@ class NewJob extends Component {
     return (
       <div className="newJobPage">
       
+      <button className="backButton" onClick={window.history.back()}>Back</button>
   
         <h1 className="pageTitle">
           New Job
@@ -154,7 +159,7 @@ class NewJob extends Component {
             onBlur={this.getGeocode}
             type="text"
             placeholder="1500 University Street, Montreal, H3A3S7"
-          />
+          /> <p className="addressError">{this.state.errorMessage}</p>
 
           <h2 className="formHeader"> Details: </h2>
           <input
@@ -171,13 +176,18 @@ class NewJob extends Component {
           name="pic" 
           className="uploadButton"
           onChange={this.uploadPicture}
-          accept="image/*"/>
-
+          accept="image/*"
+          />
           <button
             type="submit"
             className="submitButton"
-            onClick={this.handleClickNext}
-          >
+            onClick={this.handleClickSubmit}
+            disabled={!this.state.imageHasLoaded 
+              || !this.state.locationHasLoaded 
+              || this.state.jobTitle.length===0 
+            || this.state.jobDetails.length===0 
+            || this.state.jobPay.length===0 }
+            >
             Submit
           </button>    
         </form>

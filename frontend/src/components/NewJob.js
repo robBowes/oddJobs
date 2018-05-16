@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+/* global google */
+
 class NewJob extends Component {
   constructor(props) {
     super(props);
@@ -10,26 +12,28 @@ class NewJob extends Component {
       jobAddress: '',
       jobDetails: '',
       image:'',
+      geolocation: {},
+      locationHasLoaded: false,
+      imageHasLoaded: false,
     };
   }
   handleClickSubmit = event => {
     event.preventDefault();
-    fetch('/modify', {
+    fetch('/addJob', {
       method: "PUT",
       credentials: 'same-origin',
       body: JSON.stringify({
-        description: this.state.description,
-        welcomeStage: 3
+        jobName: this.state.jobTitle,
+        jobDescription: this.state.jobDetails,
+        location: {},
+        price: this.state.jobPay,
+        filename: '',
       })
     })
     .then(x => x.json())
     .then(y => {
       console.log(y)
       if (!y.status) throw new Error(y.reason)
-      this.props.dispatch({
-        type: 'USER_UPDATE',
-        payload: y.user,
-      })
     })
   };
   handleTitleChange = event => {
@@ -51,10 +55,51 @@ class NewJob extends Component {
   handleSubmit = event => {
     event.preventDefault();
   };
+  getGoogleMaps() {
+    // If we haven't already defined the promise, define it
+    if (!this.googleMapsPromise) {
+      this.googleMapsPromise = new Promise((resolve) => {
+        // Add a global handler for when the API finishes loading
+        window.resolveGoogleMapsPromise = () => {
+          // Resolve the promise
+          resolve(google);
+          // Tidy up
+          delete window.resolveGoogleMapsPromise;
+        };
+
+        // Load the Google Maps API
+        const script = document.createElement("script");
+        const API = "AIzaSyCbrOIME0qqdPjO-rgbqX_1L7uPxWvYbaw";
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${API}&callback=resolveGoogleMapsPromise`;
+        script.async = true;
+        document.body.appendChild(script);
+      });
+    }
+    // Return a promise for the Google Maps API
+    return this.googleMapsPromise;
+  }
+  getGeocode = () => {
+    this.getGoogleMaps().then((google) => {
+      let geocoder = new google.maps.Geocoder();
+      geocoder.geocode( { 'address': this.state.jobAddress}, function(results, status) {
+        if (status == 'OK') {
+          console.log(results[0].geometry.location);
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    })
+  }
+  componentWillMount = () => {
+    // Start Google Maps API loading since we know we'll soon need it
+    console.log("test")
+    this.getGoogleMaps();
+  }
   render() {
     return (
       <div className="newJobPage">
-
+      
+  
         <h1 className="pageTitle">
           New Job
         </h1>
@@ -75,7 +120,7 @@ class NewJob extends Component {
             className="jobInput"
             value={this.state.jobPay}
             onChange={this.handlePayChange}
-            type="text"
+            type="number"
             placeholder="Job Pay"
           />
 
@@ -84,6 +129,7 @@ class NewJob extends Component {
             className="jobInput"
             value={this.state.jobAddress}
             onChange={this.handleAddressChange}
+            onBlur={this.getGeocode}
             type="text"
             placeholder="1500 University Street, Montreal, H3A3S7"
           />

@@ -20,7 +20,10 @@ class Swiper extends Component {
     };
   }
   swipeRight = x => {
-    const target = this.refs.stack.refs[this.state.cards[this.state.cards.length - 1].ref];
+      if(this.state.cards.length>0){
+    const target = this.refs.stack.refs[
+      this.state.cards[this.state.cards.length - 1].ref
+    ];
 
     // get Target Dom Element
     const el = ReactDOM.findDOMNode(target);
@@ -30,33 +33,37 @@ class Swiper extends Component {
 
     // throwOut method call
     card.throwOut(0, 0, Swing.DIRECTION.RIGHT);
+}
   };
 
-  swipeLeft = x =>{
-      // Swing Card Directions
+  swipeLeft = x => {
+      if(this.state.cards.length>0){
+    // Swing Card Directions
 
-       // Swing Component Childrens refs
-       const target = this.refs.stack.refs[this.state.cards[this.state.cards.length-1].ref];
+    // Swing Component Childrens refs
+    const target = this.refs.stack.refs[
+      this.state.cards[this.state.cards.length - 1].ref
+    ];
 
-       // get Target Dom Element
-       const el = ReactDOM.findDOMNode(target);
+    // get Target Dom Element
+    const el = ReactDOM.findDOMNode(target);
 
-       // stack.getCard
-       const card = this.state.stack.getCard(el);
+    // stack.getCard
+    const card = this.state.stack.getCard(el);
 
-       // throwOut method call
-       card.throwOut(0, 0, Swing.DIRECTION.LEFT); 
+    // throwOut method call
+    card.throwOut(0, 0, Swing.DIRECTION.LEFT);
     //    let b = {}
     //    b.target = target
-       //this.removeCard(b) 
-  }
+    //this.removeCard(b)
+  }};
 
   removeCard = e => {
     const target = e.target;
     const el = ReactDOM.findDOMNode(target);
     const card = this.state.stack.getCard(el);
     //card.destroy();
-    console.log(target.id)
+    console.log(target.id);
     // el.remove()
     this.setState({
       cards: this.state.cards.filter((x, i) => {
@@ -75,7 +82,7 @@ class Swiper extends Component {
           id={i}
         >
           <img
-          draggable='false'
+            draggable="false"
             src={
               "http://unsplash.it/" +
               Math.round(Math.random() * (305 - 295) + 295) +
@@ -83,7 +90,17 @@ class Swiper extends Component {
               Math.round(Math.random() * (255 - 245) + 245)
             }
           />
-          <div style={{'flex':'none','fontSize':'10pt','top':'5%','backgroundColor':'white','position':'absolute'}}>LMAO{i}</div>
+          <div
+            style={{
+              flex: "none",
+              fontSize: "10pt",
+              top: "5%",
+              backgroundColor: "white",
+              position: "absolute"
+            }}
+          >
+            LMAO{i}
+          </div>
         </div>
       );
     }
@@ -100,16 +117,15 @@ class Swiper extends Component {
   componentWillMount = props => {
     this.renderCards();
   };
-  accept = (e) =>{
-      console.log(e)
-      console.log('YES THIS JOB')
-    }
-    
-    reject = (e) =>{
-        console.log(e)
-        console.log('NOT THIS JOB')
+  accept = e => {
+    console.log(e);
+    console.log("YES THIS JOB");
+  };
 
-  }
+  reject = e => {
+    console.log(e);
+    console.log("NOT THIS JOB");
+  };
 
   render() {
     console.log(Swing);
@@ -125,6 +141,7 @@ class Swiper extends Component {
           throwoutleft={this.reject}
           throwoutright={this.accept}
         >
+              <div style={{'position':'absolute', 'bottom':'20%', 'left':'10%'}}>NO MORE CARDS</div>
           {this.state.cards ? (
             this.state.cards.map(x => {
               return x;
@@ -134,7 +151,7 @@ class Swiper extends Component {
           )}
         </Swing>
         <div>
-          <button type="button" name='accept' onClick={this.swipeRight}>
+          <button type="button" name="accept" onClick={this.swipeRight}>
             ACCEPT
           </button>
           <button type="button" onClick={this.swipeLeft}>

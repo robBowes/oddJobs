@@ -9,6 +9,7 @@ import {BrowserRouter, Link, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import WelcomeStaging from './components/WelcomeStaging';
 import WelcomeStaging2 from './components/WelcomeStaging2';
+import User from './containers/User.js'
 import WelcomeStaging3 from './components/WelcomeStaging3';
 import NewJob from './components/NewJob'
 
@@ -51,6 +52,9 @@ class App extends Component {
     }
     console.log(cookie);
   }
+  renderUserDetails=(x)=>{
+    return <User id={x.match.params.id}/>
+  }
   resetWelcome = () => {
     this.props.dispatch({
     type: 'WELCOME_STATE',
@@ -72,6 +76,7 @@ class App extends Component {
       <Route exact={true} path='/' render={this.renderHome}/>
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>
+      <Route exact={true} path="/user:id" render={this.renderUserDetails} />
        {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===1?<WelcomeStaging2/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===2?<WelcomeStaging3/>:''):''}

@@ -46,7 +46,7 @@ class Login extends Component {
       })
     })
     }
-    getpos()
+    
     response.location={}
     if (response.id) {
       fetch('/login', {
@@ -59,6 +59,7 @@ class Login extends Component {
           if (!y.status) {
             throw new Error('FAILED LOGIN');
           }
+          getpos();
           this.props.dispatch({
             type: 'USER_UPDATE',
             payload: y.user,

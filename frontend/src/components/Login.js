@@ -27,16 +27,16 @@ class Login extends Component {
   responseFacebook = (response) => {
     console.log(response);
     if (response.id) {
-      console.log('TRYING TO LOGIN');
       fetch('/login', {
         method: 'POST',
         credentials: 'same-origin',
         body: JSON.stringify(response),
       })
-        .then((x) => x.json())
-        .then((y) => {
-          console.log(y);
-          if (!y.status) {
+      .then((x) => x.json())
+      .then((y) => {
+        console.log(y);
+        console.log('LOGIN');
+        if (!y.status) {
             throw new Error('FAILED LOGIN');
           }
           this.props.dispatch({
@@ -44,7 +44,7 @@ class Login extends Component {
             payload: y.user,
           });
         });
-        
+
 
       this.setState({loading: false});
     }

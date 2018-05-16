@@ -122,7 +122,8 @@ describe('Server', () => {
                 {
                     jobDescription: 'test',
                     jobTitle: 'test',
-                    location: {lat: '100', lng: '100'},
+                    location: {lat: '45', lng: '-38'},
+                    picture: '253200.jpg',
                 }),
                 headers: {
                     cookie,
@@ -282,7 +283,7 @@ describe('Server', () => {
             {
                 method: 'POST',
                 body: JSON.stringify({
-                    location: {lat: '100', lng: '100'},
+                    location: {lat: '39', lng: '-94'},
                 }),
                 headers: {
                     cookie,

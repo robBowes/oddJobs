@@ -2,6 +2,12 @@ const utils = require('./utils');
 const sha1 = require('sha1');
 const r = require('./utils');
 const fs = require('fs');
+const geolib = require('geolib');
+
+const deepUser = async (Job, user) => {
+    let userIsPatron = await Job.find({patronId: user.id});
+    console.log(userIsPatron);
+};
 
 const modify = async (user, newProps) =>{
     if (!user) return {status: false, reason: 'no user found'};
@@ -15,19 +21,25 @@ const modify = async (user, newProps) =>{
     return {status, user, reason};
 };
 
-const login = async (fb, cookie, User) => {
-    if (!fb.id ||
+const login = (Job)=> async (fb, cookie, User, user) => {
+    if (!user &&
+        (!fb.id ||
         !fb.name ||
-        !fb.accessToken
+        !fb.accessToken)
     ) return {status: false, reason: 'no facebook data'};
     let fbIsValid;
     if (fb) fbIsValid = r.checkFbToken(fb);
-    let user = await User.findOne({id: fb.id});
+    if (!user) {
+        user = await User.findOne({id: fb.id});
+        user.appToken = sha1(Date.now());
+        user.save();
+    }
     if (!user) {
         user = new User(fb);
+        user.appToken = sha1(Date.now());
+        user.save();
     }
-    user.appToken = sha1(Date.now());
-    user.save();
+    // deepUser(Job, user);
     return {status: true, user};
 };
 
@@ -85,6 +97,22 @@ const allJobs = (Job) => async (user, location) => {
     user.location = location;
     user.update();
     let jobs = await Job.find();
+    jobs.forEach((job)=>{
+        // console.log('user location', parseFloat(user.location.lat), user.location.lng);
+        // console.log('job location', job.location.lat, job.location.lng);
+        // console.log(
+        //     geolib.getDistance(
+        //         {
+        //             latitude: parseFloat(user.location.lat),
+        //             longitude: parseFloat(user.location.lng),
+        //         }, {
+        //             latitude: parseFloat(job.location.lat),
+        //             longitude: parseFloat(job.location.lng),
+        //         }
+        //     )
+        // );
+    });
+    // console.log(jobs);
     return {status: true, content: jobs};
 };
 

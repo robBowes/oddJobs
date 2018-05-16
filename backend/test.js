@@ -339,6 +339,66 @@ describe('Server', () => {
             json = await login.json();
             assert.isTrue(json.status, 'should return false');
             assert.isOk(json.job, 'should include reason');
+            assert.isString(json.job.pairedHelpers[0], 'at least pair is present');
+        });
+    });
+    describe('deal endpoint', () =>{
+        it('returns false if not given a job ID', async () =>{
+            login = await fetch('http://localhost:4000/deal',
+            {
+                method: 'PUT',
+                body: JSON.stringify({}),
+                headers: {
+                    cookie,
+                },
+                credentials: 'same-origin',
+            });
+            json = await login.json();
+            assert.isFalse(json.status, 'should return false');
+            assert.isOk(json.reason, 'should include reason');
+            assert.isNotOk(json.job, 'should not include job');
+        });
+        it('returns false if not receiving user info', async () =>{
+            login = await fetch('http://localhost:4000/deal',
+            {
+                method: 'PUT',
+                body: JSON.stringify({id: '472999'}),
+                credentials: 'same-origin',
+            });
+            json = await login.json();
+            assert.isFalse(json.status, 'should return false');
+            assert.isOk(json.reason, 'should include reason');
+            assert.isNotOk(json.job, 'should not include job');
+        });
+        it('returns true and job when user is helper', async () =>{
+            login = await fetch('http://localhost:4000/deal',
+            {
+                method: 'PUT',
+                body: JSON.stringify({id: '472999'}),
+                headers: {
+                    cookie,
+                },
+                credentials: 'same-origin',
+            });
+            json = await login.json();
+            assert.isTrue(json.status, 'should return false');
+            assert.isOk(json.job, 'should include reason');
+            assert.nestedInclude(json.job.dealsOfferedByHelpers, '10102449795812560', 'at least pair is present');
+        });
+        it('returns true and job when user is patron', async () =>{
+            login = await fetch('http://localhost:4000/deal',
+            {
+                method: 'PUT',
+                body: JSON.stringify({id: '813985'}),
+                headers: {
+                    cookie,
+                },
+                credentials: 'same-origin',
+            });
+            json = await login.json();
+            assert.isTrue(json.status, 'should return false');
+            assert.isOk(json.job, 'should include reason');
+            assert.nestedInclude(json.job.dealsOfferedByPatron, '10102449795812560', 'at least pair is present');
         });
     });
 });

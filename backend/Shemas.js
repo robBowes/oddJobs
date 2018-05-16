@@ -63,6 +63,9 @@ const JobSchema = new mongoose.Schema({
     picture: {type: String, required: true},
     helperId: String,
     pairedHelpers: [String],
+    dealsOfferedByPatron: [],
+    dealsOfferedByHelpers: [],
+    dealMade: Boolean,
     location: {
         lat: {type: String, required: true},
         lng: {type: String, required: true},
@@ -82,6 +85,30 @@ const JobSchema = new mongoose.Schema({
         }],
     }],
 });
+
+JobSchema.methods.addHelper = function(helperId) {
+    if (!this.pairedHelpers.some((helper)=>helper===helperId)) {
+        this.pairedHelpers = [...this.pairedHelpers, helperId];
+    }
+};
+
+JobSchema.methods.addDeal = function(userId) {
+    if (userId === this.patronId) {
+        this.dealsOfferedByPatron = [...this.dealsOfferedByPatron, userId];
+    } else if (this.pairedHelpers.some((helper)=>helper===userId)) {
+        this.dealsOfferedByHelpers = [...this.dealsOfferedByHelpers, userId];
+    }
+    let match = this.dealsOfferedByPatron.find((patronDeal)=>{
+        return this.dealsOfferedByHelpers.some((helperDeal)=>helperDeal===patronDeal);
+    });
+    if (!!match) {
+        this.helperId = match;
+        this.dealDate = Date.now();
+        this.dealMade = true;
+    }
+    this.save();
+    return this.toObject();
+};
 
 const Job = mongoose.model('Job', JobSchema);
 // const User = mongoose.model('User', UserSchema);

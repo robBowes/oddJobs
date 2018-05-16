@@ -28,6 +28,7 @@ const findUser = oddJobs.findUser(User);
 const allJobs = oddJobs.allJobs(Job);
 const pairJob = oddJobs.pairJob(Job);
 const login = oddJobs.login(Job);
+const makeDeal = oddJobs.offerDeal(Job);
 
 // app.use(express.json({type: 'application/json'}));
 app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));
@@ -63,8 +64,10 @@ app.put('/pair', async (req, res)=>{
     res.json(job);
 });
 
-app.put('/deal', (req, res)=>{
-    res.json({'status': true, 'job': testData.job});
+app.put('/deal', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
+    let job = await makeDeal(user, req.body);
+    res.json(job);
 });
 
 app.put('/completeJob', (req, res)=>{

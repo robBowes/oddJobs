@@ -153,6 +153,20 @@ class Swiper extends Component {
       });
   };
   accept = e => {
+      const target = e.target;
+      const el = ReactDOM.findDOMNode(target);
+      //const card = this.state.stack.getCard(el);
+      let jobId = target.getAttribute("jobid");
+      console.log(jobId)
+      fetch('/pair',{
+          method: 'PUT',
+          credentials: 'same-origin',
+          body: JSON.stringify({id: jobId})
+      })
+      .then(x=>x.json())
+      .then(y=>{
+          console.log(y)
+      })
     console.log("YES THIS JOB");
   };
 

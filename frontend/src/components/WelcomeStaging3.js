@@ -43,40 +43,19 @@ class WelcomeStaging extends Component {
     event.preventDefault();
   };
   render() {
-    return (
-      <div className="welcomeStage3">
+    return <div className="welcomeStage3">
+        <img className="userPicture" src={this.props.picture} alt="" />
 
-              <img className="userPicture" src={this.props.picture}/>
+        <h1 className="welcomeText"> Tell us about yourself!</h1>
 
-        <h1 className="welcomeText">
-          {" "}
-          Tell us about yourself!
-        </h1>
-           
+        <form onSubmit={this.handleSubmit}>
+          <textarea className="welcomeDescriptionInput" value={this.state.description} onChange={this.handleChange} type="textarea" rows="5" cols="50" placeholder="This is who I am and the stuff I like to do!" />
 
-
-         <form onSubmit={this.handleSubmit}>
-           
-          <textarea
-            className="welcomeDescriptionInput"
-            value={this.state.description}
-            onChange={this.handleChange}
-            type="textarea"
-            rows="5"
-            cols="50"
-            placeholder="This is who I am and the stuff I like to do!"
-          />
-
-          <button
-            type="submit"
-            className="welcomeButton"
-            onClick={this.handleClickNext}
-          >
+          <button type="submit" className="welcomeButton" onClick={this.handleClickNext}>
             Finish!
-          </button>    
+          </button>
         </form>
-      </div>
-    );
+      </div>;
   }
 }
 

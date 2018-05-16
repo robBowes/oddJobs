@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
-import Swing, { Stack, Card, Direction } from "react-swing";
+import Swing from "react-swing";
 import { Link } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
 
@@ -63,11 +63,28 @@ class Swiper extends Component {
   };
 
   removeCard = e => {
-    const target = e.target;
-    const el = ReactDOM.findDOMNode(target);
-    const card = this.state.stack.getCard(el);
+    //const target = e.target;
+    //const el = ReactDOM.findDOMNode(target);
+    //const card = this.state.stack.getCard(el);
     //card.destroy();
     // el.remove()
+    let lat;
+    let lng;
+    navigator.geolocation.getCurrentPosition(x => {
+      lat = x.coords.latitude;
+      lng = x.coords.longitude;
+    });
+    fetch('/modify',{
+        method: 'PUT',
+        body: JSON.stringify({location:{lat,lng}})
+    })
+    .then(x=>x.json())
+    .then(y=>{
+        this.props.dispatch({
+            type:'USER_UPDATE',
+            payload: y.user
+        })
+    })
     this.setState({
       cards: this.state.cards.filter((x, i) => {
         return parseInt(x.key) !== this.state.cards.length - 1;
@@ -76,37 +93,19 @@ class Swiper extends Component {
   };
   renderCards = () => {
     let newStack = []
-    for (let i = 0; i < this.props.jobs.length; i++) {
-      newStack = newStack.concat(
-        <div
-          key={i}
-          className={"card " + (parseInt(i) + 1)}
-          ref={"card" + (parseInt(i) + 1)}
-          id={i}
-          jobid={this.props.jobs[i].id}
-        >
-          <img
-            style={{'max-width':'100%','height':'auto'}}
-            draggable="false"
-            src={
-              this.props.jobs[i].picture
-            }
-          />
-          <div
-            style={{
-              fontSize: "10pt",
-              top: "0%",
-              backgroundColor: "white",
-              position: "absolute"
-            }}
-          >
-            <Link to={"/job" + this.props.jobs[i].id}>
+    let jobsShown = this.props.jobs.filter(x=>{
+        return x.patronId!==this.props.user.id
+    })
+    for (let i = 0; i < jobsShown.length; i++) {
+      newStack = newStack.concat(<div key={i} className={"card " + (parseInt(i) + 1)} ref={"card" + (parseInt(i) + 1)} id={i} jobid={jobsShown[i].id}>
+          <img style={{ maxWidth: "100%", height: "auto" }} draggable="false" src={jobsShown[i].picture} alt="" />
+          <div style={{ fontSize: "10pt", top: "0%", backgroundColor: "white", position: "absolute" }}>
+            <Link to={"/job" + jobsShown[i].id}>
               <button>details</button>
             </Link>
-            {this.props.jobs[i].jobTitle}
+            {jobsShown[i].jobTitle}
           </div>
-        </div>
-      );
+        </div>);
     }
     this.props.dispatch({
       type: "UPDATE_STACK",
@@ -184,7 +183,8 @@ class Swiper extends Component {
 
 const mapStateToProps = state => ({
   cards: state.data.cards,
-  jobs: state.data.jobs
+  jobs: state.data.jobs,
+  user: state.user
 });
 
 export default connect(mapStateToProps)(Swiper);

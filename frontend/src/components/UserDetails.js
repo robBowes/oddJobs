@@ -20,7 +20,7 @@ class UserDetails extends Component {
       return this.state.loading === true ? <div>
           <MoonLoader color="#05ff05" loading={this.state.loading} />
         </div> : <div>
-          <img src={this.props.user.picture ? this.props.user.picture.data.url : "loading image"} />
+          <img src={this.props.user.picture ? this.props.user.picture.data.url : "loading image"} alt="" />
           <br />
           <h3>{this.props.user.name}</h3>
           <br />

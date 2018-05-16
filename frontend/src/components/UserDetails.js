@@ -21,8 +21,11 @@ class UserDetails extends Component {
         :
       <div><img src={this.props.user.picture?this.props.user.picture.data.url:'loading image'}/>
       <br/>
-      {this.props.user.name}<br/>
-      DESCRIPTION
+      <h3>{this.props.user.name}</h3><br/>
+      {this.props.user.description}
+      <br/>
+      <br/>
+      Some rating 99
       </div>
   }
 }

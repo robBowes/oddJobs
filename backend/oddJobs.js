@@ -82,8 +82,15 @@ const allJobs = (Job) => async (user, location) => {
         !location.lng ||
         !location.lat
     ) return {status: false, reason: 'no location information'};
+    user.location = location;
+    user.update();
     let jobs = await Job.find();
     return {status: true, content: jobs};
+};
+
+const pairJob = (Job) => async (user, jobId) =>{
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!jobId.id) return {status: false, reason: 'no job information'};
 };
 
 module.exports = {
@@ -94,6 +101,7 @@ module.exports = {
     uploadImage,
     findUser,
     allJobs,
+    pairJob,
 };
 
 

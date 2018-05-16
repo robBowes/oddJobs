@@ -26,6 +26,7 @@ const createNewJob = oddJobs.newJob(Job);
 const findJob = oddJobs.findJob(Job);
 const findUser = oddJobs.findUser(User);
 const allJobs = oddJobs.allJobs(Job);
+const pairJob = oddJobs.pairJob(Job);
 
 // app.use(express.json({type: 'application/json'}));
 app.use(bodyParser.raw({type: 'image/*'}));
@@ -55,8 +56,10 @@ app.post('/allJobs', async (req, res)=>{
     res.json(reply);
 });
 
-app.put('/pair', (req, res)=>{
-    res.json({'status': true, 'job': testData.job});
+app.put('/pair', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
+    let job = await pairJob(user, req.body);
+    res.json(job);
 });
 
 app.put('/deal', (req, res)=>{

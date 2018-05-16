@@ -51,7 +51,7 @@ UserSchema.methods.clean = function() {
 const User = mongoose.model('User', UserSchema);
 
 const JobSchema = new mongoose.Schema({
-    // id: {type: String, required: true},
+    id: {type: String, default: Math.floor(Math.random()*1000000).toString()},
     jobDescription: {type: String, required: true},
     jobTitle: {type: String, required: true},
     jobPay: {type: String, default: '0'},
@@ -59,10 +59,7 @@ const JobSchema = new mongoose.Schema({
     picture: String,
     helperId: String,
     pairedHelpers: [String],
-    location: {
-        lat: String,
-        lng: String,
-    },
+    location: Object,
     listingDate: {type: String, default: Date.now()},
     dealDate: Number,
     completedDate: Number,

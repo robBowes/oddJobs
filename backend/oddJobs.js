@@ -38,6 +38,7 @@ const newJob = (Job) => async (user, jobDetails = {}) => {
     jobDetails.patronId = user.id;
     try {
         job = await new Job(jobDetails);
+        console.log(job);
         await job.save();
     } catch (error) {
         // console.log(error.message);
@@ -49,8 +50,9 @@ const newJob = (Job) => async (user, jobDetails = {}) => {
 };
 
 const findJob = (Job) => async (body) => {
-    if (!body.jobId) return {status: false, reason: 'no body included'};
-    const job = await Job.findOne({id: body.jobId});
+    console.log(body);
+    if (!body.id) return {status: false, reason: 'no body included'};
+    const job = await Job.findOne(body);
     if (job) return {status: true, job};
     else return {status: false, reason: 'job could not be found'};
 };

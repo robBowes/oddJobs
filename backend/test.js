@@ -114,14 +114,14 @@ describe('Server', () => {
         });
     });
     describe('add job', () => {
-        it('adds a job', async () => {
+        it('returns a job on the endpoint', async () => {
             login = await fetch('http://localhost:4000/addJob', {
             method: 'PUT',
             body: JSON.stringify(
                 {
                     jobDescription: 'test',
                     jobTitle: 'test',
-                    id: 0,
+                    location: {lat: '100', lng: '100'},
                 }),
                 headers: {
                     cookie,
@@ -129,10 +129,16 @@ describe('Server', () => {
                 credentials: 'same-origin',
             });
             json = await login.json();
-            assert(json.status, 'test add Job should succeed');
+            assert.isTrue(json.status, 'test add Job should succeed');
             assert(json.job.patronId && json.job.listingDate,
                 'test add Job should return job'
             );
+            assert.isOk(json.job.location, 'location should esist');
+        });
+        it('writes a job to the database', async () =>{
+            let job = await Job.findOne({id: '12345'});
+            assert.isOk(job, 'test job exists');
+            assert.isOk(job.location);
         });
         it('fails when no body is entered', async () => {
             // test add job endpoint with bad data
@@ -175,7 +181,7 @@ describe('Server', () => {
             {
                 method: 'POST',
                 body: JSON.stringify({
-                    jobId: '12345',
+                    id: '12345',
                 }),
                 headers: {
                     cookie,
@@ -183,7 +189,7 @@ describe('Server', () => {
                 credentials: 'same-origin',
             }).catch((e) => console.log(e));
             json = await login.json();
-            assert(json.status, 'test /job should succeed');
+            assert(json.status, json.reason);
             assert(json.status === true, 'status should be true');
             assert(json.job, 'test /job should return job');
             assert(json.job.listingDate, 'jobs must have listing date');
@@ -195,7 +201,7 @@ describe('Server', () => {
             {
                 method: 'POST',
                 body: JSON.stringify({
-                    jobId: '5afb702ad3049a09a0994d94',
+                    id: '5afb702ad3049a09a0994d94',
                 }),
                 headers: {
                     cookie,

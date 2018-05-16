@@ -1,6 +1,7 @@
 const utils = require('./utils');
 const sha1 = require('sha1');
 const r = require('./utils');
+const fs = require('fs');
 
 const modify = async (user, newProps) =>{
     if (!user) return {status: false, reason: 'no user found'};
@@ -17,7 +18,8 @@ const modify = async (user, newProps) =>{
 const login = async (fb, cookie, User) => {
     if (!fb.id ||
         !fb.name ||
-        !fb.accessToken) return {status: false, reason: 'no facebook data'};
+        !fb.accessToken
+    ) return {status: false, reason: 'no facebook data'};
     let fbIsValid;
     if (fb) fbIsValid = r.checkFbToken(fb);
     let user = await User.findOne({id: fb.id});
@@ -53,9 +55,24 @@ const findJob = (Job) => async (body) => {
     else return {status: false, reason: 'job could not be found'};
 };
 
+const uploadImage = (req) => {
+    let extension = req.query.ext.split('.').pop();
+    if (extension.length < 1) {
+        return {status: false, reason: 'invalid extension'};
+    }
+    let randomString = '' + Math.floor(Math.random() * 10000000);
+    let filename = randomString + '.' + extension;
+    fs.writeFile('./data/images/' + filename, req.body,
+    (err)=>err?console.log(err):null);
+    return {status: true, name: filename};
+};
+
 module.exports = {
     modify,
     newJob,
     login,
     findJob,
+    uploadImage,
 };
+
+

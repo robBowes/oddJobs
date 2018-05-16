@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {Link} from "react-router-dom"
 
 //the Nav tools on the main swipe page
 //Far left settings button, far right pairslist button
@@ -9,12 +10,15 @@ import { connect } from "react-redux";
 class SwipeNav extends Component {
   render() {
       return (<div>SWIPE NAV TOOLS<br/>
-      <button>SETTINGS</button><button>CHAT</button></div>)
+      <button>SETTINGS</button><button>CHAT</button>
+      <br/>
+      <Link to={'/user'+this.props.id}><button>user</button></Link>
+      </div>)
   }
 }
 
 const mapStateToProps = state => ({
-  //redux props import
+  id: state.user.id
 });
 
 export default connect(mapStateToProps)(SwipeNav);

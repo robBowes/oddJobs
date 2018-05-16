@@ -6,11 +6,29 @@ import { connect } from "react-redux";
 //pic, description, statistics
 
 class UserDetails extends Component {
-  render() {}
+    constructor(props){
+        super(props);
+        this.state ={
+            loading: true
+        }
+    }
+    componentDidMount=()=>{
+        this.setState({loading: false})
+    }
+  render() {
+      return this.state.loading===true?
+      <div>Loading data</div>
+        :
+      <div><img src={this.props.user.picture?this.props.user.picture.data.url:'loading image'}/>
+      <br/>
+      {this.props.user.name}<br/>
+      DESCRIPTION
+      </div>
+  }
 }
 
 const mapStateToProps = state => ({
-  //redux props import
+  user: state.user
 });
 
 export default connect(mapStateToProps)(UserDetails);

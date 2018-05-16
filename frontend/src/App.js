@@ -9,6 +9,7 @@ import {BrowserRouter, Link, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import WelcomeStaging from './components/WelcomeStaging';
 import WelcomeStaging2 from './components/WelcomeStaging2';
+import User from './containers/User.js'
 
 
 class App extends Component {
@@ -50,21 +51,22 @@ class App extends Component {
 
     console.log(cookie);
   }
+  renderUserDetails=(x)=>{
+    return <User id={x.match.params.id}/>
+  }
   render() {
-    return (
-      <BrowserRouter>
-      <div className="App">
-      {!this.props.loggedIn?<Landing/>:<Swipe/>}
-      <Settings style={{'display': this.state.currentPage==='settings'?'block':'none'}}/>
-      <Route exact={true} path='/settings' render={this.renderSettings}/>
+    return <BrowserRouter>
+        <div className="App">
+          {!this.props.loggedIn ? <Landing /> : <Swipe />}
+          <Settings style={{ display: this.state.currentPage === "settings" ? "block" : "none" }} />
+          <Route exact={true} path="/settings" render={this.renderSettings} />
 
-       {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}
-       {this.props.loggedIn?(this.props.welcomeStage===1?<WelcomeStaging2/>:''):''}
+          {this.props.loggedIn ? this.props.welcomeStage === 0 ? <WelcomeStaging /> : "" : ""}
+          {this.props.loggedIn ? this.props.welcomeStage === 1 ? <WelcomeStaging2 /> : "" : ""}
 
-
-      </div>
-      </BrowserRouter>
-    );
+          <Route exact={true} path="/user:id" render={this.renderUserDetails} />
+        </div>
+      </BrowserRouter>;
   }
 }
 

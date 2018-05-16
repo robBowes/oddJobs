@@ -60,6 +60,9 @@ const uploadImage = (req) => {
     if (extension.length < 1) {
         return {status: false, reason: 'invalid extension'};
     }
+    if (!req.body) {
+        return {status: false, reason: 'empty image body'};
+    }
     let randomString = '' + Math.floor(Math.random() * 10000000);
     let filename = randomString + '.' + extension;
     fs.writeFile('./data/images/' + filename, req.body,

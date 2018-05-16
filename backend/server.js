@@ -13,16 +13,13 @@ const Schemas = require('./Shemas.js');
 const User = Schemas.User;
 const Job = Schemas.Job;
 
-
 mongoose.connect(r.uri, {autoIndex: false});
 const db = mongoose.connection;
-
 
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', ()=>{
     console.log('connected to mongoose server');
 });
-
 
 const findUser = r.findToken(User);
 const createNewJob = oddJobs.newJob(Job);
@@ -32,7 +29,7 @@ const findJob = oddJobs.findJob(Job);
 app.use(express.json({type: '*/*'}));
 // app.use(bodyParser.raw({type: '*/*'}));
 app.use(cookieParser());
-
+app.use(express.static('data/images'));
 
 app.post('/login', async (req, res)=>{
     let fb = req.body;

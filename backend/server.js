@@ -21,9 +21,10 @@ db.once('open', ()=>{
     console.log('connected to mongoose server');
 });
 
-const findUser = r.findToken(User);
+const userFromToken = r.findToken(User);
 const createNewJob = oddJobs.newJob(Job);
 const findJob = oddJobs.findJob(Job);
+const findUser = oddJobs.findUser(User);
 
 // app.use(express.json({type: 'application/json'}));
 app.use(express.json({type: '*/*'}));
@@ -35,14 +36,14 @@ app.post('/login', async (req, res)=>{
     let fb = req.body;
     let appToken = req.cookies.token;
     let ret = {status: true};
-    if (appToken) ret.user = await findUser(req.cookies.token);
+    if (appToken) ret.user = await userFromToken(req.cookies.token);
     if (!ret.user) ret = await oddJobs.login(fb, req.cookies.token, User);
     if (ret.status) res.cookie('token', ret.user.appToken);
     res.json(ret);
 });
 
 app.put('/modify', async (req, res)=>{
-    let user = await findUser(req.cookies.token);
+    let user = await userFromToken(req.cookies.token);
     let reply = await oddJobs.modify(user, req.body);
     res.json(reply);
 });
@@ -68,13 +69,18 @@ app.put('/rejectJob', (req, res)=>{
 });
 
 app.put('/addJob', async (req, res)=>{
-    let user = await findUser(req.cookies.token);
+    let user = await userFromToken(req.cookies.token);
     let job = await createNewJob(user, req.body);
     res.json(job);
 });
 
-app.post('/user', (req, res)=>{
-    res.json({'status': true, 'user': testData.testUser});
+app.post('/user', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
+    let ret;
+    if (user.id ===req.body.userId) ret = {status: true, user};
+    else ret = await findUser(req.body);
+    console.log(ret);
+    res.json(ret);
 });
 
 app.post('/job', async (req, res)=>{

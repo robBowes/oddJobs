@@ -70,12 +70,19 @@ const uploadImage = (req) => {
     return {status: true, name: filename};
 };
 
+const findUser = (User) =>async (params) => {
+    let user = await User.findOne(params);
+    if (user) return {status: true, user};
+    else return {status: false, reason: 'No user found'};
+};
+
 module.exports = {
     modify,
     newJob,
     login,
     findJob,
     uploadImage,
+    findUser,
 };
 
 

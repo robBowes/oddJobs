@@ -22,17 +22,22 @@ before(function(done) {
 });
 
 describe('OddJobs', function() {
-    let randomString = ['test1', 'test2', 'test3', 'test4', 'test5'][Math.floor(Math.random() * 5)];
+    let randomString = [
+        'test1', 'test2', 'test3', 'test4', 'test5',
+    ][Math.floor(Math.random() * 5)];
     after(() => {
         Job.deleteMany({
             jobDescription: 'test',
         }, (err) => err ? console.log(err) : null);
     });
+    let user;
+    before(async ()=>{
+        user = await User.findOne({
+            name: 'TEST',
+        });
+    });
     describe('modify', () => {
         it('modifies, saves and retrieves modifications', async () => {
-            const user = await User.findOne({
-                name: 'TEST',
-            });
             await oddJobs.modify(user, {
                 description: randomString,
                 maxPrice: randomString,
@@ -43,17 +48,17 @@ describe('OddJobs', function() {
             });
             assert.equal(user.description, randomString);
         });
+        it('does not modify a number field with a string', ()=>{
+            reply = oddJobs.modify(user, {
+                welcomeStage: randomString,
+            });
+            assert.isNotTrue(reply.status);
+        });
     });
 });
 
 
 dbTests = async () => {
-    // test invalid request
-    reply = oddJobs.modify(user, {
-        welcomeStage: randomString,
-    });
-    assert(!reply.status);
-
     // test null user
     reply = await oddJobs.modify(null, {
         description: randomString,
@@ -75,7 +80,9 @@ dbTests = async () => {
     assert(newJob.status === false && newJob.reason === 'no user found');
 
     newJob = await createNewJob(user2);
-    assert(newJob.status === false, 'create new job is not detecting lack of job details');
+    assert(newJob.status === false,
+        'create new job is not detecting lack of job details'
+    );
 };
 describe('Server', () => {
     let cookie = 'token=test';
@@ -89,7 +96,9 @@ describe('Server', () => {
                 }),
             });
             let json = await login.json();
-            assert(!json.status, 'login without cookie or facebook access token should fail');
+            assert(!json.status,
+                'login without cookie or facebook access token should fail'
+            );
         });
         it('login with test cookie returns test user', async () => {
             login = await fetch('http://localhost:4000/login',
@@ -101,122 +110,155 @@ describe('Server', () => {
                 credentials: 'same-origin',
             });
             json = await login.json();
-            assert(json.status && json.user.name === 'TEST', 'test cookie should return test user');
-        });
+            assert(json.status && json.user.name === 'TEST',
+            'test cookie should return test user'
+        );
     });
-    describe('add job', () => {
-        it('adds a job', async () => {
-            // test add job endpoint with good data
-            login = await fetch('http://localhost:4000/addJob', {
+});
+describe('add job', () => {
+    it('adds a job', async () => {
+        login = await fetch('http://localhost:4000/addJob', {
+        method: 'PUT',
+        body: JSON.stringify(
+            {
+                jobDescription: 'test',
+                jobTitle: 'test',
+                id: 0,
+            }),
+            headers: {
+                cookie,
+            },
+            credentials: 'same-origin',
+        });
+        json = await login.json();
+        assert(json.status, 'test add Job should succeed');
+        assert(json.job.patronId && json.job.listingDate,
+            'test add Job should return job'
+        );
+    });
+    it('fails when no body is entered', async () => {
+        // test add job endpoint with bad data
+        login = await fetch('http://localhost:4000/addJob',
+        {
             method: 'PUT',
-            body: JSON.stringify(
-                {
-                    jobDescription: 'test',
-                    jobTitle: 'test',
-                    id: 0,
-                }),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
-            assert(json.status, 'test add Job should succeed');
-            assert(json.job.patronId && json.job.listingDate, 'test add Job should return job');
+            body: JSON.stringify({}),
+            headers: {
+                cookie,
+            },
+            credentials: 'same-origin',
         });
-        it('fails when no body is entered', async () => {
-            // test add job endpoint with bad data
-            login = await fetch('http://localhost:4000/addJob',
-            {
-                method: 'PUT',
-                body: JSON.stringify({}),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
-            assert(!json.status, 'test addJob should fail');
-            assert(!json.job, 'test addJob should not return job');
-        });
+        json = await login.json();
+        assert(!json.status, 'test addJob should fail');
+        assert(!json.job, 'test addJob should not return job');
     });
-    describe('find job endpoint', () => {
-        it('doesn\'t return a job and gives a status false when there is no job id given', async () => {
-            // test /job endpoint
-            login = await fetch('http://localhost:4000/job',
-            {
-                method: 'POST',
-                body: JSON.stringify({}),
-                headers: {cookie},
-                credentials: 'same-origin',
-            });
-            json = await login.json();
-            assert(!json.status, 'test /job with no jobId should fail');
-            assert(json.status === false, 'test /job with no jobId should fail with false reason');
-            assert(!json.job, 'test /job should not return job');
-            assert(json.reason.length > 4, 'reason should be included');
+});
+describe('find job endpoint', () => {
+    it('doesn\'t return a job and gives a status false when there is '
+    + 'no job id given',
+    async () => {
+        login = await fetch('http://localhost:4000/job',
+        {
+            method: 'POST',
+            body: JSON.stringify({}),
+            headers: {cookie},
+            credentials: 'same-origin',
         });
-        it('return a test job when given the test job ID', async () => {
-            // test /job with valid data
-            login = await fetch('http://localhost:4000/job',
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    jobId: '12345',
-                }),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            }).catch((e) => console.log(e));
-            json = await login.json();
-            assert(json.status, 'test /job should succeed');
-            assert(json.status === true, 'status should be true');
-            assert(json.job, 'test /job should return job');
-            assert(json.job.listingDate, 'jobs must have listing date');
-        });
-        it('returns a false status and reason when given a non existing job id', async () => {
-            // test /job with non existing job id
-            login = await fetch('http://localhost:4000/job',
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    jobId: '5afb702ad3049a09a0994d94',
-                }),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            }).catch((e) => console.log(e));
-            json = await login.json();
-            assert(json.status === false, 'should not find non existing job id');
-            assert(json.reason, 'failiure should include reason');
-        });
+        json = await login.json();
+        assert(!json.status, 'test /job with no jobId should fail');
+        assert(json.status === false,
+            'test /job with no jobId should fail with false reason'
+        );
+        assert(!json.job, 'test /job should not return job');
+        assert(json.reason.length > 4, 'reason should be included');
     });
-    describe('get user endpoint', () => {
-        it('returns the test user when searching for id: 10102449795812560', async () => {
-            login = await fetch('http://localhost:4000/user',
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    jobId: '5afb702ad3049a09a0994d94',
-                }),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-        });
+    it('return a test job when given the test job ID', async () => {
+        // test /job with valid data
+        login = await fetch('http://localhost:4000/job',
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                jobId: '12345',
+            }),
+            headers: {
+                cookie,
+            },
+            credentials: 'same-origin',
+        }).catch((e) => console.log(e));
+        json = await login.json();
+        assert(json.status, 'test /job should succeed');
+        assert(json.status === true, 'status should be true');
+        assert(json.job, 'test /job should return job');
+        assert(json.job.listingDate, 'jobs must have listing date');
     });
+    it('returns a false status and reason when given a non existing job id',
+    async () => {
+        // test /job with non existing job id
+        login = await fetch('http://localhost:4000/job',
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                jobId: '5afb702ad3049a09a0994d94',
+            }),
+            headers: {
+                cookie,
+            },
+            credentials: 'same-origin',
+        }).catch((e) => console.log(e));
+        json = await login.json();
+        assert(json.status === false,
+            'should not find non existing job id'
+        );
+        assert(json.reason, 'failiure should include reason');
+    });
+});
+describe('get user endpoint', () => {
+    it('returns the test user when searching for id: 10102449795812560',
+    async () => {
+        login = await fetch('http://localhost:4000/user',
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                userId: '10102449795812560',
+            }),
+            headers: {
+                cookie,
+            },
+            credentials: 'same-origin',
+        });
+        json = await login.json();
+        assert.isTrue(json.status);
+        assert.equal(json.user.name, 'TEST', 'Return user.name TEST');
+    });
+    it('doesnt return too much information when searching for other users',
+    async () => {
+        login = await fetch('http://localhost:4000/user',
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                id: '10160372275430055',
+            }),
+            headers: {
+                cookie,
+            },
+            credentials: 'same-origin',
+        });
+        json = await login.json();
+        assert.isTrue(json.status, 'returned false status');
+        assert.isNotOk(json.user.email,
+            'returned e-mail, emails should be private'
+        );
+        assert.equal(json.user.name, 'Yazid Mehenni', 'Return user.name Yazid');
+    });
+});
 
-    // test /uploadImage with non existing job id
-    // login = await fetch('http://localhost:4000/uploadImage?ext=jpg', {
-    //     method: 'PUT',
-    //     body: JSON.stringify({image: '234234234'}),
-    //     headers: {cookie},
-    //     credentials: 'same-origin'}).catch((e)=>console.log(e));
-    //     json = await login.json();
-    // assert(json.status === true, 'upload should work');
-    // assert(json.name, 'upload should include string');
+// test /uploadImage with non existing job id
+// login = await fetch('http://localhost:4000/uploadImage?ext=jpg', {
+//     method: 'PUT',
+//     body: JSON.stringify({image: '234234234'}),
+//     headers: {cookie},
+//     credentials: 'same-origin'}).catch((e)=>console.log(e));
+//     json = await login.json();
+// assert(json.status === true, 'upload should work');
+// assert(json.name, 'upload should include string');
 });
 

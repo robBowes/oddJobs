@@ -30,16 +30,37 @@ class PairsList extends Component {
         <div className="listedJobCard">
            <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
            <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Patron" }</h3>
-           <h2 className="jobTitleHeader">{x.jobTitle+"\n"}{x.dealMade?"(In Progress)":"(Pending)"}}</h2>
-           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>></button>
+           <h2 className="jobTitleHeader">{x.jobTitle+"\n"}{x.dealMade?"(In Progress)":"(Pending)"}</h2>
+           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{">"}</button>
         </div>
       )
     })
   }
+  mapPairedJobs =() => {
+    let pairedJobs = [...this.props.user.pairs]
+    console.log(pairedJobs)
+    return pairedJobs.map(x => {
+      return (
+        <div className="pairedJobCard">
+           <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
+           <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Helper" }</h3>
+           <h2 className="jobTitleHeader">{x.jobTitle+"\n"}{x.dealMade?"(In Progress)":"(Pending)"}</h2>
+           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{">"}</button>
+        </div>
+      )
+    })
+  }
+  goBack = (event) => {
+    event.preventDefault()
+    window.history.back();
+  }
   render() {
     return !this.props.user.loggedIn?<div><MoonLoader color="#05FF05"/></div>:(
       <div className="pairsPage">
+      <button className="backButton" onClick={this.goBack}>Back</button>
+      <h1 className="pairsPageHeader">{"Current & Pending Jobs"}</h1>
         {this.mapListedJobs()}
+        {this.mapPairedJobs()}
       </div>
     )
   }

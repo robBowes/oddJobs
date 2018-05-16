@@ -14,6 +14,16 @@ const deepUser = async (Job, user) => {
         });
         return job;
     });
+    if (user.location.lat) {
+        cleanPairs = cleanPairs.map((job)=>{
+            job.distance = r.distanceBetween(job, user);
+            return job;
+        });
+        userIsPatron = userIsPatron.map((job)=>{
+            job.distance = r.distanceBetween(job, user);
+            return job;
+        });
+    }
     returnUser.pairs = cleanPairs;
     returnUser.jobsListed = userIsPatron;
     return returnUser;
@@ -106,22 +116,6 @@ const allJobs = (Job) => async (user, location) => {
     user.location = location;
     user.update();
     let jobs = await Job.find();
-    jobs.forEach((job)=>{
-        // console.log('user location', parseFloat(user.location.lat), user.location.lng);
-        // console.log('job location', job.location.lat, job.location.lng);
-        // console.log(
-        //     geolib.getDistance(
-        //         {
-        //             latitude: parseFloat(user.location.lat),
-        //             longitude: parseFloat(user.location.lng),
-        //         }, {
-        //             latitude: parseFloat(job.location.lat),
-        //             longitude: parseFloat(job.location.lng),
-        //         }
-        //     )
-        // );
-    });
-    // console.log(jobs);
     return {status: true, content: jobs};
 };
 

@@ -27,7 +27,29 @@ class UserSettings extends Component {
   componentWillReceiveProps = props => {
     this.setState(props);
   };
-  handleSubmitButton = event => {};
+  handleSubmitButton = event => {
+    event.preventDefault();
+    fetch('/modify', {
+      method: "PUT",
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        description: this.state.description,
+        maxDistance: this.state.maxDistance,
+        minPrice: this.state.minPrice,
+        maxPrice: this.state.maxPrice,
+        categories: this.state.categories,
+      })
+    })
+    .then(x => x.json())
+    .then(y => {
+      console.log(y)
+      if (!y.status) throw new Error(y.reason)
+      this.props.dispatch({
+        type: 'USER_UPDATE',
+        payload: y.user,
+      })
+    })
+  };
   handleDescriptionChange = event => {
     this.setState({ description: event.target.value });
   };
@@ -72,6 +94,9 @@ class UserSettings extends Component {
       );
     });
   };
+  goBack = () => {
+    window.history.back();
+  }
   componentDidMount = () => {
     this.setState({ loading: false });
   };
@@ -80,6 +105,7 @@ class UserSettings extends Component {
       <div>Loading</div>
     ) : (
       <div className="userSettingsPage">
+        <button className="backButton" onClick={this.goBack}>Back</button>
         <img
           className="userPicture"
           src={this.props.picture ? this.props.picture.data.url : ""}

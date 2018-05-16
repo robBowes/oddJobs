@@ -27,7 +27,7 @@ describe('OddJobs', function() {
     ][Math.floor(Math.random() * 5)];
     after(() => {
         Job.deleteMany({
-            jobDescription: 'test',
+            jobTitle: 'test',
         }, (err) => err ? console.log(err) : null);
     });
     let user;
@@ -114,6 +114,7 @@ describe('Server', () => {
         });
     });
     describe('add job', () => {
+        let id;
         it('returns a job on the endpoint', async () => {
             login = await fetch('http://localhost:4000/addJob', {
             method: 'PUT',
@@ -129,14 +130,17 @@ describe('Server', () => {
                 credentials: 'same-origin',
             });
             json = await login.json();
+            id = json.job.id;
             assert.isTrue(json.status, 'test add Job should succeed');
             assert(json.job.patronId && json.job.listingDate,
                 'test add Job should return job'
             );
-            assert.isOk(json.job.location, 'location should esist');
+            assert.isOk(json.job.location, 'location should exist');
+            assert.isOk(json.job.location.lat, 'location should exist');
+            assert.isOk(json.job.location.lng, 'location should exist');
         });
         it('writes a job to the database', async () =>{
-            let job = await Job.findOne({id: '12345'});
+            let job = await Job.findOne({id});
             assert.isOk(job, 'test job exists');
             assert.isOk(job.location);
         });
@@ -286,7 +290,9 @@ describe('Server', () => {
                 credentials: 'same-origin',
             });
             json = await login.json();
-            assert.isNotTrue(json.status, 'should return false status');
+            assert.isTrue(json.status, 'should return true status');
+            assert.isOk(json.content, 'should include content');
+            assert.isArray(json.content, 'content is array');
         });
     });
     // test /uploadImage with non existing job id

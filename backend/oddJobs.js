@@ -38,10 +38,8 @@ const newJob = (Job) => async (user, jobDetails = {}) => {
     jobDetails.patronId = user.id;
     try {
         job = await new Job(jobDetails);
-        console.log(job);
         await job.save();
     } catch (error) {
-        // console.log(error.message);
         status = false;
         reason = 'Invalid job details';
         job = null;
@@ -50,7 +48,6 @@ const newJob = (Job) => async (user, jobDetails = {}) => {
 };
 
 const findJob = (Job) => async (body) => {
-    console.log(body);
     if (!body.id) return {status: false, reason: 'no body included'};
     const job = await Job.findOne(body);
     if (job) return {status: true, job};
@@ -85,6 +82,8 @@ const allJobs = (Job) => async (user, location) => {
         !location.lng ||
         !location.lat
     ) return {status: false, reason: 'no location information'};
+    let jobs = await Job.find();
+    return {status: true, content: jobs};
 };
 
 module.exports = {

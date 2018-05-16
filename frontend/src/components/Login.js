@@ -49,7 +49,6 @@ class Login extends Component {
     getpos()
     response.location={}
     if (response.id) {
-      console.log('TRYING TO LOGIN');
       fetch('/login', {
         method: 'POST',
         credentials: 'same-origin',
@@ -65,7 +64,7 @@ class Login extends Component {
             payload: y.user,
           });
         });
-        
+
 
       this.setState({loading: false});
     }

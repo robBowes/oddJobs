@@ -27,9 +27,10 @@ const findJob = oddJobs.findJob(Job);
 const findUser = oddJobs.findUser(User);
 const allJobs = oddJobs.allJobs(Job);
 const pairJob = oddJobs.pairJob(Job);
+const login = oddJobs.login(Job);
 
 // app.use(express.json({type: 'application/json'}));
-app.use(bodyParser.raw({type: 'image/*'}));
+app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));
 app.use(express.json({type: '*/*'}));
 app.use(cookieParser());
 app.use(express.static('data/images'));
@@ -39,7 +40,7 @@ app.post('/login', async (req, res)=>{
     let appToken = req.cookies.token;
     let ret = {status: true};
     if (appToken) ret.user = await userFromToken(req.cookies.token);
-    if (!ret.user) ret = await oddJobs.login(fb, req.cookies.token, User);
+    ret = await login(fb, req.cookies.token, User, ret.user);
     if (ret.status) res.cookie('token', ret.user.appToken);
     res.json(ret);
 });

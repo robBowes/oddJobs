@@ -9,7 +9,6 @@ import { MoonLoader } from "react-spinners";
 //A constantly rotating pair of jobs giving the impression of continuous flow
 //users will select yes or no, swiping left or right on jobs
 
-
 class Swiper extends Component {
   constructor(props) {
     super(props);
@@ -74,17 +73,7 @@ class Swiper extends Component {
       lat = x.coords.latitude;
       lng = x.coords.longitude;
     });
-    fetch('/modify',{
-        method: 'PUT',
-        body: JSON.stringify({location:{lat,lng}})
-    })
-    .then(x=>x.json())
-    .then(y=>{
-        this.props.dispatch({
-            type:'USER_UPDATE',
-            payload: y.user
-        })
-    })
+
     this.setState({
       cards: this.state.cards.filter((x, i) => {
         return parseInt(x.key) !== this.state.cards.length - 1;
@@ -92,20 +81,51 @@ class Swiper extends Component {
     });
   };
   renderCards = () => {
-    let newStack = []
-    let jobsShown = this.props.jobs.filter(x=>{
-        return x.patronId!==this.props.user.id
-    })
+    let newStack = [];
+    let filterOwn = this.props.jobs.filter(x => {
+      return x.patronId !== this.props.user.id;
+    });
+    let jobsShown = filterOwn.filter(x=>{
+        for (let i=0;i<this.props.rejected.length;i++){
+           if (this.props.rejected[i]===x.id){
+               return false
+           }
+        }
+        return true
+    }
+        )    
+    
+    
     for (let i = 0; i < jobsShown.length; i++) {
-      newStack = newStack.concat(<div key={i} className={"card " + (parseInt(i) + 1)} ref={"card" + (parseInt(i) + 1)} id={i} jobid={jobsShown[i].id}>
-          <img style={{ maxWidth: "100%", height: "auto" }} draggable="false" src={jobsShown[i].picture} alt="" />
-          <div style={{ fontSize: "10pt", top: "0%", backgroundColor: "white", position: "absolute" }}>
+      newStack = newStack.concat(
+        <div
+          key={i}
+          className={"card " + (parseInt(i) + 1)}
+          ref={"card" + (parseInt(i) + 1)}
+          id={i}
+          jobid={jobsShown[i].id}
+        >
+          <img
+            style={{ maxWidth: "100%", height: "auto" }}
+            draggable="false"
+            src={jobsShown[i].picture}
+            alt=""
+          />
+          <div
+            style={{
+              fontSize: "10pt",
+              top: "0%",
+              backgroundColor: "white",
+              position: "absolute"
+            }}
+          >
             <Link to={"/job" + jobsShown[i].id}>
               <button>details</button>
             </Link>
             {jobsShown[i].jobTitle}
           </div>
-        </div>);
+        </div>
+      );
     }
     this.props.dispatch({
       type: "UPDATE_STACK",
@@ -120,7 +140,7 @@ class Swiper extends Component {
     fetch("/allJobs", {
       method: "POST",
       credentials: "same-origin",
-      body: JSON.stringify({location:{lat:'123',lng:'456'}})
+      body: JSON.stringify({ location: { lat: "123", lng: "456" } })
     })
       .then(x => x.json())
       .then(y => {
@@ -137,6 +157,14 @@ class Swiper extends Component {
   };
 
   reject = e => {
+    const target = e.target;
+    const el = ReactDOM.findDOMNode(target);
+    //const card = this.state.stack.getCard(el);
+    let jobId = target.getAttribute("jobid")
+    this.props.dispatch({
+        type:'LEFT_SWIPE',
+        payload: jobId
+    })
     console.log("NOT THIS JOB");
   };
 
@@ -182,6 +210,7 @@ class Swiper extends Component {
 }
 
 const mapStateToProps = state => ({
+  rejected: state.data.rejected,  
   cards: state.data.cards,
   jobs: state.data.jobs,
   user: state.user

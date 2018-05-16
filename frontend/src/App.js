@@ -9,6 +9,9 @@ import {BrowserRouter, Link, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import WelcomeStaging from './components/WelcomeStaging';
 import WelcomeStaging2 from './components/WelcomeStaging2';
+import WelcomeStaging3 from './components/WelcomeStaging3';
+import NewJob from './components/NewJob'
+
 
 
 class App extends Component {
@@ -46,22 +49,32 @@ class App extends Component {
       }
     });
     }
-
-
     console.log(cookie);
+  }
+  resetWelcome = () => {
+    this.props.dispatch({
+    type: 'WELCOME_STATE',
+    payload: 0,
+    })
+  }
+  renderNewJob = () => {
+    return (<NewJob/>)
+  }
+  renderHome = () => {
+    return (this.props.loggedIn?(this.props.welcomeStage===3?<Swipe/>:''):<Landing/>)
   }
   render() {
     return (
       <BrowserRouter>
-      <div className="App">
-      {!this.props.loggedIn?<Landing/>:<Swipe/>}
-      <Settings style={{'display': this.state.currentPage==='settings'?'block':'none'}}/>
+      <div className="App">    
+      <button onClick={this.resetWelcome}> Reset Welcome </button>   
+      <Settings style={{'display': this.state.currentPage==='settings'?'block':'none'}}/>      
+      <Route exact={true} path='/' render={this.renderHome}/>
+      <Route exact={true} path='/listjob' render={this.renderNewJob}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>
-
        {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===1?<WelcomeStaging2/>:''):''}
-
-
+       {this.props.loggedIn?(this.props.welcomeStage===2?<WelcomeStaging3/>:''):''}
       </div>
       </BrowserRouter>
     );

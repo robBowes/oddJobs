@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import Swing, { Stack, Card, Direction } from "react-swing";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
 
 //The main function of the app
 //A constantly rotating pair of jobs giving the impression of continuous flow
@@ -18,50 +19,51 @@ class Swiper extends Component {
     this.state = {
       stack: null,
       cards: [],
-      loading:true
+      loading: true
     };
   }
-  componentWillReceiveProps=props=>{
+  componentWillReceiveProps = props => {
     //
-                        }
+  };
   swipeRight = x => {
-      if(this.state.cards.length>0){
-    const target = this.refs.stack.refs[
-      this.state.cards[this.state.cards.length - 1].ref
-    ];
+    if (this.state.cards.length > 0) {
+      const target = this.refs.stack.refs[
+        this.state.cards[this.state.cards.length - 1].ref
+      ];
 
-    // get Target Dom Element
-    const el = ReactDOM.findDOMNode(target);
+      // get Target Dom Element
+      const el = ReactDOM.findDOMNode(target);
 
-    // stack.getCard
-    const card = this.state.stack.getCard(el);
+      // stack.getCard
+      const card = this.state.stack.getCard(el);
 
-    // throwOut method call
-    card.throwOut(0, 0, Swing.DIRECTION.RIGHT);
-}
+      // throwOut method call
+      card.throwOut(0, 0, Swing.DIRECTION.RIGHT);
+    }
   };
 
   swipeLeft = x => {
-      if(this.state.cards.length>0){
-    // Swing Card Directions
+    if (this.state.cards.length > 0) {
+      // Swing Card Directions
 
-    // Swing Component Childrens refs
-    const target = this.refs.stack.refs[
-      this.state.cards[this.state.cards.length - 1].ref
-    ];
+      // Swing Component Childrens refs
+      const target = this.refs.stack.refs[
+        this.state.cards[this.state.cards.length - 1].ref
+      ];
 
-    // get Target Dom Element
-    const el = ReactDOM.findDOMNode(target);
+      // get Target Dom Element
+      const el = ReactDOM.findDOMNode(target);
 
-    // stack.getCard
-    const card = this.state.stack.getCard(el);
+      // stack.getCard
+      const card = this.state.stack.getCard(el);
 
-    // throwOut method call
-    card.throwOut(0, 0, Swing.DIRECTION.LEFT);
-    //    let b = {}
-    //    b.target = target
-    //this.removeCard(b)
-  }};
+      // throwOut method call
+      card.throwOut(0, 0, Swing.DIRECTION.LEFT);
+      //    let b = {}
+      //    b.target = target
+      //this.removeCard(b)
+    }
+  };
 
   removeCard = e => {
     const target = e.target;
@@ -105,15 +107,13 @@ class Swiper extends Component {
               position: "absolute"
             }}
           >
-          <Link to={'/job'+Object.keys(this.props.jobs)[0]
-          }>
-          <button>details</button>
-          </Link>
+            <Link to={"/job" + Object.keys(this.props.jobs)[0]}>
+              <button>details</button>
+            </Link>
             LMAO{i}
           </div>
         </div>
       );
-      
     }
     this.props.dispatch({
       type: "UPDATE_STACK",
@@ -126,22 +126,21 @@ class Swiper extends Component {
     return newStack;
   };
   componentWillMount = props => {
-      fetch("/allJobs", {
-        method: "POST",
-        credentials: "same-origin",
-        body: ""
-      })
-        .then(x => x.json())
-        .then(y => {
-          console.log(y);
-          this.props.dispatch({
-            type: "UPDATE_JOBS",
-            payload: y.content
+    fetch("/allJobs", {
+      method: "POST",
+      credentials: "same-origin",
+      body: ""
+    })
+      .then(x => x.json())
+      .then(y => {
+        console.log(y);
+        this.props.dispatch({
+          type: "UPDATE_JOBS",
+          payload: y.content
         });
         this.renderCards();
-        this.setState({ loading: false })
-        })
-    
+        this.setState({ loading: false });
+      });
   };
   accept = e => {
     console.log(e);
@@ -155,9 +154,11 @@ class Swiper extends Component {
 
   render() {
     console.log(Swing);
-    return this.state.loading?
-    (<div>Loading...</div>)
-    :(
+    return this.state.loading ? (
+      <div style={{ left: "40vw",top:'30vh', position: "absolute" }}>
+        <MoonLoader color="#000000" loading={this.state.loading} />
+      </div>
+    ) : (
       <div className="swipeContainer">
         SWIPER
         <Swing
@@ -169,7 +170,9 @@ class Swiper extends Component {
           throwoutleft={this.reject}
           throwoutright={this.accept}
         >
-              <div style={{'position':'absolute', 'bottom':'20%', 'left':'10%'}}>NO MORE CARDS</div>
+          <div style={{ position: "absolute", bottom: "20%", left: "10%" }}>
+            NO MORE CARDS
+          </div>
           {this.state.cards ? (
             this.state.cards.map(x => {
               return x;

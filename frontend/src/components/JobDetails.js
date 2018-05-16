@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { MoonLoader } from "react-spinners";
 
 //This component renders the details for a given job
 //When viewing job details page
@@ -17,7 +18,12 @@ class JobDetails extends Component {
     }
   render() {
       return this.state.loading?
-      <div>Loading...</div>
+     <div>
+    <MoonLoader 
+     color='#000000'
+      loading={this.state.loading}
+     />
+      </div>
       :
       <div>
           test

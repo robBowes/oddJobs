@@ -74,7 +74,8 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-      <div className="App">    
+      <div className="App">
+      <Link to = "/listjob"><button className="addJobButton">+</button></Link>   
       <button onClick={this.resetWelcome}> Reset Welcome </button>   
       <Settings style={{'display': this.state.currentPage==='settings'?'block':'none'}}/>      
       <Route exact={true} path='/' render={this.renderHome}/>

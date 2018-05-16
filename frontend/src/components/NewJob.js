@@ -117,6 +117,9 @@ class NewJob extends Component {
       })
       .catch((e) => console.log(e));
   }
+  goBack = () => {
+    window.history.back();
+  }
   componentWillMount = () => {
     // Start Google Maps API loading since we know we'll soon need it
     this.getGoogleMaps();
@@ -125,7 +128,7 @@ class NewJob extends Component {
     return (
       <div className="newJobPage">
       
-      <button className="backButton" onClick={window.history.back()}>Back</button>
+      <button className="backButton" onClick={this.goBack}>Back</button>
   
         <h1 className="pageTitle">
           New Job

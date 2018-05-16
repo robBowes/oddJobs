@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {FacebookLogin} from 'react-facebook-login-component';
 
-const responseFacebook = (response) => {
-  console.log(response);
-};
+
 
 // This Login Component will render the FB login
 
@@ -27,27 +25,38 @@ class Login extends Component {
   responseFacebook = (response) => {
     let lat;
     let lng;
-    navigator.geolocation.getCurrentPosition(x => {
-      console.log(x);
+    let getpos = async()=>{
+      let result = await navigator.geolocation.getCurrentPosition(x => {
+        console.log(x)
       lat =x.coords.latitude;
       lng =x.coords.longitude;
-      ;
-    });
-    console.log(response);
+      let loc = {lat, lng}
+      console.log(loc)
+      fetch('/modify',{
+        method:'PUT',
+        credentials: 'same-origin',
+        body: JSON.stringify({location: loc})
+      }).then(x=>x.json())
+      .then(y=>{
+        console.log(y)
+        this.props.dispatch({
+          type:'USER_UPDATE',
+          payload: y.user.location
+        })
+      })
+    })
+    }
+    getpos()
     response.location={}
-    response.location.lat=lat
-    response.location.lng=lng
     if (response.id) {
       fetch('/login', {
         method: 'POST',
         credentials: 'same-origin',
         body: JSON.stringify(response),
       })
-      .then((x) => x.json())
-      .then((y) => {
-        console.log(y);
-        console.log('LOGIN');
-        if (!y.status) {
+        .then((x) => x.json())
+        .then((y) => {
+          if (!y.status) {
             throw new Error('FAILED LOGIN');
           }
           this.props.dispatch({

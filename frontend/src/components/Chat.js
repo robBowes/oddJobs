@@ -14,7 +14,11 @@ class Chat extends Component{
             loading: true
         }
     }
+    componentDidUpdate=()=>{
+        
+    }
     componentDidMount=()=>{
+        if(this.state.loading){
          fetch('/user',{
              method:'POST',
              credentials: 'same-origin',
@@ -33,15 +37,15 @@ class Chat extends Component{
              console.log(z)
             this.setState({
               loading: false,
-              messages: z.user.jobsListed[0].messages[1]
+              messages: z.user.jobsListed[0].messages[0]
                 .messages,
               job: z.user.jobsListed[0]
             });
-         })
+         })}
     }
     componentWillReceiveProps=(props)=>{
         if(!this.state.job && !this.state.userId){
-        this.setState({job: props.user.jobsListed[0], userId: props.user.id, loading: false})}
+        this.setState({job: props.user.jobsListed[0], userId: props.user.id})}
     }
     goBack=()=>{
         window.history.back()
@@ -66,7 +70,7 @@ class Chat extends Component{
                 payload: y.user
             })
             
-            this.setState({messages:y.user.jobsListed[0].messages[1].messages})
+            this.setState({messages:y.user.jobsListed[0].messages[0].messages})
         })
         .then(()=>{
         })

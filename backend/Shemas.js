@@ -111,6 +111,17 @@ JobSchema.methods.addDeal = function(userId) {
     return this.toObject();
 };
 
+JobSchema.methods.removePatron = function() {
+    this.patronId = 'deleted';
+    this.pairedHelpers = [];
+    this.save();
+};
+
+JobSchema.methods.removeHelper = function(id) {
+    this.pairedHelpers = this.pairedHelpers.filter((helper)=>helper!== id);
+    this.save();
+};
+
 const Job = mongoose.model('Job', JobSchema);
 // const User = mongoose.model('User', UserSchema);
 

@@ -15,11 +15,15 @@ const deepUser = async (Job, user) => {
         return job;
     });
     cleanPairs = cleanPairs.map((job)=>{
-        job.distance = r.distanceBetween(job, user);
+        if (job.location.lat && user.location.lat) {
+            job.distance = r.distanceBetween(job, user);
+        }
         return job;
     });
     userIsPatron = userIsPatron.map((job)=>{
-        job.distance = r.distanceBetween(job, user);
+        if (job.location.lat && user.location.lat) {
+            job.distance = r.distanceBetween(job, user);
+        }
         return job;
     });
     returnUser.pairs = cleanPairs;
@@ -43,110 +47,125 @@ const login = (Job)=> async (fb, cookie, User, user) => {
     if (!user &&
         (!fb.id ||
             !fb.name ||
-            !fb.accessToken)
-        ) return {status: false, reason: 'no facebook data'};
-        let fbIsValid;
-        if (fb) fbIsValid = r.checkFbToken(fb);
-        if (!user) {
-            user = await User.findOne({id: fb.id});
-            user.appToken = sha1(Date.now());
-            user.save();
-        }
-        if (!user) {
-            user = new User(fb);
-            user.appToken = sha1(Date.now());
-            user.save();
-        }
-        let newUser = await deepUser(Job, user);
-        return {status: true, user: newUser};
-    };
+            !fb.accessToken
+        )
+    ) return {status: false, reason: 'no facebook data'};
+    let fbIsValid;
+    if (fb) fbIsValid = r.checkFbToken(fb);
+    if (!user) {
+        user = await User.findOne({id: fb.id});
+        user.appToken = sha1(Date.now());
+        user.save();
+    }
+    if (!user) {
+        user = new User(fb);
+        user.appToken = sha1(Date.now());
+        user.save();
+    }
+    let newUser = await deepUser(Job, user);
+    return {status: true, user: newUser};
+};
 
-    const newJob = (Job) => async (user, jobDetails = {}) => {
-        if (!user) return {status: false, reason: 'no user found'};
-        let status = true;
-        let reason;
-        jobDetails.patronId = user.id;
-        try {
-            job = await new Job(jobDetails);
-            await job.save();
-        } catch (error) {
-            status = false;
-            reason = 'Invalid job details';
-            job = null;
-        }
-        return {status, job, reason};
-    };
-
-    const findJob = (Job) => async (body) => {
-        if (!body.id) return {status: false, reason: 'no body included'};
-        const job = await Job.findOne(body);
-        if (job) return {status: true, job};
-        else return {status: false, reason: 'job could not be found'};
-    };
-
-    const uploadImage = (req) => {
-        let extension = req.query.ext.split('.').pop();
-        if (extension.length < 1) {
-            return {status: false, reason: 'invalid extension'};
-        }
-        if (!req.body) {
-            return {status: false, reason: 'empty image body'};
-        }
-        let randomString = '' + Math.floor(Math.random() * 10000000);
-        let filename = randomString + '.' + extension;
-        fs.writeFile('./data/images/' + filename, req.body,
-        (err)=>err?console.log(err):null);
-        return {status: true, name: filename};
-    };
-
-    const findUser = (User) =>async (params) => {
-        let user = await User.findOne(params);
-        if (!user) return {status: false, reason: 'No user found'};
-        let cleanUser = user.clean();
-        return {status: true, user: cleanUser};
-    };
-
-    const allJobs = (Job) => async (user, location) => {
-        if (!user) return {status: false, reason: 'no user information'};
-        if (!location ||
-            !location.lng ||
-            !location.lat
-        ) return {status: false, reason: 'no location information'};
-        user.location = location;
-        user.update();
-        let jobs = await Job.find();
-        return {status: true, content: jobs};
-    };
-
-    const pairJob = (Job) => async (user, jobId) =>{
-        if (!user) return {status: false, reason: 'no user information'};
-        if (!jobId.id) return {status: false, reason: 'no job information'};
-        let job = await Job.findOne(jobId);
-        job.addHelper(user.id);
+const newJob = (Job) => async (user, jobDetails = {}) => {
+    if (!user) return {status: false, reason: 'no user found'};
+    let status = true;
+    let reason;
+    jobDetails.patronId = user.id;
+    try {
+        job = await new Job(jobDetails);
         await job.save();
-        let newUser = await deepUser(Job, user);
-        console.log(newUser);
-        return {status: true, job, user: newUser};
-    };
+    } catch (error) {
+        status = false;
+        reason = 'Invalid job details';
+        job = null;
+    }
+    return {status, job, reason};
+};
 
-    const offerDeal = (Job) => async (user, jobId) =>{
-        if (!user) return {status: false, reason: 'no user information'};
-        if (!jobId.id) return {status: false, reason: 'no job information'};
-        let job = await Job.findOne(jobId);
-        let jobWithDeal = await job.addDeal(user.id);
-        return {status: true, job: jobWithDeal};
-    };
+const findJob = (Job) => async (body) => {
+    if (!body.id) return {status: false, reason: 'no body included'};
+    const job = await Job.findOne(body);
+    if (job) return {status: true, job};
+    else return {status: false, reason: 'job could not be found'};
+};
 
-    module.exports = {
-        modify,
-        newJob,
-        login,
-        findJob,
-        uploadImage,
-        findUser,
-        allJobs,
-        pairJob,
-        offerDeal,
-    };
+const uploadImage = (req) => {
+    let extension = req.query.ext.split('.').pop();
+    if (extension.length < 1) {
+        return {status: false, reason: 'invalid extension'};
+    }
+    if (!req.body) {
+        return {status: false, reason: 'empty image body'};
+    }
+    let randomString = '' + Math.floor(Math.random() * 10000000);
+    let filename = randomString + '.' + extension;
+    fs.writeFile('./data/images/' + filename, req.body,
+    (err)=>err?console.log(err):null);
+    return {status: true, name: filename};
+};
+
+const findUser = (User) =>async (params) => {
+    let user = await User.findOne(params);
+    if (!user) return {status: false, reason: 'No user found'};
+    let cleanUser = user.clean();
+    return {status: true, user: cleanUser};
+};
+
+const allJobs = (Job) => async (user, location) => {
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!location ||
+        !location.lng ||
+        !location.lat
+    ) return {status: false, reason: 'no location information'};
+    user.location = location;
+    user.update();
+    let jobs = await Job.find();
+    return {status: true, content: jobs};
+};
+
+const pairJob = (Job) => async (user, jobId) =>{
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!jobId.id) return {status: false, reason: 'no job information'};
+    let job = await Job.findOne(jobId);
+    job.addHelper(user.id);
+    await job.save();
+    let newUser = await deepUser(Job, user);
+    return {status: true, job, user: newUser};
+};
+
+const offerDeal = (Job) => async (user, jobId) =>{
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!jobId.id) return {status: false, reason: 'no job information'};
+    let job = await Job.findOne(jobId);
+    if (!job) return {status: false, reason: 'job not found'};
+    let jobWithDeal = await job.addDeal(user.id);
+    return {status: true, job: jobWithDeal};
+};
+
+const rejectJob = (Job) => async (user, jobId) => {
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!jobId) return {status: false, reason: 'no job information'};
+    let job = await Job.findOne({id: jobId});
+    if (!job) return {status: false, reason: 'job not found'};
+    console.log(job);
+    if (user.id ===job.patronId) {
+        job.removePatron();
+        return {status: true, user: await deepUser(Job, user)};
+    } else await job.removeHelper(user.id);
+    return {status: true, user: await deepUser(Job, user)};
+};
+
+module.exports = {
+    modify,
+    newJob,
+    login,
+    findJob,
+    uploadImage,
+    findUser,
+    allJobs,
+    pairJob,
+    offerDeal,
+    rejectJob,
+};
 
 

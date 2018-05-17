@@ -10,19 +10,38 @@ class Chat extends Component{
         this.state={
             message: '',
             messages: [],
-            job: ''
+            job: undefined,
+            loading: true
         }
     }
-    componentDidMount=()=>{
-        // fetch('/user',{
-        //     method:'',
-        //     credentials: 'same-origin',
-        //     body: JSON.stringify
-        // })
+    componentDidUpdate=()=>{
+         fetch('/user',{
+             method:'POST',
+             credentials: 'same-origin',
+             body: JSON.stringify({userId: this.props.user.id})
+         })
+         .then(x=>x.json())
+         .then(y=>{
+             console.log(y)
+             this.props.dispatch({
+                 type: 'USER_UPDATE',
+                 payload: y.user
+             })
+             return y
+         })
+         .then(z=>{
+             console.log(z)
+            this.setState({
+              loading: false,
+              messages: z.user.jobsListed[0].messages[1]
+                .messages,
+              job: z.user.jobsListed[0]
+            });
+         })
     }
     componentWillReceiveProps=(props)=>{
-        if(!this.state.job){
-        this.setState({job: props.user.jobsListed[0]})}
+        if(!this.state.job && !this.state.userId){
+        this.setState({job: props.user.jobsListed[0], userId: props.user.id, loading: false})}
     }
     goBack=()=>{
         window.history.back()
@@ -42,10 +61,9 @@ class Chat extends Component{
         })
         .then(x=>x.json())
         .then(y=>{
-            console.log(y)
             this.props.dispatch({
-                type: 'USER_UPDATE',
-                jobsListed: y.user
+                type: 'MESSAGE_UPDATE',
+                payload: y.user
             })
             
             this.setState({messages:y.user.jobsListed[0].messages[1].messages})
@@ -55,20 +73,18 @@ class Chat extends Component{
         //this.setState({messages: messages})
         document.getElementById('chatbar').value=''
     }
-    componentDidUpdate=()=>{
-
-    }
+    
     renderMessages=()=>{
         return this.state.messages.map((x,i)=>{
             return <li id={x.id} key={i}>{x.userId+': '+x.message}</li>
         })
     }
     render(){
-    return !this.state.job.id?
+    return this.state.loading?
     <div>LOAD</div>:<div>
         <button onClick={this.goBack}>BACK</button>
         <button>HOME</button>
-        <div className="chatWindow">
+        <div style={{overflowY: 'scroll'}} className="chatWindow">
           <ul>{this.renderMessages()}</ul>
         </div>
         <div style={{ bottom: "0vh", position: "absolute" }}  className="chatInput">

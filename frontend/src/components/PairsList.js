@@ -29,22 +29,10 @@ class PairsList extends Component {
     return listedJobs.map((x) => {
       return (
         <div className="listedJobCard">
-<<<<<<< HEAD
            <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
            <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Patron" }</h3>
            <h2 className="jobTitleHeader">{x.jobTitle}<br/>{x.dealMade?"(In Progress)":"(Pending)"}</h2>
            <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{">"}</button>
-||||||| merged common ancestors
-           <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
-           <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Patron" }</h3>
-           <h2 className="jobTitleHeader">{x.jobTitle+"\n"}{x.dealMade?"(In Progress)":"(Pending)"}</h2>
-           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{">"}</button>
-=======
-           <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button>
-           <h3 className="jobDetailsHeader">{'$'+x.jobPay + ' - Patron' }</h3>
-           <h2 className="jobTitleHeader">{x.jobTitle+'\n'}{x.dealMade?'(In Progress)':'(Pending)'}{Math.floor(x.distance/1000)}Km</h2>
-           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{'>'}</button>
->>>>>>> c1330d3d89b7bc1c81c06e74921cb7b9b6c00afe
         </div>
       );
     });
@@ -55,22 +43,10 @@ class PairsList extends Component {
     return pairedJobs.map((x) => {
       return (
         <div className="pairedJobCard">
-<<<<<<< HEAD
            <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
            <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Helper" }</h3>
            <h2 className="jobTitleHeader">{x.jobTitle}<br/>{x.dealMade?"(In Progress)":"(Pending)"}</h2>
            <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{">"}</button>
-||||||| merged common ancestors
-           <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
-           <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Helper" }</h3>
-           <h2 className="jobTitleHeader">{x.jobTitle+"\n"}{x.dealMade?"(In Progress)":"(Pending)"}</h2>
-           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{">"}</button>
-=======
-           <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button>
-           <h3 className="jobDetailsHeader">{'$'+x.jobPay + ' - Helper' }</h3>
-           <h2 className="jobTitleHeader">{x.jobTitle+'\n'}{x.dealMade?'(In Progress)':'(Pending)'}</h2>
-           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{'>'}</button>
->>>>>>> c1330d3d89b7bc1c81c06e74921cb7b9b6c00afe
         </div>
       );
     });

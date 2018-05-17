@@ -56,6 +56,7 @@ class Login extends Component {
           if (!y.status) {
             throw new Error('FAILED LOGIN');
           }
+          getpos();
           this.props.dispatch({
             type: 'USER_UPDATE',
             payload: y.user,

@@ -78,9 +78,9 @@ const JobSchema = new mongoose.Schema({
     messages: [{
         // jobId: {type: String, required: true},
         time: {type: Number, default: 0},
-        userId: {type: Number, required: true},
+        userId: {type: String, required: true},
         messages: [{
-            user: String,
+            userId: String,
             message: String,
         }],
     }],
@@ -117,14 +117,18 @@ JobSchema.methods.removePatron = function() {
 };
 
 JobSchema.methods.addMessage = function(user, message) {
-    let userMessages = this.messages.find((m)=>m.userId ===user.id);
-    if (!userMessages) {
-        message = {
+    let chatRoom = this.messages.find((m)=>m.userId ==user.id);
+    if (!chatRoom) {
+        chatRoom = {
             time: Date.now(),
             userId: user.id,
+            messages: [],
         };
+        this.messages = [...this.messages, chatRoom];
     }
-    userMessages.messages = [...userMessages.messages, {user: user.id, message: message}];
+    let chatId = this.messages.findIndex((m)=>m.userId ==user.id);
+    chatRoom.messages = chatRoom.messages.concat({userId: user.id, message: message});
+    this.messages[chatId] = chatRoom;
     this.save();
 };
 

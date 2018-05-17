@@ -110,6 +110,7 @@ app.post('/job', async (req, res)=>{
 });
 
 app.put('/sendMessage', async (req, res)=>{
+    console.log(req.body);
     let user = await userFromToken(req.cookies.token);
     let reply = await sendMessage(user, req.body);
     res.json(reply);

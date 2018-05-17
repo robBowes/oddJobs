@@ -163,6 +163,7 @@ const rejectJob = (Job) => async (user, jobId) => {
 };
 
 const sendMessage = (Job) => async (user, body) => {
+    // console.log(user, body);
     if (!user) return {status: false, reason: 'no user information'};
     if (!body.id) return {status: false, reason: 'no job information'};
     let job = await Job.findOne({id: body.id});

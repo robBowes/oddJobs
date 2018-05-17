@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
     picture: Object,
     jobsListed: [Object],
     pairs: [Object],
+    distance: {type: String, default: 0},
     location: {
         lat: {type: String},
         lng: {type: String},

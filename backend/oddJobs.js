@@ -5,9 +5,9 @@ const fs = require('fs');
 const geolib = require('geolib');
 
 const deepUser = async (Job, user) => {
-    let userIsPatron = await Job.find({patronId: user.id});
-    let userIsPair = await Job.find({pairedHelpers: user.id});
-    let returnUser = {...user.toObject()};
+    let userIsPatron = await Job.find({patronId: user.id}).lean();
+    let userIsPair = await Job.find({pairedHelpers: user.id}).lean();
+    let returnUser = user.toObject();
     let cleanPairs = userIsPair.map((job)=>{
         job.messages = job.messages.filter((messageObj)=>{
             return messageObj.userId === user.id;
@@ -57,7 +57,8 @@ const login = (Job)=> async (fb, cookie, User, user) => {
             user.appToken = sha1(Date.now());
             user.save();
         }
-        return {status: true, user: await deepUser(Job, user)};
+        let newUser = await deepUser(Job, user);
+        return {status: true, user: newUser};
     };
 
     const newJob = (Job) => async (user, jobDetails = {}) => {
@@ -147,6 +148,5 @@ const login = (Job)=> async (fb, cookie, User, user) => {
         pairJob,
         offerDeal,
     };
-
 
 

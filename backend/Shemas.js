@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
         jobsCompleted: Number,
         jobsCanceled: Number,
     },
-    jobInProgress: Boolean,
+    jobInProgress: {type: Boolean, default: false},
     welcomeStage: {type: Number, default: 0},
     name: String,
     email: String,
@@ -64,9 +64,9 @@ const JobSchema = new mongoose.Schema({
     picture: {type: String, required: true},
     helperId: String,
     pairedHelpers: [String],
-    dealsOfferedByPatron: [],
-    dealsOfferedByHelpers: [],
-    dealMade: Boolean,
+    dealsOfferedByPatron: [String],
+    dealsOfferedByHelpers: [String],
+    dealMade: {type: Boolean, default: false},
     location: {
         lat: {type: String, required: true},
         lng: {type: String, required: true},
@@ -78,7 +78,7 @@ const JobSchema = new mongoose.Schema({
     completedByHelper: {type: Boolean, default: false},
     messages: [{
         // jobId: {type: String, required: true},
-        lastMessage: Number,
+        lastMessage: {type: Number, default: 0},
         userId: {type: Number, required: true},
         messages: [{
             user: String,

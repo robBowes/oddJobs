@@ -54,14 +54,13 @@ const login = (Job)=> async (fb, cookie, User, user) => {
     if (fb) fbIsValid = r.checkFbToken(fb);
     if (!user) {
         user = await User.findOne({id: fb.id});
+        if (!user) {
+            user = await new User(fb);
+        }
         user.appToken = sha1(Date.now());
         user.save();
     }
-    if (!user) {
-        user = new User(fb);
-        user.appToken = sha1(Date.now());
-        user.save();
-    }
+
     let newUser = await deepUser(Job, user);
     return {status: true, user: newUser};
 };

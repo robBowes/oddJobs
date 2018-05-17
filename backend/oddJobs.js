@@ -127,6 +127,7 @@ const uploadImage = (req) => {
 };
 
 const findUser = (User) =>async (params) => {
+    if (!User) return {status: false, reason: 'server error'};
     let user = await User.findOne(params);
     if (!user) return {status: false, reason: 'No user found'};
     let cleanUser = user.clean();

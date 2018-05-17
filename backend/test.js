@@ -98,11 +98,15 @@ const fetchConstructor = (cookie, method) => {
         return json;
     };
 };
-let cookie = 'token=test';
-const postWithCookie = fetchConstructor(cookie, 'POST');
+const cookie1 = 'token=test';
+const cookie2 = 'token=983d23585c000312ea1a7359e49caf344a462003';
+const user2Id = '110068453205089';
 const postNoCookie = fetchConstructor(null, 'POST');
 const putNoCookie = fetchConstructor(null, 'POST');
-const putWithCookie = fetchConstructor(cookie, 'PUT');
+const postUser1 = fetchConstructor(cookie1, 'POST');
+const putUser1 = fetchConstructor(cookie1, 'PUT');
+const postUser2 = fetchConstructor(cookie2, 'POST');
+const putUser2 = fetchConstructor(cookie2, 'PUT');
 
 let testJobInfo = {
     jobDescription: 'test',
@@ -121,7 +125,7 @@ describe('Server', () => {
             );
         });
         it('logs in with test cookie', async () => {
-            let reply = await postWithCookie('/login');
+            let reply = await postUser1('/login');
             assert.isTrue(reply.status, reply.reason);
             assert(reply.status && reply.user.name === 'TEST',
             'test cookie should return test user' );
@@ -131,7 +135,7 @@ describe('Server', () => {
     });
     describe('add job', () => {
         it('returns a job on the endpoint', async () => {
-            let json = await putWithCookie('/addJob', testJobInfo);
+            let json = await putUser1('/addJob', testJobInfo);
             newJobId = json.job.id;
             assert.isTrue(json.status, 'test add Job should succeed');
             assert(json.job.patronId && json.job.listingDate,
@@ -403,17 +407,35 @@ describe('Server', () => {
     describe('create, reject, find job as patron', ()=>{
         let jobId;
         it('creates a job', async () => {
-            let reply = await putWithCookie('/addJob', testJobInfo);
+            let reply = await putUser1('/addJob', testJobInfo);
             jobId =reply.job.id;
             assert.isTrue(reply.status, reply.reason);
             assert.isOk(jobId, 'returns job id');
         });
         it('rejects a job', async () => {
-            let reply = await putWithCookie('/rejectJob', {id: jobId});
+            let reply = await putUser1('/rejectJob', {id: jobId});
             assert.isTrue(reply.status, reply.reason);
         });
         it('returns a job with no patron', async () => {
-            let reply = await postWithCookie('/job', {id: jobId});
+            let reply = await postUser1('/job', {id: jobId});
+            assert.isTrue(reply.status, reply.reason);
+        });
+    });
+    describe('create job, user 2 pairs, both parties make a deal', ()=>{
+        let jobId;
+        it('creates a job', async () => {
+            let reply = await putUser1('/addJob', testJobInfo);
+            jobId =reply.job.id;
+            assert.isTrue(reply.status, reply.reason);
+            assert.isOk(jobId, 'returns job id');
+        });
+        it('gets accepted by user2', async () => {
+            let reply = await putUser2('/pair', {id: jobId});
+            assert.isTrue(reply.status, reply.reason);
+            assert.equal();
+        });
+        it('returns a job with no patron', async () => {
+            let reply = await postUser1('/job', {id: jobId});
             assert.isTrue(reply.status, reply.reason);
         });
     });

@@ -20,6 +20,7 @@ const checkFbToken = async (fb) => {
 };
 
 const findToken = (db) => async (token) =>{
+    if (!token) return null;
     let user = await db.findOne({appToken: token});
     return user;
 };

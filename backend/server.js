@@ -32,6 +32,10 @@ const makeDeal = oddJobs.offerDeal(Job);
 const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 
+const verbose = (obj) => {
+    if (true)console.log(obj);
+};
+
 // app.use(express.json({type: 'application/json'}));
 app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));
 app.use(express.json({type: '*/*'}));
@@ -40,6 +44,7 @@ app.use(express.static('data/images'));
 
 
 app.post('/login', async (req, res)=>{
+    verbose('login');
     let ret = {status: true};
     try {
         let fb = req.body;
@@ -54,12 +59,14 @@ app.post('/login', async (req, res)=>{
 });
 
 app.put('/modify', async (req, res)=>{
+    verbose('modify');
     let user = await userFromToken(req.cookies.token);
     let reply = await oddJobs.modify(user, req.body);
     res.json(reply);
 });
 
 app.post('/allJobs', async (req, res)=>{
+    verbose('allJobs');
     let user = await userFromToken(req.cookies.token);
     let reply = await allJobs(user, req.body.location);
     res.json(reply);
@@ -77,7 +84,8 @@ app.put('/deal', async (req, res)=>{
     res.json(job);
 });
 
-app.put('/completeJob', (req, res)=>{
+app.put('/completeJob', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
     res.json({'status': true, 'job': testData.job});
 });
 

@@ -116,7 +116,7 @@ JobSchema.methods.removePatron = function() {
     this.save();
 };
 
-JobSchema.methods.addMessage = function(user, message) {
+JobSchema.methods.addMessage = async function(user, message) {
     let chatRoom = this.messages.find((m)=>m.userId ==user.id);
     if (!chatRoom) {
         chatRoom = {
@@ -129,7 +129,7 @@ JobSchema.methods.addMessage = function(user, message) {
     let chatId = this.messages.findIndex((m)=>m.userId ==user.id);
     chatRoom.messages = chatRoom.messages.concat({userId: user.id, message: message});
     this.messages[chatId] = chatRoom;
-    this.save();
+    await this.save();
 };
 
 JobSchema.methods.removeHelper = function(id) {

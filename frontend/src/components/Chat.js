@@ -14,7 +14,7 @@ class Chat extends Component{
             loading: true
         }
     }
-    componentDidUpdate=()=>{
+    componentDidMount=()=>{
          fetch('/user',{
              method:'POST',
              credentials: 'same-origin',

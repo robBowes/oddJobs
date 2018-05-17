@@ -15,6 +15,9 @@ class Chat extends Component{
         }
     }
     componentDidUpdate=()=>{
+        
+    }
+    componentDidMount=()=>{
         if(this.state.loading){
          fetch('/user',{
              method:'POST',
@@ -34,7 +37,7 @@ class Chat extends Component{
              console.log(z)
             this.setState({
               loading: false,
-              messages: z.user.jobsListed[0].messages[1]
+              messages: z.user.jobsListed[0].messages[0]
                 .messages,
               job: z.user.jobsListed[0]
             });
@@ -67,7 +70,7 @@ class Chat extends Component{
                 payload: y.user
             })
             
-            this.setState({messages:y.user.jobsListed[0].messages[1].messages})
+            this.setState({messages:y.user.jobsListed[0].messages[0].messages})
         })
         .then(()=>{
         })

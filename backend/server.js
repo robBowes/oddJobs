@@ -27,7 +27,7 @@ const findJob = oddJobs.findJob(Job);
 const findUser = oddJobs.findUser(User);
 const allJobs = oddJobs.allJobs(Job);
 const pairJob = oddJobs.pairJob(Job);
-const login = oddJobs.login(Job);
+const login = oddJobs.login(Job, User);
 const makeDeal = oddJobs.offerDeal(Job);
 const rejectJob = oddJobs.rejectJob(Job);
 

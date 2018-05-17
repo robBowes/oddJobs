@@ -4,7 +4,8 @@ const r = require('./utils');
 const fs = require('fs');
 const geolib = require('geolib');
 
-const deepUser = async (Job, user) => {
+const deepUser = async (Job, user, User) => {
+    let findUserInner = findUser(User);
     let userIsPatron = await Job.find({patronId: user.id}).lean();
     let userIsPair = await Job.find({pairedHelpers: user.id}).lean();
     let returnUser = user.toObject();
@@ -14,10 +15,16 @@ const deepUser = async (Job, user) => {
         });
         return job;
     });
-    cleanPairs = cleanPairs.map((job)=>{
+    cleanPairs = cleanPairs.map(async (job)=>{
         if (job.location.lat && user.location.lat) {
             job.distance = r.distanceBetween(job, user);
         }
+        job.pairedHelpers = job.pairedHelpers.map(async (helper)=>{
+            let obj = {id: helper};
+            let reply = await findUserInner(obj);
+            return reply.user;
+        });
+        job.pairedHelpers = await Promise.all(job.pairedHelpers);
         return job;
     });
     userIsPatron = userIsPatron.map((job)=>{
@@ -26,6 +33,8 @@ const deepUser = async (Job, user) => {
         }
         return job;
     });
+    cleanPairs = await Promise.all(cleanPairs);
+    console.log(cleanPairs);
     returnUser.pairs = cleanPairs;
     returnUser.jobsListed = userIsPatron;
     return returnUser;
@@ -43,13 +52,14 @@ const modify = async (user, newProps) =>{
     return {status, user, reason};
 };
 
-const login = (Job)=> async (fb, cookie, User, user) => {
+const login = (Job, User)=> async (fb, cookie, User, user) => {
     if (!user &&
         (!fb.id ||
             !fb.name ||
             !fb.accessToken
         )
     ) return {status: false, reason: 'no facebook data'};
+
     let fbIsValid;
     if (fb) fbIsValid = r.checkFbToken(fb);
     if (!user) {
@@ -61,7 +71,7 @@ const login = (Job)=> async (fb, cookie, User, user) => {
         user.save();
     }
 
-    let newUser = await deepUser(Job, user);
+    let newUser = await deepUser(Job, user, User);
     return {status: true, user: newUser};
 };
 

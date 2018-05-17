@@ -49,7 +49,6 @@ UserSchema.methods.clean = function() {
     cleanUser.description = dirtyUser.description;
     cleanUser.lastLoginDate = dirtyUser.lastLoginDate;
     cleanUser.statistics = dirtyUser.statistics;
-    cleanUser.jobInProgress = dirtyUser.lastLoginDate;
     return cleanUser;
 };
 

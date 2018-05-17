@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {MoonLoader} from 'react-spinners';
+import { Link } from 'react-router-dom';
 
 // The PairsList component will render a given users pairs
 // Pairs for jobs posted and jobs applied for will appear in different colors
@@ -17,10 +18,7 @@ class PairsList extends Component {
     };
   }
   removeJob = (event) => {
-
-  }
-  goToChats = (event) => {
-
+  
   }
   // DUDE DRY, DON'T WRITE THE SAME FUNCTION TWICE
   mapListedJobs = () => {
@@ -30,9 +28,10 @@ class PairsList extends Component {
       return (
         <div className="listedJobCard">
            <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
+           <img height="100px" width="100px" className="pairJobPic" src={x.picture} alt="Pair List Job Image"/>
            <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Patron" }</h3>
            <h2 className="jobTitleHeader">{x.jobTitle}<br/>{x.dealMade?"(In Progress)":"(Pending)"}</h2>
-           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{">"}</button>
+           <Link to={'/chats/'+x.id}><button name={x.id} className="goToChatsArrow">{">"}</button></Link>
         </div>
       );
     });
@@ -44,9 +43,10 @@ class PairsList extends Component {
       return (
         <div className="pairedJobCard">
            <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
-           <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Helper" }</h3>
+           <img height="100px" width="100px" className="pairJobPic" src={x.picture} alt="Pair List Job Image"/>
+           <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - "+Math.floor(x.distance/1000)+"km" }</h3>
            <h2 className="jobTitleHeader">{x.jobTitle}<br/>{x.dealMade?"(In Progress)":"(Pending)"}</h2>
-           <button name={x.id} className="goToChatsArrow" onClick={this.goToChats}>{">"}</button>
+           <Link to={'/chats/'+x.id}><button name={x.id} className="goToChatsArrow">{">"}</button></Link>
         </div>
       );
     });
@@ -60,8 +60,10 @@ class PairsList extends Component {
       <div className="pairsPage">
       <button className="backButton" onClick={this.goBack}>Back</button>
       <h1 className="pairsPageHeader">{'Current & Pending Jobs'}</h1>
+      <div style={{overflowY: 'scroll', height: '80vh'}} className="jobsList" >
         {this.mapListedJobs()}
         {this.mapPairedJobs()}
+        </div>
       </div>
     );
   }

@@ -100,7 +100,7 @@ app.put('/addJob', async (req, res)=>{
 app.post('/user', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
     let ret;
-    if (user.id ===req.body.userId) ret = {status: true, user};
+    if (user.id ===req.body.userId) ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
     else ret = await findUser(req.body);
     res.json(ret);
 });

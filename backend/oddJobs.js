@@ -19,12 +19,14 @@ const deepUser = async (Job, user, User) => {
         if (job.location.lat && user.location.lat) {
             job.distance = r.distanceBetween(job, user);
         }
-        job.pairedHelpers = job.pairedHelpers.map(async (helper)=>{
-            let obj = {id: helper};
-            let reply = await findUserInner(obj);
-            return reply.user;
-        });
-        job.pairedHelpers = await Promise.all(job.pairedHelpers);
+        // job.pairedHelpers = job.pairedHelpers.map(async (helper)=>{
+        //     let obj = {id: helper};
+        //     let reply = await findUserInner(obj);
+        //     return reply.user;
+        // });
+        // job.pairedHelpers = await Promise.all(job.pairedHelpers);
+        let patron = await findUserInner({id: job.patronId});
+        job.patron = patron.user;
         return job;
     });
     userIsPatron = userIsPatron.map(async (job)=>{
@@ -68,13 +70,17 @@ const login = (Job, User)=> async (fb, cookie, User, user) => {
     if (!User) return {status: false, reason: 'server error'};
     let fbIsValid;
     if (fb) fbIsValid = r.checkFbToken(fb);
-    if (!user) {
-        user = await User.findOne({id: fb.id});
+    try {
         if (!user) {
-            user = await new User(fb);
+            user = await User.findOne({id: fb.id});
+            if (!user) {
+                user = await new User(fb);
+            }
+            user.appToken = sha1(Date.now());
+            user.save();
         }
-        user.appToken = sha1(Date.now());
-        user.save();
+    } catch (error) {
+        console.log(error);
     }
 
     let newUser = await deepUser(Job, user, User);
@@ -142,6 +148,7 @@ const allJobs = (Job) => async (user, location) => {
 const pairJob = (Job) => async (user, jobId) =>{
     if (!user) return {status: false, reason: 'no user information'};
     if (!jobId.id) return {status: false, reason: 'no job information'};
+    if (!Job) return {status: false, reason: 'server error'};
     let job = await Job.findOne(jobId);
     job.addHelper(user.id);
     await job.save();
@@ -172,18 +179,19 @@ const rejectJob = (Job) => async (user, jobId) => {
 };
 
 const sendMessage = (Job, User) => async (user, body) => {
-    // console.log(user, body);
     if (!user) return {status: false, reason: 'no user information'};
     if (!body.id) return {status: false, reason: 'no job information'};
     if (!Job) return {status: false, reason: 'server error'};
     let job = await Job.findOne({id: body.id});
     if (!job) return {status: false, reason: 'job not found'};
     try {
-        job.addMessage(user, body.message);
+        await job.addMessage(user, body.message);
     } catch (error) {
         console.log('error!: ' + error);
     }
-    return {status: true, user: await deepUser(Job, user, User)};
+    let newUser = await deepUser(Job, user, User);
+    // console.log(newUser.jobsListed[0].messages[1]);
+    return {status: true, user: newUser};
 };
 
 module.exports = {
@@ -198,6 +206,7 @@ module.exports = {
     offerDeal,
     rejectJob,
     sendMessage,
+    deepUser,
 };
 
 

@@ -23,18 +23,15 @@ class Login extends Component {
   };
   getpos = async ()=>{
     let result = await navigator.geolocation.watchPosition((x) => {
-      console.log(x);
     let lat =x.coords.latitude;
     let lng =x.coords.longitude;
     let loc = {lat, lng};
-    console.log(loc);
     fetch('/modify', {
       method: 'PUT',
       credentials: 'same-origin',
       body: JSON.stringify({location: loc}),
     }).then((x)=>x.json())
     .then((y)=>{
-      console.log(y);
       this.props.dispatch({
         type: 'USER_UPDATE',
         payload: y.user.location,

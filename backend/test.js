@@ -415,7 +415,6 @@ describe('Server', () => {
         it('returns a job with no patron', async () => {
             let reply = await postWithCookie('/job', {id: jobId});
             assert.isTrue(reply.status, reply.reason);
-            console.log(reply);
         });
     });
 });

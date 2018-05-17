@@ -186,6 +186,7 @@ module.exports = {
     pairJob,
     offerDeal,
     rejectJob,
+    sendMessage,
 };
 
 

@@ -30,6 +30,7 @@ const pairJob = oddJobs.pairJob(Job);
 const login = oddJobs.login(Job, User);
 const makeDeal = oddJobs.offerDeal(Job);
 const rejectJob = oddJobs.rejectJob(Job);
+const sendMessage = oddJobs.sendMessage(Job);
 
 // app.use(express.json({type: 'application/json'}));
 app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));

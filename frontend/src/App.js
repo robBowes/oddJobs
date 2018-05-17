@@ -13,7 +13,7 @@ import WelcomeStaging2 from './components/WelcomeStaging2';
 import User from './containers/User.js'
 import WelcomeStaging3 from './components/WelcomeStaging3';
 import NewJob from './components/NewJob'
-
+import Chat from './components/Chat'
 
 
 class App extends Component {
@@ -79,11 +79,15 @@ class App extends Component {
   renderPairsList = () => {
     return <Pairs/>
   }
+  renderChat = () =>{
+    return <Chat/>
+  }
   render() {
     return (
       <BrowserRouter>
       <div className="App">
-      <button onClick={this.resetWelcome}> Reset Welcome </button>   
+      <button onClick={this.resetWelcome}> Reset Welcome </button>  
+      <Route exact={true} path='/chatTest' render={this.renderChat} />
       <Route exact={true} path='/' render={this.renderHome}/>
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>

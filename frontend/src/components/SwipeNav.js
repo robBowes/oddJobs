@@ -13,6 +13,7 @@ class SwipeNav extends Component {
       <Link to='/settings'><button>SETTINGS</button></Link> <Link to='/currentjobs'><button>CHAT</button></Link>
       <br/>
       <Link to={'/user'+this.props.id}><button>user</button></Link>
+      <Link to={'/chatTest'}><button>CHAT TEST</button></Link>
       </div>)
   }
 }

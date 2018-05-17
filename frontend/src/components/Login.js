@@ -40,6 +40,7 @@ class Login extends Component {
   });
   };
   responseFacebook = (response) => {
+    console.log(response)
     this.getpos();
     response.location={};
     if (response.id) {

@@ -5,25 +5,27 @@ const fs = require('fs');
 const geolib = require('geolib');
 
 const deepUser = async (Job, user) => {
-    let userIsPatron = await Job.find({patronId: user.id});
-    let userIsPair = await Job.find({pairedHelpers: user.id});
-    let returnUser = {...user.toObject()};
+    let userIsPatron = await Job.find({patronId: user.id}).lean();
+    let userIsPair = await Job.find({pairedHelpers: user.id}).lean();
+    let returnUser = user.toObject();
     let cleanPairs = userIsPair.map((job)=>{
         job.messages = job.messages.filter((messageObj)=>{
             return messageObj.userId === user.id;
         });
         return job;
     });
-    if (user.location.lat) {
-        cleanPairs = cleanPairs.map((job)=>{
+    cleanPairs = cleanPairs.map((job)=>{
+        if (job.location.lat && user.location.lat) {
             job.distance = r.distanceBetween(job, user);
-            return job;
-        });
-        userIsPatron = userIsPatron.map((job)=>{
+        }
+        return job;
+    });
+    userIsPatron = userIsPatron.map((job)=>{
+        if (job.location.lat && user.location.lat) {
             job.distance = r.distanceBetween(job, user);
-            return job;
-        });
-    }
+        }
+        return job;
+    });
     returnUser.pairs = cleanPairs;
     returnUser.jobsListed = userIsPatron;
     return returnUser;
@@ -44,8 +46,9 @@ const modify = async (user, newProps) =>{
 const login = (Job)=> async (fb, cookie, User, user) => {
     if (!user &&
         (!fb.id ||
-        !fb.name ||
-        !fb.accessToken)
+            !fb.name ||
+            !fb.accessToken
+        )
     ) return {status: false, reason: 'no facebook data'};
     let fbIsValid;
     if (fb) fbIsValid = r.checkFbToken(fb);
@@ -59,7 +62,8 @@ const login = (Job)=> async (fb, cookie, User, user) => {
         user.appToken = sha1(Date.now());
         user.save();
     }
-    return {status: true, user: await deepUser(Job, user)};
+    let newUser = await deepUser(Job, user);
+    return {status: true, user: newUser};
 };
 
 const newJob = (Job) => async (user, jobDetails = {}) => {
@@ -126,7 +130,6 @@ const pairJob = (Job) => async (user, jobId) =>{
     job.addHelper(user.id);
     await job.save();
     let newUser = await deepUser(Job, user);
-    console.log(newUser);
     return {status: true, job, user: newUser};
 };
 
@@ -134,8 +137,22 @@ const offerDeal = (Job) => async (user, jobId) =>{
     if (!user) return {status: false, reason: 'no user information'};
     if (!jobId.id) return {status: false, reason: 'no job information'};
     let job = await Job.findOne(jobId);
+    if (!job) return {status: false, reason: 'job not found'};
     let jobWithDeal = await job.addDeal(user.id);
     return {status: true, job: jobWithDeal};
+};
+
+const rejectJob = (Job) => async (user, jobId) => {
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!jobId) return {status: false, reason: 'no job information'};
+    let job = await Job.findOne({id: jobId});
+    if (!job) return {status: false, reason: 'job not found'};
+    console.log(job);
+    if (user.id ===job.patronId) {
+        job.removePatron();
+        return {status: true, user: await deepUser(Job, user)};
+    } else await job.removeHelper(user.id);
+    return {status: true, user: await deepUser(Job, user)};
 };
 
 module.exports = {
@@ -148,6 +165,7 @@ module.exports = {
     allJobs,
     pairJob,
     offerDeal,
+    rejectJob,
 };
 
 

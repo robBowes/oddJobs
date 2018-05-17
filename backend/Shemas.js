@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
     picture: Object,
     jobsListed: [Object],
     pairs: [Object],
+    distance: {type: String, default: 0},
     location: {
         lat: {type: String},
         lng: {type: String},
@@ -108,6 +109,17 @@ JobSchema.methods.addDeal = function(userId) {
     }
     this.save();
     return this.toObject();
+};
+
+JobSchema.methods.removePatron = function() {
+    this.patronId = 'deleted';
+    this.pairedHelpers = [];
+    this.save();
+};
+
+JobSchema.methods.removeHelper = function(id) {
+    this.pairedHelpers = this.pairedHelpers.filter((helper)=>helper!== id);
+    this.save();
 };
 
 const Job = mongoose.model('Job', JobSchema);

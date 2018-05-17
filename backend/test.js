@@ -83,57 +83,56 @@ dbTests = async () => {
         'create new job is not detecting lack of job details'
     );
 };
+
+const fetchConstructor = (cookie, method) => {
+    let options = {
+        headers: {cookie: cookie},
+        method: method,
+        credentials: 'same-origin',
+    };
+    return async (path, obj) => {
+        let bodyStr = JSON.stringify(obj);
+        options.body = bodyStr;
+        let login = await fetch('http://localhost:4000'+path, {...options});
+        let json = await login.json();
+        return json;
+    };
+};
+let cookie = 'token=test';
+const postWithCookie = fetchConstructor(cookie, 'POST');
+const postNoCookie = fetchConstructor(null, 'POST');
+const putNoCookie = fetchConstructor(null, 'POST');
+const putWithCookie = fetchConstructor(cookie, 'PUT');
+
+let testJobInfo = {
+    jobDescription: 'test',
+    jobTitle: 'test',
+    location: {lat: '45', lng: '-38'},
+    picture: '253200.jpg',
+};
+
 describe('Server', () => {
-    let cookie = 'token=test';
+    let newJobId;
     describe('login', () => {
         it('calling login without cookie fails', async () => {
-            let login = await fetch('http://localhost:4000/login', {
-            method: 'POST',
-            body: JSON.stringify(
-                {
-                    id: '131200',
-                }),
-            });
-            let json = await login.json();
-            assert(!json.status,
+            let reply = await postNoCookie('/login', {id: '131200'});
+            assert(!reply.status,
                 'login without cookie or facebook access token should fail'
             );
         });
         it('logs in with test cookie', async () => {
-            login = await fetch('http://localhost:4000/login',
-            {
-                method: 'POST',
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
-            assert(json.status && json.user.name === 'TEST',
+            let reply = await postWithCookie('/login');
+            assert.isTrue(reply.status, reply.reason);
+            assert(reply.status && reply.user.name === 'TEST',
             'test cookie should return test user' );
-            assert.isArray(json.user.pairs, 'user pairs should be included in user object');
-            assert.isArray(json.user.jobsListed, 'user pairs should be included in user object');
+            assert.isArray(reply.user.pairs, 'user pairs should be included in user object');
+            assert.isArray(reply.user.jobsListed, 'user pairs should be included in user object');
         });
     });
     describe('add job', () => {
-        let id;
         it('returns a job on the endpoint', async () => {
-            login = await fetch('http://localhost:4000/addJob', {
-            method: 'PUT',
-            body: JSON.stringify(
-                {
-                    jobDescription: 'test',
-                    jobTitle: 'test',
-                    location: {lat: '45', lng: '-38'},
-                    picture: '253200.jpg',
-                }),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
-            id = json.job.id;
+            let json = await putWithCookie('/addJob', testJobInfo);
+            newJobId = json.job.id;
             assert.isTrue(json.status, 'test add Job should succeed');
             assert(json.job.patronId && json.job.listingDate,
                 'test add Job should return job'
@@ -143,7 +142,7 @@ describe('Server', () => {
             assert.isOk(json.job.location.lng, 'location should exist');
         });
         it('writes a job to the database', async () =>{
-            let job = await Job.findOne({id});
+            let job = await Job.findOne({id: newJobId});
             assert.isOk(job, 'test job exists');
             assert.isOk(job.location);
         });
@@ -399,6 +398,24 @@ describe('Server', () => {
             assert.isTrue(json.status, 'should return false');
             assert.isOk(json.job, 'should include reason');
             assert.nestedInclude(json.job.dealsOfferedByPatron, '10102449795812560', 'at least pair is present');
+        });
+    });
+    describe('create, reject, find job as patron', ()=>{
+        let jobId;
+        it('creates a job', async () => {
+            let reply = await putWithCookie('/addJob', testJobInfo);
+            jobId =reply.job.id;
+            assert.isTrue(reply.status, reply.reason);
+            assert.isOk(jobId, 'returns job id');
+        });
+        it('rejects a job', async () => {
+            let reply = await putWithCookie('/rejectJob', {id: jobId});
+            assert.isTrue(reply.status, reply.reason);
+        });
+        it('returns a job with no patron', async () => {
+            let reply = await postWithCookie('/job', {id: jobId});
+            assert.isTrue(reply.status, reply.reason);
+            console.log(reply);
         });
     });
 });

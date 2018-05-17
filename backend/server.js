@@ -29,6 +29,7 @@ const allJobs = oddJobs.allJobs(Job);
 const pairJob = oddJobs.pairJob(Job);
 const login = oddJobs.login(Job);
 const makeDeal = oddJobs.offerDeal(Job);
+const rejectJob = oddJobs.rejectJob(Job);
 
 // app.use(express.json({type: 'application/json'}));
 app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));
@@ -37,12 +38,16 @@ app.use(cookieParser());
 app.use(express.static('data/images'));
 
 app.post('/login', async (req, res)=>{
-    let fb = req.body;
-    let appToken = req.cookies.token;
     let ret = {status: true};
-    if (appToken) ret.user = await userFromToken(req.cookies.token);
-    ret = await login(fb, req.cookies.token, User, ret.user);
-    if (ret.status) res.cookie('token', ret.user.appToken);
+    try {
+        let fb = req.body;
+        let appToken = req.cookies.token;
+        if (appToken) ret.user = await userFromToken(req.cookies.token);
+        ret = await login(fb, req.cookies.token, User, ret.user);
+        if (ret.status) res.cookie('token', ret.user.appToken);
+    } catch (error) {
+        console.log(error);
+    }
     res.json(ret);
 });
 
@@ -61,7 +66,6 @@ app.post('/allJobs', async (req, res)=>{
 app.put('/pair', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
     let job = await pairJob(user, req.body);
-    console.log(job);
     res.json(job);
 });
 
@@ -75,9 +79,15 @@ app.put('/completeJob', (req, res)=>{
     res.json({'status': true, 'job': testData.job});
 });
 
-app.put('/rejectJob', (req, res)=>{
-    res.json({'status': true, 'job': testData.job});
-});
+try {
+    app.put('/rejectJob', async (req, res)=>{
+        let user = await userFromToken(req.cookies.token);
+        let ret = await rejectJob(user, req.body.id);
+        res.json(ret);
+    });
+} catch (error) {
+    console.log(error);
+}
 
 app.put('/addJob', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);

@@ -13,7 +13,8 @@ import WelcomeStaging2 from './components/WelcomeStaging2';
 import User from './containers/User.js'
 import WelcomeStaging3 from './components/WelcomeStaging3';
 import NewJob from './components/NewJob'
-
+import ChatList from './components/ChatList.js'
+import Chat from './components/Chat'
 
 
 class App extends Component {
@@ -79,17 +80,25 @@ class App extends Component {
   renderPairsList = () => {
     return <Pairs/>
   }
+  renderChatList = (x) => {
+    return <ChatList id={x.match.params.id}/>
+  }
+  renderChat = () =>{
+    return <Chat/>
+  }
   render() {
     return (
       <BrowserRouter>
       <div className="App">
-      <button onClick={this.resetWelcome}> Reset Welcome </button>   
+      <button onClick={this.resetWelcome}> Reset Welcome </button>  
+      <Route exact={true} path='/chatTest' render={this.renderChat} />
       <Route exact={true} path='/' render={this.renderHome}/>
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>
       <Route exact={true} path="/user:id" render={this.renderUserDetails} />
       <Route exact={true} path="/job:id" render={this.renderJobDetails} />
       <Route exact={true} path="/currentjobs" render={this.renderPairsList} />
+      <Route exact={true} path="/chats/:id" render={this.renderChatList} />
        {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===1?<WelcomeStaging2/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===2?<WelcomeStaging3/>:''):''}

@@ -13,6 +13,7 @@ export default (state = {
         newState.picture = action.picture;
         newState.id = action.id;
         newState.loggedIn = action.loggedIn;
+        newState.jobsListed = action.jobslisted
     }
     if (action.type === 'WELCOME_STATE') {
         newState.welcomeStage = action.payload;

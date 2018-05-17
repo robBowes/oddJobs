@@ -108,8 +108,10 @@ app.post('/job', async (req, res)=>{
     res.json(ret);
 });
 
-app.put('/sendMessage', (req, res)=>{
-    res.json({'status': true, 'job': testData.job});
+app.put('/sendMessage', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
+    let reply = await sendMessage(user, req.body);
+    res.json(reply);
 });
 
 app.put('/uploadImage', (req, res)=>{

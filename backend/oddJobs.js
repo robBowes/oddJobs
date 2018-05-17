@@ -34,7 +34,6 @@ const deepUser = async (Job, user, User) => {
         return job;
     });
     cleanPairs = await Promise.all(cleanPairs);
-    console.log(cleanPairs);
     returnUser.pairs = cleanPairs;
     returnUser.jobsListed = userIsPatron;
     return returnUser;
@@ -156,12 +155,24 @@ const rejectJob = (Job) => async (user, jobId) => {
     if (!jobId) return {status: false, reason: 'no job information'};
     let job = await Job.findOne({id: jobId});
     if (!job) return {status: false, reason: 'job not found'};
-    console.log(job);
     if (user.id ===job.patronId) {
         job.removePatron();
         return {status: true, user: await deepUser(Job, user)};
     } else await job.removeHelper(user.id);
     return {status: true, user: await deepUser(Job, user)};
+};
+
+const sendMessage = (Job) => async (user, body) => {
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!jobId) return {status: false, reason: 'no job information'};
+    let job = await Job.findOne({id: body.id});
+    if (!job) return {status: false, reason: 'job not found'};
+    try {
+        job.addMessage(user, body.message);
+    } catch (error) {
+        console.log('error!: ' + error);
+    }
+    return {status: true, job};
 };
 
 module.exports = {

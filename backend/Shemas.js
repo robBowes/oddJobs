@@ -77,7 +77,7 @@ const JobSchema = new mongoose.Schema({
     completedByHelper: {type: Boolean, default: false},
     messages: [{
         // jobId: {type: String, required: true},
-        lastMessage: {type: Number, default: 0},
+        time: {type: Number, default: 0},
         userId: {type: Number, required: true},
         messages: [{
             user: String,
@@ -113,6 +113,18 @@ JobSchema.methods.addDeal = function(userId) {
 JobSchema.methods.removePatron = function() {
     this.patronId = 'deleted';
     this.pairedHelpers = [];
+    this.save();
+};
+
+JobSchema.methods.addMessage = function(user, message) {
+    let userMessages = this.messages.find((m)=>m.userId ===user.id);
+    if (!userMessages) {
+        message = {
+            time: Date.now(),
+            userId: user.id,
+        };
+    }
+    userMessages.messages = [...userMessages.messages, {user: user.id, message: message}];
     this.save();
 };
 

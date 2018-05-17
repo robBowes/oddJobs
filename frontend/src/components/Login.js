@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {FacebookLogin} from 'react-facebook-login-component';
 
 
-
 // This Login Component will render the FB login
 
 class Login extends Component {
@@ -22,32 +21,30 @@ class Login extends Component {
       username: this.props.username,
     });
   };
+  getpos = async ()=>{
+    let result = await navigator.geolocation.watchPosition((x) => {
+      console.log(x);
+    let lat =x.coords.latitude;
+    let lng =x.coords.longitude;
+    let loc = {lat, lng};
+    console.log(loc);
+    fetch('/modify', {
+      method: 'PUT',
+      credentials: 'same-origin',
+      body: JSON.stringify({location: loc}),
+    }).then((x)=>x.json())
+    .then((y)=>{
+      console.log(y);
+      this.props.dispatch({
+        type: 'USER_UPDATE',
+        payload: y.user.location,
+      });
+    });
+  });
+  };
   responseFacebook = (response) => {
-    let lat;
-    let lng;
-    let getpos = async()=>{
-      let result = await navigator.geolocation.watchPosition(x => {
-        console.log(x)
-      lat =x.coords.latitude;
-      lng =x.coords.longitude;
-      let loc = {lat, lng}
-      console.log(loc)
-      fetch('/modify',{
-        method:'PUT',
-        credentials: 'same-origin',
-        body: JSON.stringify({location: loc})
-      }).then(x=>x.json())
-      .then(y=>{
-        console.log(y)
-        this.props.dispatch({
-          type:'USER_UPDATE',
-          payload: y.user.location
-        })
-      })
-    })
-    }
-    getpos()
-    response.location={}
+    this.getpos();
+    response.location={};
     if (response.id) {
       fetch('/login', {
         method: 'POST',
@@ -71,7 +68,7 @@ class Login extends Component {
     // anything else you want to do(save to localStorage)...
   };
   componentWillMount = () =>{
-    
+    this.getpos();
   }
 
   render() {

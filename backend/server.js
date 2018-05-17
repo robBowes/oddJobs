@@ -30,13 +30,14 @@ const pairJob = oddJobs.pairJob(Job);
 const login = oddJobs.login(Job, User);
 const makeDeal = oddJobs.offerDeal(Job);
 const rejectJob = oddJobs.rejectJob(Job);
-const sendMessage = oddJobs.sendMessage(Job);
+const sendMessage = oddJobs.sendMessage(Job, User);
 
 // app.use(express.json({type: 'application/json'}));
 app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));
 app.use(express.json({type: '*/*'}));
 app.use(cookieParser());
 app.use(express.static('data/images'));
+
 
 app.post('/login', async (req, res)=>{
     let ret = {status: true};
@@ -110,7 +111,6 @@ app.post('/job', async (req, res)=>{
 });
 
 app.put('/sendMessage', async (req, res)=>{
-    console.log(req.body);
     let user = await userFromToken(req.cookies.token);
     let reply = await sendMessage(user, req.body);
     res.json(reply);

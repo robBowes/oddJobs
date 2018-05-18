@@ -99,10 +99,10 @@ const fetchConstructor = (cookie, method) => {
     };
 };
 const cookie1 = 'token=test';
-const cookie2 = 'token=983d23585c000312ea1a7359e49caf344a462003';
+const cookie2 = 'token=a8dc0ec94cf2a0c18188abf0411ed3dbca8944b7';
 const user2Id = '110068453205089';
-const postNoCookie = fetchConstructor(null, 'POST');
-const putNoCookie = fetchConstructor(null, 'POST');
+const postNoCookie = fetchConstructor('token=', 'POST');
+const putNoCookie = fetchConstructor('token=', 'PUT');
 const postUser1 = fetchConstructor(cookie1, 'POST');
 const putUser1 = fetchConstructor(cookie1, 'PUT');
 const postUser2 = fetchConstructor(cookie2, 'POST');
@@ -157,7 +157,7 @@ describe('Server', () => {
                 method: 'PUT',
                 body: JSON.stringify({}),
                 headers: {
-                    cookie,
+                    cookie1,
                 },
                 credentials: 'same-origin',
             });
@@ -174,7 +174,7 @@ describe('Server', () => {
             {
                 method: 'POST',
                 body: JSON.stringify({}),
-                headers: {cookie},
+                headers: {cookie1},
                 credentials: 'same-origin',
             });
             json = await login.json();
@@ -194,7 +194,7 @@ describe('Server', () => {
                     id: '12345',
                 }),
                 headers: {
-                    cookie,
+                    cookie1,
                 },
                 credentials: 'same-origin',
             }).catch((e) => console.log(e));
@@ -214,7 +214,7 @@ describe('Server', () => {
                     id: '5afb702ad3049a09a0994d94',
                 }),
                 headers: {
-                    cookie,
+                    cookie1,
                 },
                 credentials: 'same-origin',
             }).catch((e) => console.log(e));
@@ -228,36 +228,14 @@ describe('Server', () => {
     describe('get user endpoint', () => {
         it('returns the test user when searching for id: 10102449795812560',
         async () => {
-            login = await fetch('http://localhost:4000/user',
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    userId: '10102449795812560',
-                }),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await postUser1('/user', {id: '10102449795812560'});
             assert.isTrue(json.status);
             assert.equal(json.user.name, 'TEST', 'Return user.name TEST');
         });
         it('returns clean information when searching for other users',
         async () => {
-            login = await fetch('http://localhost:4000/user',
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    id: '10160372275430055',
-                }),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
-            assert.isTrue(json.status, 'returned false status');
+            let json = await postUser1('/user', {id: '10160372275430055'});
+            assert.isTrue(json.status, 'returned false status: ' + json.reason);
             assert.isNotOk(json.user.email,
                 'returned e-mail, emails should be private'
             );
@@ -269,33 +247,11 @@ describe('Server', () => {
     });
     describe('get all jobs endpoint', ()=>{
         it('returns false when bad data is entered', async () =>{
-            login = await fetch('http://localhost:4000/allJobs',
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    location: null,
-                }),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await postUser1('/allJobs', {location: null});
             assert.isNotTrue(json.status, 'should return false status');
         });
         it('returns at least one job when good information', async () =>{
-            login = await fetch('http://localhost:4000/allJobs',
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    location: {lat: '39', lng: '-94'},
-                }),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await postUser1('/allJobs', {location: {lat: '39', lng: '-94'}});
             assert.isTrue(json.status, 'should return true status');
             assert.isOk(json.content, 'should include content');
             assert.isArray(json.content, 'content is array');
@@ -303,43 +259,19 @@ describe('Server', () => {
     });
     describe('pair endpoint', () =>{
         it('returns false if not given a job ID', async () =>{
-            login = await fetch('http://localhost:4000/pair',
-            {
-                method: 'PUT',
-                body: JSON.stringify({}),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await putUser1('/pair');
             assert.isFalse(json.status, 'should return false');
             assert.isOk(json.reason, 'should include reason');
             assert.isNotOk(json.job, 'should not include job');
         });
         it('returns false if not receiving user info', async () =>{
-            login = await fetch('http://localhost:4000/pair',
-            {
-                method: 'PUT',
-                body: JSON.stringify({id: '472999'}),
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await putNoCookie('/pair', {id: '472999'});
             assert.isFalse(json.status, 'should return false');
             assert.isOk(json.reason, 'should include reason');
             assert.isNotOk(json.job, 'should not include job');
         });
         it('returns true and job with good information', async () =>{
-            login = await fetch('http://localhost:4000/pair',
-            {
-                method: 'PUT',
-                body: JSON.stringify({id: '472999'}),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await putUser1('/pair', {id: '472999'} );
             assert.isTrue(json.status, 'should return false');
             assert.isOk(json.job, 'should include reason');
             assert.isString(json.job.pairedHelpers[0], 'at least pair is present');
@@ -347,58 +279,25 @@ describe('Server', () => {
     });
     describe('deal endpoint', () =>{
         it('returns false if not given a job ID', async () =>{
-            login = await fetch('http://localhost:4000/deal',
-            {
-                method: 'PUT',
-                body: JSON.stringify({}),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await putUser1('/deal');
             assert.isFalse(json.status, 'should return false');
             assert.isOk(json.reason, 'should include reason');
             assert.isNotOk(json.job, 'should not include job');
         });
         it('returns false if not receiving user info', async () =>{
-            login = await fetch('http://localhost:4000/deal',
-            {
-                method: 'PUT',
-                body: JSON.stringify({id: '472999'}),
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await putNoCookie('/deal', {id: '472999'} );
             assert.isFalse(json.status, 'should return false');
             assert.isOk(json.reason, 'should include reason');
             assert.isNotOk(json.job, 'should not include job');
         });
         it('returns true and job when user is helper', async () =>{
-            login = await fetch('http://localhost:4000/deal',
-            {
-                method: 'PUT',
-                body: JSON.stringify({id: '472999'}),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await putUser1('/deal', {id: '472999'});
             assert.isTrue(json.status, 'should return false');
             assert.isOk(json.job, 'should include reason');
             assert.nestedInclude(json.job.dealsOfferedByHelpers, '10102449795812560', 'at least pair is present');
         });
         it('returns true and job when user is patron', async () =>{
-            login = await fetch('http://localhost:4000/deal',
-            {
-                method: 'PUT',
-                body: JSON.stringify({id: '813985'}),
-                headers: {
-                    cookie,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await putUser1('/deal', {id: '813985'});
             assert.isTrue(json.status, 'should return false');
             assert.isOk(json.job, 'should include reason');
             assert.nestedInclude(json.job.dealsOfferedByPatron, '10102449795812560', 'at least pair is present');
@@ -432,11 +331,16 @@ describe('Server', () => {
         it('gets accepted by user2', async () => {
             let reply = await putUser2('/pair', {id: jobId});
             assert.isTrue(reply.status, reply.reason);
-            assert.equal();
+            assert.oneOf(user2Id, reply.job.pairedHelpers, 'user is in list of helpers');
         });
-        it('returns a job with no patron', async () => {
-            let reply = await postUser1('/job', {id: jobId});
+        it('returns false if patron offers deal with no counterparty', async ()=>{
+            let reply = await putUser1('/deal', {jobId});
+            assert.isNotTrue(reply.status, reply.reason);
+        });
+        it('patron offers deal', async () => {
+            let reply = await putUser1('/deal', {jobId: jobId, counterPartyId: user2Id});
             assert.isTrue(reply.status, reply.reason);
+            asser.oneOf(user2Id, reply.job.dealsOfferedByPatron, 'user is in list of deals offered by patron');
         });
     });
 });

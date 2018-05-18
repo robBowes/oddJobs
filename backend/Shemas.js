@@ -92,9 +92,9 @@ JobSchema.methods.addHelper = function(helperId) {
     }
 };
 
-JobSchema.methods.addDeal = function(userId) {
+JobSchema.methods.addDeal = function(userId, counterParty) {
     if (userId === this.patronId) {
-        this.dealsOfferedByPatron = [...this.dealsOfferedByPatron, userId];
+        this.dealsOfferedByPatron = [...this.dealsOfferedByPatron, counterParty];
     } else if (this.pairedHelpers.some((helper)=>helper===userId)) {
         this.dealsOfferedByHelpers = [...this.dealsOfferedByHelpers, userId];
     }
@@ -116,8 +116,9 @@ JobSchema.methods.removePatron = function() {
     this.save();
 };
 
-JobSchema.methods.addMessage = async function(user, message) {
-    let chatRoom = this.messages.find((m)=>m.userId ==user.id);
+JobSchema.methods.addMessage = async function(user, message, partner) {
+    let userIsPatron = user.id ==this.patronId;
+    let chatRoom = this.messages.find((m)=>m.userId ==userIsPatron?partner:user.id);
     if (!chatRoom) {
         chatRoom = {
             time: Date.now(),

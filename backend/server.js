@@ -69,12 +69,16 @@ app.post('/allJobs', async (req, res)=>{
     verbose('allJobs');
     let user = await userFromToken(req.cookies.token);
     let reply = await allJobs(user, req.body.location);
+    if (!reply.status) console.log(reply);
     res.json(reply);
 });
 
 app.put('/pair', async (req, res)=>{
+    console.log(req.body, req.cookies.token);
     let user = await userFromToken(req.cookies.token);
+    if (!user) console.log('no user info');
     let job = await pairJob(user, req.body);
+    if (!user) console.log(job);
     res.json(job);
 });
 
@@ -106,9 +110,9 @@ app.put('/addJob', async (req, res)=>{
 });
 
 app.post('/user', async (req, res)=>{
-    let user = await userFromToken(req.cookies.token);
     let ret;
-    if (user.id ===req.body.userId) ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
+    let user = await userFromToken(req.cookies.token);
+    if (user.id ===req.body.id) ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
     else ret = await findUser(req.body);
     res.json(ret);
 });
@@ -127,6 +131,11 @@ app.put('/sendMessage', async (req, res)=>{
 app.put('/uploadImage', (req, res)=>{
     let ret = oddJobs.uploadImage(req);
     res.json(ret);
+});
+
+app.put('*', (req, res)=>{
+    console.log('unhandled request');
+    app.json({status: false, reason: 'unhandled request'});
 });
 
 app.listen(4000, ()=>{

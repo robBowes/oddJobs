@@ -19,12 +19,6 @@ const deepUser = async (Job, user, User) => {
         if (job.location.lat && user.location.lat) {
             job.distance = r.distanceBetween(job, user);
         }
-        // job.pairedHelpers = job.pairedHelpers.map(async (helper)=>{
-        //     let obj = {id: helper};
-        //     let reply = await findUserInner(obj);
-        //     return reply.user;
-        // });
-        // job.pairedHelpers = await Promise.all(job.pairedHelpers);
         let patron = await findUserInner({id: job.patronId});
         job.patron = patron.user;
         return job;
@@ -69,7 +63,7 @@ const login = (Job, User)=> async (fb, cookie, User, user) => {
     ) return {status: false, reason: 'no facebook data'};
     if (!User) return {status: false, reason: 'server error'};
     let fbIsValid;
-    if (fb) fbIsValid = r.checkFbToken(fb);
+    if (!user && fb) fbIsValid = r.checkFbToken(fb);
     try {
         if (!user) {
             user = await User.findOne({id: fb.id});
@@ -157,12 +151,13 @@ const pairJob = (Job) => async (user, jobId) =>{
     return {status: true, job, user: newUser};
 };
 
-const offerDeal = (Job) => async (user, jobId) =>{
+const offerDeal = (Job) => async (user, body) =>{
     if (!user) return {status: false, reason: 'no user information'};
-    if (!jobId.id) return {status: false, reason: 'no job information'};
+    if (!body.id) return {status: false, reason: 'no job information'};
     let job = await Job.findOne(jobId);
     if (!job) return {status: false, reason: 'job not found'};
-    let jobWithDeal = await job.addDeal(user.id);
+    if (job.patronId === user.id && !counterParty) return {status: false, reason: 'no counterparty id'};
+    let jobWithDeal = await job.addDeal(user.id, counterParty.counterPartyId);
     return {status: true, job: jobWithDeal};
 };
 
@@ -186,7 +181,7 @@ const sendMessage = (Job, User) => async (user, body) => {
     let job = await Job.findOne({id: body.id});
     if (!job) return {status: false, reason: 'job not found'};
     try {
-        await job.addMessage(user, body.message);
+        await job.addMessage(user, body.message, body.partner);
     } catch (error) {
         console.log('error!: ' + error);
     }

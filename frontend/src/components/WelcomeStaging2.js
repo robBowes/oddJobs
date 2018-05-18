@@ -24,9 +24,9 @@ class WelcomeStaging extends Component {
         "plumbing",
         "housekeeping",
         "carpentry",
-        "pet care",
+        "petcare",
         "it"
-      ]
+      ],
     };
   }
   handleClickNext = event => {
@@ -80,13 +80,17 @@ class WelcomeStaging extends Component {
   mapCheckBoxes = categories => {
     return categories.map((x, i) => {
       return (
+        <div className="tickBox">
         <input
           onChange={this.tickChange}
           key={i}
+          id={x}
           className="categoryCheckBox"
           type="checkbox"
           name={x}
         />
+        <label className="tickLabel" htmlFor={x}>{x}</label>
+        </div>
       );
     });
   };

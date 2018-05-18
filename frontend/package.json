@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://10.65.108.139:4000",
+  "proxy": "http://localhost:4000",
   "dependencies": {
     "eslint": "^4.19.1",
     "immutable": "^3.8.2",

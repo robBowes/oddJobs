@@ -23,24 +23,26 @@ class Login extends Component {
   };
   getpos = async ()=>{
     let result = await navigator.geolocation.watchPosition((x) => {
-    let lat =x.coords.latitude;
-    let lng =x.coords.longitude;
-    let loc = {lat, lng};
-    fetch('/modify', {
-      method: 'PUT',
-      credentials: 'same-origin',
-      body: JSON.stringify({location: loc}),
-    }).then((x)=>x.json())
-    .then((y)=>{
-      this.props.dispatch({
-        type: 'USER_UPDATE',
-        payload: y.user.location,
+      let lat =x.coords.latitude;
+      let lng =x.coords.longitude;
+      let loc = {lat, lng};
+      fetch('/modify', {
+        method: 'PUT',
+        credentials: 'same-origin',
+        body: JSON.stringify({location: loc}),
+      }).then((x)=>x.json())
+      .then((y)=>{
+        if (y.user) {
+          this.props.dispatch({
+            type: 'USER_UPDATE',
+            payload: y.user.location,
+          });
+        }
       });
     });
-  });
   };
   responseFacebook = (response) => {
-    console.log(response)
+    console.log(response);
     this.getpos();
     response.location={};
     if (response.id) {
@@ -49,16 +51,16 @@ class Login extends Component {
         credentials: 'same-origin',
         body: JSON.stringify(response),
       })
-        .then((x) => x.json())
-        .then((y) => {
-          if (!y.status) {
-            throw new Error('FAILED LOGIN');
-          }
-          this.props.dispatch({
-            type: 'USER_UPDATE',
-            payload: y.user,
-          });
+      .then((x) => x.json())
+      .then((y) => {
+        if (!y.status) {
+          throw new Error('FAILED LOGIN');
+        }
+        this.props.dispatch({
+          type: 'USER_UPDATE',
+          payload: y.user,
         });
+      });
 
 
       this.setState({loading: false});
@@ -72,17 +74,17 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <FacebookLogin
-          socialId="132248777635494"
-          language="en_US"
-          scope="public_profile,email"
-          responseHandler={this.responseFacebook}
-          xfbml={true}
-          fields="id,email,name,picture.type(large)"
-          version="v2.5"
-          className="facebook-login"
-          buttonText="Login With Facebook"
-        />
+      <FacebookLogin
+      socialId="132248777635494"
+      language="en_US"
+      scope="public_profile,email"
+      responseHandler={this.responseFacebook}
+      xfbml={true}
+      fields="id,email,name,picture.type(large)"
+      version="v2.5"
+      className="facebook-login"
+      buttonText="Login With Facebook"
+      />
       </div>
     );
   }

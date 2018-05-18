@@ -95,6 +95,7 @@ app.put('/completeJob', async (req, res)=>{
 
 try {
     app.put('/rejectJob', async (req, res)=>{
+        verbose('reject job');
         let user = await userFromToken(req.cookies.token);
         let ret = await rejectJob(user, req.body.id);
         res.json(ret);
@@ -110,6 +111,7 @@ app.put('/addJob', async (req, res)=>{
 });
 
 app.post('/user', async (req, res)=>{
+    verbose('user');
     let ret;
     let user = await userFromToken(req.cookies.token);
     if (user.id ===req.body.id) ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
@@ -118,11 +120,13 @@ app.post('/user', async (req, res)=>{
 });
 
 app.post('/job', async (req, res)=>{
+    verbose('job');
     let ret = await findJob(req.body);
     res.json(ret);
 });
 
 app.put('/sendMessage', async (req, res)=>{
+    verbose('job');
     let user = await userFromToken(req.cookies.token);
     let reply = await sendMessage(user, req.body);
     res.json(reply);

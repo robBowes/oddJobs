@@ -135,9 +135,20 @@ const allJobs = (Job) => async (user, location) => {
         !location.lng ||
         !location.lat
     ) return {status: false, reason: 'no location information'};
-    user.location = location;
+    // user.location = location;
     user.update();
     let jobs = await Job.find();
+    jobs = jobs.map((el)=>el.toObject());
+    jobs = jobs.filter((job)=>!job.dealMade);
+    // console.log(jobs);
+    jobs = jobs.filter((job)=>{
+        let distance = r.distanceBetween(job, user)/1000;
+        // console.log(distance);
+        let max = parseFloat(user.maxDistance);
+        console.log(distance, max);
+        return distance < max;
+    }
+    );
     return {status: true, content: jobs};
 };
 

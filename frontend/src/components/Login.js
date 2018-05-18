@@ -87,6 +87,7 @@ class Login extends Component {
       // version="v2.5"
       className="facebook-login"
       buttonText="Login With Facebook"
+      redirectUri='https://localhost:3000/'
       />
       </div>
     );

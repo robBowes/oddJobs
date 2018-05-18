@@ -44,16 +44,27 @@ class WelcomeStaging extends Component {
   };
   render() {
     return <div className="welcomeStage3">
-        <img className="userPicture" src={this.props.picture} alt="" />
+        
+        <div className="userPictureContainer">
+        <img className="userPicture" src={this.props.picture} alt="user Profile" />
+        </div>
+         
 
-        <h1 className="welcomeText"> Tell us about yourself!</h1>
+        <h1 className="welcomeName">  {this.props.name} </h1>
+
+        <h1 className="welcomeText2"> Tell us about yourself!</h1>
+
 
         <form onSubmit={this.handleSubmit}>
-          <textarea className="welcomeDescriptionInput" value={this.state.description} onChange={this.handleChange} type="textarea" rows="5" cols="50" placeholder="This is who I am and the stuff I like to do!" />
 
+        <div className="descriptionWrapper">
+          <textarea className="welcomeDescriptionInput" value={this.state.description} onChange={this.handleChange} type="textarea" placeholder="This is who I am and the stuff I like to do!" />
+         </div>
+         <div className="buttonWrapper2">
           <button type="submit" className="welcomeButton" onClick={this.handleClickNext}>
             Finish!
           </button>
+          </div>
         </form>
       </div>;
   }
@@ -61,6 +72,7 @@ class WelcomeStaging extends Component {
 
 const mapStateToProps = state => ({
   picture: state.user.picture.data.url,
+  name: state.user.name,
 });
 
 export default connect(mapStateToProps)(WelcomeStaging);

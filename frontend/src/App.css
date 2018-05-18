@@ -242,6 +242,52 @@ input[type="checkbox"]:checked + label {
     padding-top: 25%;
 }
 
+/* Styling welcome stage 3 */
+
+.welcomeStage3{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+}
+
+.userPictureContainer{
+    min-width: 100%;
+    padding-top: 15%;
+}
+
+.userPicture{
+    display: block;
+    position: relative;
+    width: 50%;
+    height:auto;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+.welcomeName{
+    color: #222222;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    width: 100%;
+    text-align: center;    
+}
+
+.descriptionWrapper{
+    text-align: center;
+}
+
+.welcomeDescriptionInput{
+    border: solid 1px #cccccc;
+    padding: 2%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #222222;
+    width: 80%;
+    padding-bottom: 15%;
+}
+
+
 .card {
   width: 300px;
   height: 250px;

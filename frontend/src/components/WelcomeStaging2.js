@@ -140,6 +140,8 @@ class WelcomeStaging extends Component {
             placeholder="to"
           />
           </div>
+
+          
           <div className="interestsWrapper">
           <h2 className="welcomeHeader"> I'm interested in: </h2>
           <div className="interestsButtonWrapper">

@@ -56,6 +56,7 @@ body {
   font-weight: 320;
   text-align: left;
   padding-left: 6%;
+  margin-bottom: 3%;
 }
 .welcomeText2 {
   color: #cccccc;
@@ -238,6 +239,7 @@ input[type="checkbox"]:checked + label {
 .buttonWrapper2 {
   text-align: center;
   padding-top: 25%;
+  padding-bottom: 10%;
 }
 
 /* Styling welcome stage 3 */
@@ -258,16 +260,16 @@ input[type="checkbox"]:checked + label {
 .userPicture {
   display: block;
   position: relative;
-  width: 50%;
+  width: 60%;
   height: auto;
   margin: 0 auto;
   border-radius: 50%;
 }
 
 .welcomeName {
-  color: #222222;
+  color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 300;
+  font-weight: 350;
   width: 100%;
   text-align: center;
 }
@@ -287,6 +289,23 @@ input[type="checkbox"]:checked + label {
 
 .welcomeDescriptionInput:focus {
   outline: solid 1px #82da05;
+}
+
+/* End of welcome page 3 style */
+
+.backButton{
+    color: #222222;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    position: absolute;
+    font-size: 1.5em; 
+    left: 2%;
+    top: 2%;
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
 
 .card {

@@ -29,26 +29,27 @@ class UserSettings extends Component {
   };
   handleSubmitButton = event => {
     event.preventDefault();
-    fetch('/modify', {
+    fetch("/modify", {
       method: "PUT",
-      credentials: 'same-origin',
+      credentials: "same-origin",
       body: JSON.stringify({
         description: this.state.description,
         maxDistance: this.state.maxDistance,
         minPrice: this.state.minPrice,
         maxPrice: this.state.maxPrice,
-        categories: this.state.categories,
+        categories: this.state.categories
       })
     })
-    .then(x => x.json())
-    .then(y => {
-      console.log(y)
-      if (!y.status) throw new Error(y.reason)
-      this.props.dispatch({
-        type: 'USER_UPDATE',
-        payload: y.user,
-      })
-    })
+      .then(x => x.json())
+      .then(y => {
+        console.log(y);
+        if (!y.status) throw new Error(y.reason);
+        this.props.dispatch({
+          type: "USER_UPDATE",
+          payload: y.user
+        });
+        this.goBack();
+      });
   };
   handleDescriptionChange = event => {
     this.setState({ description: event.target.value });
@@ -83,20 +84,25 @@ class UserSettings extends Component {
       if (!this.props.categories) return;
       let isSelected = this.state.categories.some(e => e === x);
       return (
-        <input
-          onChange={this.tickChange}
-          key={i}
-          className="categoryCheckBox"
-          type="checkbox"
-          name={x}
-          checked={isSelected}
-        />
+        <div className="tickBox">
+          <input
+            onChange={this.tickChange}
+            key={i}
+            className="categoryCheckBox"
+            type="checkbox"
+            name={x}
+            checked={isSelected}
+          />
+          <label className="tickLabel" htmlFor={x}>
+            {x}
+          </label>
+        </div>
       );
     });
   };
   goBack = () => {
     window.history.back();
-  }
+  };
   componentDidMount = () => {
     this.setState({ loading: false });
   };
@@ -104,60 +110,89 @@ class UserSettings extends Component {
     return this.state.loading ? (
       <div>Loading</div>
     ) : (
-      <div className="userSettingsPage">
-        <button className="backButton" onClick={this.goBack}>Back</button>
-        <img
-          className="userPicture"
-          src={this.props.picture ? this.props.picture.data.url : ""}
-          alt="user profile"
-        />
+      <div className="welcomeStage2">
+        <button className="backButton" onClick={this.goBack}>
+        {'< Home'}
+        </button>
+
+        <div className="userPictureContainer">
+          <img
+            className="userPicture"
+            src={this.props.picture ? this.props.picture.data.url : ""}
+            alt="user profile"
+          />
+        </div>
+
+                <h1 className="welcomeName">  {this.props.name} </h1>
+
         <form onSubmit={this.handleSubmit}>
-          <h2 className="settingsHeader"> Description: </h2>
-          <textarea
-            className="welcomeDescriptionInput"
-            value={this.state.description}
-            onChange={this.handleDescriptionChange}
-            type="textarea"
-            rows="5"
-            cols="50"
-            placeholder="This is who I am and the stuff I like to do!"
-          />
-          <h2 className="settingsHeader"> Show Jobs Within: </h2>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value={this.state.maxDistance}
-            onChange={this.sliderChange}
-            className="kmSlider"
-            id="welcomeSlider"
-          />{" "}
-          <p className="distanceReadout">{this.state.maxDistance + "km"}</p>
-          <h2 className="settingsHeader"> Show Jobs Paying: </h2>
-          <input
-            className="welcomeInputMinMax"
-            value={this.state.minPrice}
-            onChange={this.handleMinChange}
-            type="number"
-            placeholder="from"
-          />{" "}
-          -{" "}
-          <input
-            className="welcomeInputMinMax"
-            value={this.state.maxPrice}
-            onChange={this.handleMaxChange}
-            type="number"
-            placeholder="to"
-          />
-          <h2 className="welcomeHeader"> I'm interested in: </h2>
-          {this.mapCheckBoxes(this.state.boxCategories)}
-          <button
-            type="submit"
-            className="welcomeButton"
-            onClick={this.handleSubmitButton}
-          >
-            Update
-          </button>
+          <h2 className="welcomeHeader"> Description: </h2>
+          <div className="descriptionWrapper">
+            <textarea
+              className="welcomeDescriptionInput"
+              value={this.state.description}
+              onChange={this.handleDescriptionChange}
+              type="textarea"
+              placeholder="This is who I am and the stuff I like to do!"
+            />
+          </div>
+          <div className="rangeWrapper">
+            <h2 className="welcomeHeader"> Show Jobs Within: </h2>
+            <div className="distanceReadout">
+              <p>{this.state.maxDistance + "km"}</p>
+            </div>
+            <div className="lineBreaks">
+              <hr />
+              <div className="sliderInner">
+                <input
+                  type="range"
+                  min="1"
+                  max="100"
+                  value={this.state.maxDistance}
+                  onChange={this.sliderChange}
+                  className="kmSlider"
+                  id="welcomeSlider"
+                />
+              </div>
+              <hr />
+            </div>
+          </div>
+
+          <div className="payWrapper">
+            <h2 className="welcomeHeader"> Show Jobs Paying: </h2>
+            <input
+              className="welcomeInputMinMax"
+              value={this.state.minPrice}
+              onChange={this.handleMinChange}
+              type="number"
+              placeholder="from"
+            />{" "}
+            -{" "}
+            <input
+              className="welcomeInputMinMax"
+              value={this.state.maxPrice}
+              onChange={this.handleMaxChange}
+              type="number"
+              placeholder="to"
+            />
+          </div>
+
+          <div className="interestsWrapper">
+            <h2 className="welcomeHeader"> I'm interested in: </h2>
+            <div className="interestsButtonWrapper">
+              {this.mapCheckBoxes(this.state.boxCategories)}
+            </div>
+          </div>
+
+          <div className="buttonWrapper2">
+            <button
+              type="submit"
+              className="welcomeButton"
+              onClick={this.handleSubmitButton}
+            >
+              Update
+            </button>
+          </div>
         </form>
       </div>
     );
@@ -170,7 +205,8 @@ const mapStateToProps = state => ({
   maxDistance: state.user.maxDistance,
   minPrice: state.user.minPrice,
   maxPrice: state.user.maxPrice,
-  categories: state.user.categories
+  categories: state.user.categories,
+  name: state.user.name,
 });
 
 export default connect(mapStateToProps)(UserSettings);

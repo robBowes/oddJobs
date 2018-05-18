@@ -16,6 +16,10 @@ body {
   text-align: center;
 }
 
+input{
+  font-size: 1em;
+}
+
 .welcomeText {
   color: #cccccc;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -271,6 +275,7 @@ input[type="checkbox"]:checked + label {
   color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 350;
+  font-size: 2em;
   width: 100%;
   text-align: center;
 }
@@ -283,6 +288,7 @@ input[type="checkbox"]:checked + label {
   border: solid 1px #cccccc;
   padding: 2%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
   color: #222222;
   width: 80%;
   padding-bottom: 15%;
@@ -312,6 +318,27 @@ input[type="checkbox"]:checked + label {
 .left {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
+}
+
+/* user details page */
+
+.userRating{
+    color: #3e3e3e;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 2em; 
+    width: 100%;
+    text-align: center;
+    padding-top: 6%;
+}
+
+.descriptionDetailsWrapper{
+    text-align: center;
+    padding: 0% 6% 6% 6%;
+}
+
+.score{
+    font-weight: 500;
 }
 
 .card {

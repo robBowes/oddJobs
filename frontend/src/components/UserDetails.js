@@ -19,15 +19,20 @@ class UserDetails extends Component {
   render() {
       return this.state.loading === true ? <div>
           <MoonLoader color="#05ff05" loading={this.state.loading} />
-        </div> : <div>
-          <img src={this.props.user.picture ? this.props.user.picture.data.url : "loading image"} alt="" />
-          <br />
-          <h3>{this.props.user.name}</h3>
-          <br />
+        </div> : <div className="welcomeStage2">
+        <div className="userPictureContainer">
+
+          <img className="userPicture" src={this.props.user.picture ? this.props.user.picture.data.url : "loading image"} alt="" />
+          </div>
+          <h2 className="welcomeName">{this.props.user.name}</h2>
+
+       <div className="descriptionDetailsWrapper">
           {this.props.user.description}
-          <br />
-          <br />
-          Some rating 99
+</div>
+
+          <div className="userRating">
+          User Score -  <span className = "score">99</span>
+          </div>
         </div>;
   }
 }

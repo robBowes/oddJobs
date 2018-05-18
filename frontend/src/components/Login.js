@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {FacebookLogin} from 'react-facebook-login-component';
+// import {FacebookLogin} from 'react-facebook-login-component';
+import FacebookLogin from 'react-facebook-login';
 
 
 // This Login Component will render the FB login
@@ -75,13 +76,15 @@ class Login extends Component {
     return (
       <div>
       <FacebookLogin
-      socialId="132248777635494"
+      appId="132248777635494"
       language="en_US"
       scope="public_profile,email"
-      responseHandler={this.responseFacebook}
+      callback={this.responseFacebook}
+      onClick={this.responseFacebook}
+      autoLoad={true}
       xfbml={true}
       fields="id,email,name,picture.type(large)"
-      version="v2.5"
+      // version="v2.5"
       className="facebook-login"
       buttonText="Login With Facebook"
       />

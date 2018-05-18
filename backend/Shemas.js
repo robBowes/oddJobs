@@ -55,7 +55,11 @@ UserSchema.methods.clean = function() {
 const User = mongoose.model('User', UserSchema);
 
 const JobSchema = new mongoose.Schema({
-    id: {type: String, default: Math.floor(Math.random()*1000000).toString()},
+    id: {
+        type: String,
+        unique: true,
+        required: true,
+    },
     jobDescription: {type: String, required: true},
     jobTitle: {type: String, required: true},
     jobPay: {type: String, default: '0'},
@@ -93,9 +97,10 @@ JobSchema.methods.addHelper = function(helperId) {
 };
 
 JobSchema.methods.addDeal = function(userId, counterParty) {
+    console.log(userId, this.patronId);
     if (userId === this.patronId) {
         this.dealsOfferedByPatron = [...this.dealsOfferedByPatron, counterParty];
-    } else if (this.pairedHelpers.some((helper)=>helper===userId)) {
+    } else if (!this.dealsOfferedByHelpers.some((helper)=>helper===userId)) {
         this.dealsOfferedByHelpers = [...this.dealsOfferedByHelpers, userId];
     }
     let match = this.dealsOfferedByPatron.find((patronDeal)=>{
@@ -104,6 +109,9 @@ JobSchema.methods.addDeal = function(userId, counterParty) {
     if (!!match) {
         this.helperId = match;
         this.dealDate = Date.now();
+        this.pairs = [];
+        this.dealsOfferedByHelpers = [];
+        this.dealsOfferedByPatron = [];
         this.dealMade = true;
     }
     this.save();

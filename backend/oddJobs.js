@@ -86,6 +86,7 @@ const newJob = (Job) => async (user, jobDetails = {}) => {
     let status = true;
     let reason;
     jobDetails.patronId = user.id;
+    jobDetails.id = Math.floor(Math.random()*1000000).toString();
     try {
         job = await new Job(jobDetails);
         await job.save();
@@ -153,11 +154,11 @@ const pairJob = (Job) => async (user, jobId) =>{
 
 const offerDeal = (Job) => async (user, body) =>{
     if (!user) return {status: false, reason: 'no user information'};
-    if (!body.id) return {status: false, reason: 'no job information'};
-    let job = await Job.findOne(jobId);
+    if (!body.jobId) return {status: false, reason: 'no job information'};
+    let job = await Job.findOne({id: body.jobId});
     if (!job) return {status: false, reason: 'job not found'};
-    if (job.patronId === user.id && !counterParty) return {status: false, reason: 'no counterparty id'};
-    let jobWithDeal = await job.addDeal(user.id, counterParty.counterPartyId);
+    if (job.patronId === user.id && !body.counterParty) return {status: false, reason: 'no counterparty id'};
+    let jobWithDeal = await job.addDeal(user.id, body.counterParty);
     return {status: true, job: jobWithDeal};
 };
 

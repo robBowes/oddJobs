@@ -77,11 +77,8 @@ app.post('/allJobs', async (req, res)=>{
 });
 
 app.put('/pair', async (req, res)=>{
-    console.log(req.body, req.cookies.token);
     let user = await userFromToken(req.cookies.token);
-    if (!user) console.log('no user info');
     let job = await pairJob(user, req.body);
-    if (!user) console.log(job);
     res.json(job);
 });
 

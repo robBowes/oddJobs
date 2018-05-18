@@ -122,7 +122,7 @@ JobSchema.methods.addMessage = async function(user, message, partner) {
     if (!chatRoom) {
         chatRoom = {
             time: Date.now(),
-            userId: user.id,
+            userId: userIsPatron?partner:user.id,
             messages: [],
         };
         this.messages = [...this.messages, chatRoom];

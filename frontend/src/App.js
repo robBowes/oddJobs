@@ -66,8 +66,7 @@ class App extends Component {
   }
   renderHome = () => {
     return (<div>
-  {this.props.loggedIn?(this.props.welcomeStage===3?
-  <Link to = "/listjob"><button className="addJobButton">+</button></Link>:''):''}  
+ 
   {this.props.loggedIn?(this.props.welcomeStage===3?<Swipe/>:''):<Landing/>}
   </div>)
   }

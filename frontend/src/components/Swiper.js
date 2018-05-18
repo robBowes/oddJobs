@@ -111,7 +111,7 @@ class Swiper extends Component {
             src={jobsShown[i].picture}
             alt=""
           />
-          <div
+          <div className="bottomBar"
             style={{
               fontSize: "10pt",
               top: "0%",
@@ -192,7 +192,10 @@ class Swiper extends Component {
       </div>
     ) : (
       <div className="swipeContainer">
-              <img className="logo" src='logo.png' alt='oddjobs logo'/>
+       <div className="addJobContainer"><Link to = "/listjob"><button className="addJobButton">+</button></Link></div>
+      <div className="logoContainer">
+              <img className="logo2" src='logo.png' alt='oddjobs logo'/>
+              </div>
 
 
         SWIPER

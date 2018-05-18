@@ -192,6 +192,9 @@ class Swiper extends Component {
       </div>
     ) : (
       <div className="swipeContainer">
+              <img className="logo" src='logo.png' alt='oddjobs logo'/>
+
+
         SWIPER
         <Swing
           className="stack"

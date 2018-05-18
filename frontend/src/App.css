@@ -341,6 +341,27 @@ input[type="checkbox"]:checked + label {
     font-weight: 500;
 }
 
+/* Home page */
+
+.addJobButton{
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 5px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    font-size: 2em;
+    background: #82da05;
+    text-align: center;
+    width: 40px;
+    height: max-content;
+    position: absolute;
+    right: 8%;
+    top: 5%;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+}
+
 .card {
   width: 300px;
   height: 250px;

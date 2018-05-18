@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://10.65.109.198:4000",
+  "proxy": "http://10.65.108.139:4000",
   "dependencies": {
     "eslint": "^4.19.1",
     "immutable": "^3.8.2",
@@ -18,6 +18,7 @@
     "react-spinners": "^0.3.2",
     "react-swing": "^1.0.2",
     "redux": "^4.0.0",
+    "socket.io-client": "^2.1.1",
     "styled-components": "^3.2.6",
     "swing": "^3.1.1"
   },

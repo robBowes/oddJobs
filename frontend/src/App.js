@@ -83,15 +83,15 @@ class App extends Component {
   renderChatList = (x) => {
     return <ChatList id={x.match.params.id}/>
   }
-  renderChat = () =>{
-    return <Chat/>
+  renderChat = (x) =>{
+    return <Chat jobid={x.match.params.jobid} userid={x.match.params.userid} />;
   }
   render() {
     return (
       <BrowserRouter>
       <div className="App">
       <button onClick={this.resetWelcome}> Reset Welcome </button>  
-      <Route exact={true} path='/chatTest' render={this.renderChat} />
+      <Route exact={true} path='/chats/:jobid/:userid' render={this.renderChat} />
       <Route exact={true} path='/' render={this.renderHome}/>
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>

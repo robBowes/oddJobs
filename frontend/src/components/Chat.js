@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-//The Chat app that connects patron to helper to discuss
-// job details
+// //The Chat app that connects patron to helper to discuss
+// // job details
 
 class Chat extends Component{
     constructor(props){
@@ -11,22 +11,27 @@ class Chat extends Component{
             message: '',
             messages: [],
             job: undefined,
-            loading: true
+            loading: true,
+            timestamp: 'no stamp yet'
+            
         }
+        
     }
     componentDidUpdate=()=>{
-        
     }
     componentDidMount=()=>{
         if(this.state.loading){
+        setInterval(()=>{    
          fetch('/user',{
              method:'POST',
              credentials: 'same-origin',
-             body: JSON.stringify({userId: this.props.user.id})
+             body: JSON.stringify({id: this.props.user.id})
          })
          .then(x=>x.json())
          .then(y=>{
-             console.log(y)
+             if(!y.status){
+                 throw new Error(y.reason)
+             }
              this.props.dispatch({
                  type: 'USER_UPDATE',
                  payload: y.user
@@ -34,21 +39,25 @@ class Chat extends Component{
              return y
          })
          .then(z=>{
-             console.log(z)
+            let jobFound = this.findJob(z)
+            let chatFound = this.findChat(jobFound)
             this.setState({
               loading: false,
-              messages: z.user.jobsListed[0].messages[0]
-                .messages,
-              job: z.user.jobsListed[0]
+              messages: chatFound?chatFound.messages:[],
+              job: jobFound
             });
-         })}
+         }
+        )}, 500)
+    }
+
     }
     componentWillReceiveProps=(props)=>{
-        if(!this.state.job && !this.state.userId){
-        this.setState({job: props.user.jobsListed[0], userId: props.user.id})}
+        this.setState({jobId: this.props.jobid, partner: this.props.userid, userId: this.props.user.id})
+        
     }
     goBack=()=>{
-        window.history.back()
+        window.history.back();
+        
     }
     handleChange=()=>{
         let x = document.getElementById('chatbar').value
@@ -56,7 +65,7 @@ class Chat extends Component{
     }
     handleSubmit=e=>{
         e.preventDefault();
-        let x = {id: this.state.job.id, message: this.state.message}
+        let x = {id: this.state.job.id, message: this.state.message, partner: this.state.partner}
         console.log(x)
         fetch('/sendMessage',{
             method: 'PUT',
@@ -69,20 +78,48 @@ class Chat extends Component{
                 type: 'MESSAGE_UPDATE',
                 payload: y.user
             })
-            
-            this.setState({messages:y.user.jobsListed[0].messages[0].messages})
+            let jobFound = this.findJob(y)
+            console.log(jobFound)
+            let chatFound = this.findChat(jobFound)
+            console.log(chatFound)
+            this.setState({messages:chatFound.messages})
         })
         .then(()=>{
         })
         //this.setState({messages: messages})
         document.getElementById('chatbar').value=''
     }
+
+    findJob=(z)=>{
+       let jobFinder = z.user.jobsListed.filter(x => {
+         return x.id === this.state.jobId;
+       })[0];
+       if (!jobFinder) {
+         jobFinder = z.user.pairs.filter(x => {
+           return x.id === this.state.jobId;
+         })[0];
+       }
+       return jobFinder
+    }
+
+    findChat=(job)=>{
+        let chat = job.messages.filter(x => {
+          if (x.userId === this.props.user.id && this.props.user.id !== job.patronId) {
+            return x;
+          }
+          if (this.props.user.id === job.patronId) {
+            return x.userId === this.state.partner;
+          }
+        })[0];
+        return chat
+    }
     
     renderMessages=()=>{
+        if(this.state.messages.length>0){
         return this.state.messages.map((x,i)=>{
             return <li id={x.id} key={i}>{x.userId+': '+x.message}</li>
         })
-    }
+    }}
     render(){
     return this.state.loading?
     <div>LOAD</div>:<div>
@@ -102,7 +139,8 @@ class Chat extends Component{
 }
 
 const mapStateToProps = state =>({
- user: state.user
+ user: state.user,
+ jobs: state.data.jobs
 });
 
 export default connect(mapStateToProps)(Chat)   

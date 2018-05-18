@@ -88,6 +88,7 @@ class UserSettings extends Component {
           <input
             onChange={this.tickChange}
             key={i}
+            id={x}
             className="categoryCheckBox"
             type="checkbox"
             name={x}

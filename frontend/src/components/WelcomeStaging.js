@@ -18,17 +18,22 @@ class WelcomeStaging extends Component {
   }
   render() {
  return  (   <div className='welcomeStage1'>
+      <div className="logoWrapper">
+      <img className="logo" src='logo.png' alt='oddjobs logo'/>
+      </div>
 
-      <img src='logo.png' alt='oddjobs logo'/>
+      <div className="textWrapper">
+      <h1 className="welcomeText"> Welcome! </h1>
+      </div>
       
-      <h1 className='welcomeText'> Welcome! </h1>
-
+      <div className="buttonWrapper">
       <button 
       className='welcomeButton'
       onClick={this.handleClick}
       >
       Setup
       </button>
+      </div>
     </div>
   )
 }

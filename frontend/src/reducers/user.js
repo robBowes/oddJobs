@@ -24,6 +24,7 @@ export default (state = {
     }
     if (action.type === 'MESSAGE_UPDATE'){
         newState = action.payload
+        newState.loggedIn = true;
     }
     if (action.type === 'UPDATE_LOCATION') {
         newState.location.lat = action.payload.coords.latitude;

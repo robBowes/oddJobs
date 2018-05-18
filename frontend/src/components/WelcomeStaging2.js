@@ -16,15 +16,24 @@ class WelcomeStaging extends Component {
       minPayValue: 0,
       maxPayValue: 40,
       categories: [],
-      boxCategories: ['general','lawncare','automotive','cleaning'
-      ,'plumbing','housekeeping','carpentry','pet care','it'],
+      boxCategories: [
+        "general",
+        "lawncare",
+        "automotive",
+        "cleaning",
+        "plumbing",
+        "housekeeping",
+        "carpentry",
+        "pet care",
+        "it"
+      ]
     };
   }
   handleClickNext = event => {
     event.preventDefault();
-    fetch('/modify', {
+    fetch("/modify", {
       method: "PUT",
-      credentials: 'same-origin',
+      credentials: "same-origin",
       body: JSON.stringify({
         minPrice: this.state.minPayValue,
         maxPrice: this.state.maxPayValue,
@@ -33,15 +42,15 @@ class WelcomeStaging extends Component {
         welcomeStage: 2
       })
     })
-    .then(x => x.json())
-    .then(y => {
-      console.log(y)
-      if (!y.status) throw new Error(y.reason)
-      this.props.dispatch({
-        type: 'USER_UPDATE',
-        payload: y.user,
-      })
-    })
+      .then(x => x.json())
+      .then(y => {
+        console.log(y);
+        if (!y.status) throw new Error(y.reason);
+        this.props.dispatch({
+          type: "USER_UPDATE",
+          payload: y.user
+        });
+      });
   };
   sliderChange = event => {
     this.setState({ sliderValue: event.target.value });
@@ -58,40 +67,58 @@ class WelcomeStaging extends Component {
     event.preventDefault();
   };
   tickChange = event => {
-    if (event.target.checked){
+    if (event.target.checked) {
       let newCategories = [...this.state.categories];
       newCategories = newCategories.concat(event.target.name);
-      this.setState({categories: newCategories})
-      return
+      this.setState({ categories: newCategories });
+      return;
     }
-    this.setState({categories: this.state.categories.filter(x => x !== event.target.name)})
-  }
-  mapCheckBoxes = (categories) => {
-    return categories.map((x,i) => {
-    return (
-       <input onChange={this.tickChange} key ={i} className="categoryCheckBox" type="checkbox" name={x}/>
-  )
-    })
-  }
+    this.setState({
+      categories: this.state.categories.filter(x => x !== event.target.name)
+    });
+  };
+  mapCheckBoxes = categories => {
+    return categories.map((x, i) => {
+      return (
+        <input
+          onChange={this.tickChange}
+          key={i}
+          className="categoryCheckBox"
+          type="checkbox"
+          name={x}
+        />
+      );
+    });
+  };
   render() {
     return (
       <div className="welcomeStage2">
-        <h1 className="welcomeText">
+        <h1 className="welcomeText2">
           {" "}
           Let's start by setting up your job preferences!
         </h1>
 
         <form className="welcomeForm" onSubmit={this.handleSubmit}>
-          <h2 className="welcomeHeader"> Show Jobs Within: </h2>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value={this.state.sliderValue}
-            onChange={this.sliderChange}
-            className="kmSlider"
-            id="welcomeSlider"
-          /><p className="distanceReadout">{this.state.sliderValue+"km"}</p>
+          <div className="rangeWrapper">
+            <h2 className="welcomeHeader"> Show Jobs Within: </h2>
+            <div className="distanceReadout"><p>{this.state.sliderValue + "km"}</p></div>
+            <div className="lineBreaks">
+            <hr />
+            <div className="sliderInner">
+                <input
+                  type="range"
+                  min="1"
+                  max="100"
+                  value={this.state.sliderValue}
+                  onChange={this.sliderChange}
+                  className="kmSlider"
+                  id="welcomeSlider"
+                />
+              </div>
+              <hr />
+            </div>
+          </div>
+          <div className="payWrapper">
           <h2 className="welcomeHeader"> Show Jobs Paying: </h2>
           <input
             className="welcomeInputMinMax"
@@ -108,17 +135,22 @@ class WelcomeStaging extends Component {
             type="number"
             placeholder="to"
           />
+          </div>
+          <div className="interestsWrapper">
           <h2 className="welcomeHeader"> I'm interested in: </h2>
-            
-            {this.mapCheckBoxes(this.state.boxCategories)}
-
+          <div className="interestsButtonWrapper">
+          {this.mapCheckBoxes(this.state.boxCategories)}
+          </div>
+          </div>
+          <div className="buttonWrapper">
           <button
             type="submit"
             className="welcomeButton"
             onClick={this.handleClickNext}
           >
             Next
-          </button>    
+          </button>
+          </div>
         </form>
       </div>
     );

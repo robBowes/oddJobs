@@ -18,7 +18,20 @@ class PairsList extends Component {
     };
   }
   removeJob = (event) => {
-  
+    console.log(event.target.name)
+  fetch('rejectJob', {
+    method: 'PUT',
+    credentials: 'same-origin',
+    body: JSON.stringify({id: event.target.name})
+  })
+  .then(x => x.json())
+  .then(y => {
+    if(!y.status) throw new Error(y.reason)
+    this.props.dispatch({
+      type: "MESSAGE_UPDATE",
+      payload: y.user
+    })
+  })
   }
   // DUDE DRY, DON'T WRITE THE SAME FUNCTION TWICE
   mapListedJobs = () => {

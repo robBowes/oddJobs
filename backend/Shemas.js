@@ -117,18 +117,18 @@ JobSchema.methods.removePatron = function() {
 };
 
 JobSchema.methods.addMessage = async function(user, message, partner) {
-    console.log(user.id, partner);
-    let userIsPatron = user.id ==this.patronId;
-    let chatRoom = this.messages.find((m)=>m.userId ==userIsPatron?partner:user.id);
+    let userIsPatron = user.id ===this.patronId;
+    let chatRoomID = userIsPatron?partner:user.id;
+    let chatRoom = this.messages.find((m)=>m.userId ===chatRoomID);
     if (!chatRoom) {
         chatRoom = {
             time: Date.now(),
             userId: userIsPatron?partner:user.id,
-            messages: [],
+            messages: [{userId: user.id, message: message}],
         };
         this.messages = [...this.messages, chatRoom];
     }
-    let chatId = this.messages.findIndex((m)=>m.userId ==user.id);
+    let chatId = this.messages.findIndex((m)=>m.userId === chatRoom);
     chatRoom.messages = chatRoom.messages.concat({userId: user.id, message: message});
     this.messages[chatId] = chatRoom;
     await this.save();

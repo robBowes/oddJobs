@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 const app = express();
 const cookieParser = require('cookie-parser');
 const sha1 = require('sha1');
+const http = require('http').Server(app, '/messages');
+const io = require('socket.io')();
+
 
 const Schemas = require('./Shemas.js');
 const User = Schemas.User;
@@ -133,11 +136,33 @@ app.put('/uploadImage', (req, res)=>{
     res.json(ret);
 });
 
+io.on('connection', function(client) {
+    console.log('a user connected');
+    client.on('messages', (a)=>{
+        console.log('user subscribed to messages');
+        console.log(a);
+        setInterval(() => {
+            client.emit('timer', new Date());
+          }, 1000);
+    });
+
+    client.on('disconnect', function() {
+        console.log('user disconnected');
+    });
+});
+
+// io.emit('some event', {for: 'everyone'});
+
 app.put('*', (req, res)=>{
     console.log('unhandled request');
     app.json({status: false, reason: 'unhandled request'});
 });
+app.post('*', (req, res)=>{
+    console.log('unhandled request');
+    app.json({status: false, reason: 'unhandled request'});
+});
 
+io.listen(8000);
 app.listen(4000, ()=>{
     console.log('app listening on port 4000...');
 });

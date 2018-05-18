@@ -64,7 +64,6 @@ body {
   width: 100%;
   text-align: center;
   padding-top: 10%;
-  padding-bottom: 5%;
 }
 .rangeWrapper {
   width: 100%;
@@ -200,10 +199,10 @@ input[type="range"].kmSlider:focus::-ms-fill-upper {
   align-content: space-around;
 }
 
-.interestsButtonWrapper input{
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
+.interestsButtonWrapper input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
 
 label {
@@ -215,18 +214,17 @@ label {
   margin: 2%;
 }
 
-.tickLabel{
-    display: block;
-    width: auto;
+.tickLabel {
+  display: block;
+  width: auto;
 }
 
-.tickBox{
-text-align: center;
-min-width: 30%;
-padding-left: 2px;
-padding-right: 2px;
+.tickBox {
+  text-align: center;
+  min-width: 30%;
+  padding-left: 2px;
+  padding-right: 2px;
 }
-
 
 input[type="checkbox"]:checked + label {
   background-color: #82da05;
@@ -237,56 +235,59 @@ input[type="checkbox"]:checked + label {
   margin: 2%;
 }
 
-.buttonWrapper2{
-    text-align: center;
-    padding-top: 25%;
+.buttonWrapper2 {
+  text-align: center;
+  padding-top: 25%;
 }
 
 /* Styling welcome stage 3 */
 
-.welcomeStage3{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    position: absolute;
-    width: 100%;
+.welcomeStage3 {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
 }
 
-.userPictureContainer{
-    min-width: 100%;
-    padding-top: 15%;
+.userPictureContainer {
+  min-width: 100%;
+  padding-top: 15%;
 }
 
-.userPicture{
-    display: block;
-    position: relative;
-    width: 50%;
-    height:auto;
-    margin: 0 auto;
-    border-radius: 50%;
+.userPicture {
+  display: block;
+  position: relative;
+  width: 50%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 50%;
 }
 
-.welcomeName{
-    color: #222222;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    width: 100%;
-    text-align: center;    
+.welcomeName {
+  color: #222222;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  width: 100%;
+  text-align: center;
 }
 
-.descriptionWrapper{
-    text-align: center;
+.descriptionWrapper {
+  text-align: center;
 }
 
-.welcomeDescriptionInput{
-    border: solid 1px #cccccc;
-    padding: 2%;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #222222;
-    width: 80%;
-    padding-bottom: 15%;
+.welcomeDescriptionInput {
+  border: solid 1px #cccccc;
+  padding: 2%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222222;
+  width: 80%;
+  padding-bottom: 15%;
 }
 
+.welcomeDescriptionInput:focus {
+  outline: solid 1px #82da05;
+}
 
 .card {
   width: 300px;

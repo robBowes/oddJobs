@@ -163,7 +163,7 @@ const pairJob = (Job) => async (user, jobId) =>{
     return {status: true, job, user: newUser};
 };
 
-const offerDeal = (Job) => async (user, body) =>{
+const offerDeal = (Job, User) => async (user, body) =>{
     if (!user) return {status: false, reason: 'no user information'};
     if (!body.jobId) return {status: false, reason: 'no job information'};
     let job = await Job.findOne({id: body.jobId});

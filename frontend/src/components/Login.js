@@ -71,7 +71,26 @@ class Login extends Component {
   componentWillMount = () =>{
     this.getpos();
   }
-
+  fakeLogin = () => {
+    this.getpos();
+    fetch('/login', {
+      method: 'POST',
+      credentials: 'same-origin',
+      // headers: JSON.stringify({cookie: 'token=54321'}),
+      body: JSON.stringify({}),
+    })
+    .then((x) => x.json())
+    .then((y) => {
+      // if (!y.status) {
+      //   throw new Error('FAILED LOGIN');
+      // }
+      this.props.dispatch({
+        type: 'USER_UPDATE',
+        payload: y.user,
+      });
+    });
+    this.setState({loading: false});
+  }
   render() {
     return (
       <div>
@@ -89,6 +108,7 @@ class Login extends Component {
       buttonText="Login With Facebook"
       redirectUri='https://localhost:3000/'
       />
+      <button onClick={this.fakeLogin}>Fake Login</button>
       </div>
     );
   }

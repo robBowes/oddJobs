@@ -31,7 +31,7 @@ const findUser = oddJobs.findUser(User);
 const allJobs = oddJobs.allJobs(Job);
 const pairJob = oddJobs.pairJob(Job);
 const login = oddJobs.login(Job, User);
-const makeDeal = oddJobs.offerDeal(Job);
+const makeDeal = oddJobs.offerDeal(Job, User);
 const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 
@@ -52,12 +52,14 @@ app.post('/login', async (req, res)=>{
     try {
         let fb = req.body;
         let appToken = req.cookies.token;
+        console.log(appToken);
         if (appToken) ret.user = await userFromToken(req.cookies.token);
         ret = await login(fb, req.cookies.token, User, ret.user);
-        if (ret.status) res.cookie('token', ret.user.appToken);
+        // if (ret.status) res.cookie('token', ret.user.appToken);
     } catch (error) {
         console.log(error);
     }
+    res.cookie('token', '12345');
     res.json(ret);
 });
 

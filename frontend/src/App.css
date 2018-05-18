@@ -10,7 +10,7 @@ body {
   width: 40%;
   display: block;
   margin: 0 auto;
-  padding-top: 15%;
+  padding-top: 20%;
 }
 .welcomeStage1 {
   text-align: center;
@@ -339,6 +339,27 @@ input[type="checkbox"]:checked + label {
 
 .score{
     font-weight: 500;
+}
+
+/* Home page */
+
+.addJobButton{
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 5px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    font-size: 2em;
+    background: #82da05;
+    text-align: center;
+    width: 40px;
+    height: max-content;
+    position: absolute;
+    right: 8%;
+    top: 5%;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
 }
 
 .card {

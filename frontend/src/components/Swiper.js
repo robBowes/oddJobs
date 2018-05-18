@@ -140,7 +140,7 @@ class Swiper extends Component {
     fetch("/allJobs", {
       method: "POST",
       credentials: "same-origin",
-      body: JSON.stringify({ location: { lat: "123", lng: "456" } })
+      body: JSON.stringify({ location: this.props.user.location })
     })
       .then(x => x.json())
       .then(y => {
@@ -192,6 +192,9 @@ class Swiper extends Component {
       </div>
     ) : (
       <div className="swipeContainer">
+              <img className="logo" src='logo.png' alt='oddjobs logo'/>
+
+
         SWIPER
         <Swing
           className="stack"

@@ -117,6 +117,7 @@ JobSchema.methods.removePatron = function() {
 };
 
 JobSchema.methods.addMessage = async function(user, message, partner) {
+    console.log(user.id, partner);
     let userIsPatron = user.id ==this.patronId;
     let chatRoom = this.messages.find((m)=>m.userId ==userIsPatron?partner:user.id);
     if (!chatRoom) {

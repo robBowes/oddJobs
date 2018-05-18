@@ -40,6 +40,7 @@ body {
   background: #82da05;
   padding: 10px 40px 10px 40px;
   text-decoration: none;
+  border: none;
 }
 .welcomeButton:hover {
   background: #7ac902;
@@ -301,6 +302,11 @@ input[type="checkbox"]:checked + label {
     font-size: 1.5em; 
     left: 2%;
     top: 2%;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden; 
 }
 
 .left {

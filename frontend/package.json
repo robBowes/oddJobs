@@ -18,6 +18,7 @@
     "react-spinners": "^0.3.2",
     "react-swing": "^1.0.2",
     "redux": "^4.0.0",
+    "socket.io-client": "^2.1.1",
     "styled-components": "^3.2.6",
     "swing": "^3.1.1"
   },

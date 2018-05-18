@@ -2,7 +2,6 @@ body {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden !important;
-  overflow-y: hidden !important;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -200,44 +199,94 @@ input[type="range"].kmSlider:focus::-ms-fill-upper {
   align-content: space-around;
 }
 
-label {
-  background-color: #cccccc;
-  color: white;
-  height: 2%;
-  border-radius: 20px;
-  text-align: center;
-  padding: 8px;
-  min-height: 35px;
-  min-width: 100px;
-}
-
-.tickLabel{
-    width: 100%;
-}
-
-.tickbox{
-min-height: 35px;
-min-width: 100px;
-margin: 20px;
-position: absolute;
-}
-
-.categoryCheckBox {
+.interestsButtonWrapper input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
 }
 
+label {
+  background-color: #cccccc;
+  color: white;
+  border-radius: 20px;
+  text-align: center;
+  padding: 5%;
+  margin: 2%;
+}
+
+.tickLabel {
+  display: block;
+  width: auto;
+}
+
+.tickBox {
+  text-align: center;
+  min-width: 30%;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
 input[type="checkbox"]:checked + label {
   background-color: #82da05;
   color: white;
-  margin: 1%;
-  width: max-content;
-  min-width: 100px;
-  height: 2%;
   border-radius: 20px;
   text-align: center;
-  padding: 8px;
+  padding: 5%;
+  margin: 2%;
+}
+
+.buttonWrapper2 {
+  text-align: center;
+  padding-top: 25%;
+}
+
+/* Styling welcome stage 3 */
+
+.welcomeStage3 {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+}
+
+.userPictureContainer {
+  min-width: 100%;
+  padding-top: 15%;
+}
+
+.userPicture {
+  display: block;
+  position: relative;
+  width: 50%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.welcomeName {
+  color: #222222;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  width: 100%;
+  text-align: center;
+}
+
+.descriptionWrapper {
+  text-align: center;
+}
+
+.welcomeDescriptionInput {
+  border: solid 1px #cccccc;
+  padding: 2%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222222;
+  width: 80%;
+  padding-bottom: 15%;
+}
+
+.welcomeDescriptionInput:focus {
+  outline: solid 1px #82da05;
 }
 
 .card {

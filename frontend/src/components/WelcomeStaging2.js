@@ -146,7 +146,7 @@ class WelcomeStaging extends Component {
           {this.mapCheckBoxes(this.state.boxCategories)}
           </div>
           </div>
-          <div className="buttonWrapper">
+          <div className="buttonWrapper2">
           <button
             type="submit"
             className="welcomeButton"

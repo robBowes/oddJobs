@@ -86,6 +86,7 @@ const newJob = (Job) => async (user, jobDetails = {}) => {
     let status = true;
     let reason;
     jobDetails.patronId = user.id;
+    jobDetails.id = Math.floor(Math.random()*1000000).toString();
     try {
         job = await new Job(jobDetails);
         await job.save();
@@ -134,9 +135,23 @@ const allJobs = (Job) => async (user, location) => {
         !location.lng ||
         !location.lat
     ) return {status: false, reason: 'no location information'};
-    user.location = location;
-    user.update();
+    // user.location = location;
+    // user.update();
     let jobs = await Job.find();
+    jobs = jobs.map((el)=>el.toObject());
+    jobs = jobs.filter((job)=>!job.dealMade);
+    jobs = jobs.filter((job)=>{
+        let distance = r.distanceBetween(job, user)/1000;
+        let max = parseFloat(user.maxDistance);
+        return distance < max;
+    }
+    );
+    jobs = jobs.filter((job)=>{
+        let jobPrice = parseInt(job.jobPay);
+        let max = user.maxPrice;
+        let min = user.minPrice;
+        return jobPrice<=max && jobPrice>=min;
+    });
     return {status: true, content: jobs};
 };
 
@@ -151,13 +166,13 @@ const pairJob = (Job) => async (user, jobId) =>{
     return {status: true, job, user: newUser};
 };
 
-const offerDeal = (Job) => async (user, body) =>{
+const offerDeal = (Job, User) => async (user, body) =>{
     if (!user) return {status: false, reason: 'no user information'};
-    if (!body.id) return {status: false, reason: 'no job information'};
-    let job = await Job.findOne(jobId);
+    if (!body.jobId) return {status: false, reason: 'no job information'};
+    let job = await Job.findOne({id: body.jobId});
     if (!job) return {status: false, reason: 'job not found'};
-    if (job.patronId === user.id && !counterParty) return {status: false, reason: 'no counterparty id'};
-    let jobWithDeal = await job.addDeal(user.id, counterParty.counterPartyId);
+    if (job.patronId === user.id && !body.counterParty) return {status: false, reason: 'no counterparty id'};
+    let jobWithDeal = await job.addDeal(user.id, body.counterParty);
     return {status: true, job: jobWithDeal};
 };
 
@@ -190,6 +205,15 @@ const sendMessage = (Job, User) => async (user, body) => {
     return {status: true, user: newUser};
 };
 
+const completeJob = (Job) => async (user, body) => {
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!body) return {status: false, reason: 'no job information'};
+    if (!Job) return {status: false, reason: 'server error'};
+    let job = await Job.findOne({id: body.jobId});
+    if (!job) return {status: false, reason: 'job not found'};
+    job.complete(userId);
+};
+
 module.exports = {
     modify,
     newJob,
@@ -203,6 +227,7 @@ module.exports = {
     rejectJob,
     sendMessage,
     deepUser,
+    completeJob,
 };
 
 

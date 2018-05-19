@@ -31,9 +31,10 @@ const findUser = oddJobs.findUser(User);
 const allJobs = oddJobs.allJobs(Job);
 const pairJob = oddJobs.pairJob(Job);
 const login = oddJobs.login(Job, User);
-const makeDeal = oddJobs.offerDeal(Job);
+const makeDeal = oddJobs.offerDeal(Job, User);
 const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
+const completeJob = oddJobs.completeJob(Job);
 
 const verbose = (obj) => {
     if (true)console.log(obj);
@@ -47,67 +48,73 @@ app.use(express.static('data/images'));
 
 
 app.post('/login', async (req, res)=>{
-    verbose('login');
+    verbose('login user Id: ' + req.body.id);
     let ret = {status: true};
     try {
         let fb = req.body;
         let appToken = req.cookies.token;
         if (appToken) ret.user = await userFromToken(req.cookies.token);
         ret = await login(fb, req.cookies.token, User, ret.user);
-        if (ret.status) res.cookie('token', ret.user.appToken);
+        // if (ret.status) res.cookie('token', ret.user.appToken);
     } catch (error) {
         console.log(error);
+        ret = {status: false, reason: error};
     }
+    // res.cookie('token', '12345');
+    res.cookie('token', ret.user.appToken);
     res.json(ret);
 });
 
 app.put('/modify', async (req, res)=>{
-    verbose('modify');
     let user = await userFromToken(req.cookies.token);
+    verbose(user.name + ' request modify');
     let reply = await oddJobs.modify(user, req.body);
     res.json(reply);
 });
 
 app.post('/allJobs', async (req, res)=>{
-    verbose('allJobs');
     let user = await userFromToken(req.cookies.token);
+    verbose(user.name + 'allJobs');
     let reply = await allJobs(user, req.body.location);
     if (!reply.status) console.log(reply);
     res.json(reply);
 });
 
 app.put('/pair', async (req, res)=>{
-    console.log(req.body, req.cookies.token);
     let user = await userFromToken(req.cookies.token);
-    if (!user) console.log('no user info');
+    verbose(user.name + 'pair');
     let job = await pairJob(user, req.body);
-    if (!user) console.log(job);
     res.json(job);
 });
 
 app.put('/deal', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
+    verbose(user.name + 'deal');
     let job = await makeDeal(user, req.body);
     res.json(job);
 });
 
 app.put('/completeJob', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
+    verbose(user.name + 'complete job');
+    let reply = await completeJob(user, req.body);
     res.json({'status': true, 'job': testData.job});
 });
 
-try {
-    app.put('/rejectJob', async (req, res)=>{
+app.put('/rejectJob', async (req, res)=>{
+    try {
         let user = await userFromToken(req.cookies.token);
+        verbose(user.name + 'reject job');
         let ret = await rejectJob(user, req.body.id);
         res.json(ret);
-    });
-} catch (error) {
-    console.log(error);
-}
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 app.put('/addJob', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
+    verbose(user.name + 'allJobs');
     let job = await createNewJob(user, req.body);
     res.json(job);
 });
@@ -115,18 +122,21 @@ app.put('/addJob', async (req, res)=>{
 app.post('/user', async (req, res)=>{
     let ret;
     let user = await userFromToken(req.cookies.token);
+    verbose(user.name + 'user');
     if (user.id ===req.body.id) ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
     else ret = await findUser(req.body);
     res.json(ret);
 });
 
 app.post('/job', async (req, res)=>{
+    verbose('job');
     let ret = await findJob(req.body);
     res.json(ret);
 });
 
 app.put('/sendMessage', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
+    verbose('send message');
     let reply = await sendMessage(user, req.body);
     res.json(reply);
 });
@@ -143,7 +153,7 @@ io.on('connection', function(client) {
         console.log(a);
         setInterval(() => {
             client.emit('timer', new Date());
-          }, 1000);
+        }, 1000);
     });
 
     client.on('disconnect', function() {

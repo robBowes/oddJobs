@@ -21,13 +21,13 @@ const UserSchema = new mongoose.Schema({
     lastLoginDate: Number,
     categories: [String],
     currentLocation: Object,
-    maxDistance: String,
+    maxDistance: {type: String, default: '50'},
     maxPrice: String,
     minPrice: String,
     statistics: {
-        jobsAccepted: Number,
-        jobsCompleted: Number,
-        jobsCanceled: Number,
+        jobsAccepted: {type: Number, default: 0},
+        jobsCompleted: {type: Number, default: 0},
+        jobsCanceled: {type: Number, default: 0},
     },
     jobInProgress: {type: Boolean, default: false},
     welcomeStage: {type: Number, default: 0},
@@ -55,13 +55,17 @@ UserSchema.methods.clean = function() {
 const User = mongoose.model('User', UserSchema);
 
 const JobSchema = new mongoose.Schema({
-    id: {type: String, default: Math.floor(Math.random()*1000000).toString()},
+    id: {
+        type: String,
+        unique: true,
+        required: true,
+    },
     jobDescription: {type: String, required: true},
     jobTitle: {type: String, required: true},
     jobPay: {type: String, default: '0'},
     patronId: {type: String, required: true},
     picture: {type: String, required: true},
-    helperId: String,
+    helperId: {type: String, default: ''},
     pairedHelpers: [String],
     dealsOfferedByPatron: [String],
     dealsOfferedByHelpers: [String],
@@ -93,9 +97,10 @@ JobSchema.methods.addHelper = function(helperId) {
 };
 
 JobSchema.methods.addDeal = function(userId, counterParty) {
+    console.log(userId, this.patronId);
     if (userId === this.patronId) {
         this.dealsOfferedByPatron = [...this.dealsOfferedByPatron, counterParty];
-    } else if (this.pairedHelpers.some((helper)=>helper===userId)) {
+    } else if (!this.dealsOfferedByHelpers.some((helper)=>helper===userId)) {
         this.dealsOfferedByHelpers = [...this.dealsOfferedByHelpers, userId];
     }
     let match = this.dealsOfferedByPatron.find((patronDeal)=>{
@@ -104,6 +109,9 @@ JobSchema.methods.addDeal = function(userId, counterParty) {
     if (!!match) {
         this.helperId = match;
         this.dealDate = Date.now();
+        this.pairs = [this.helperId];
+        this.dealsOfferedByHelpers = [];
+        this.dealsOfferedByPatron = [];
         this.dealMade = true;
     }
     this.save();
@@ -137,6 +145,18 @@ JobSchema.methods.addMessage = async function(user, message, partner) {
 JobSchema.methods.removeHelper = function(id) {
     this.pairedHelpers = this.pairedHelpers.filter((helper)=>helper!== id);
     this.save();
+};
+
+JobSchema.methods.complete = function(id) {
+    let userIsPatron = user.id ===this.patronId;
+    if (userIsPatron) {
+        this.completedByPatron = true;
+    } else {
+        this.completedByHelper = true;
+    }
+    if (this.completedByHelper && this.completedByPatron) {
+        this.completedDate = Date.now();
+    }
 };
 
 const Job = mongoose.model('Job', JobSchema);

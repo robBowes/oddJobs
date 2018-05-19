@@ -66,8 +66,7 @@ class App extends Component {
   }
   renderHome = () => {
     return (<div>
-  {this.props.loggedIn?(this.props.welcomeStage===3?
-  <Link to = "/listjob"><button className="addJobButton">+</button></Link>:''):''}  
+ 
   {this.props.loggedIn?(this.props.welcomeStage===3?<Swipe/>:''):<Landing/>}
   </div>)
   }
@@ -90,7 +89,7 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div className="App">
-      <button onClick={this.resetWelcome}> Reset Welcome </button>  
+      {/* <button onClick={this.resetWelcome}> Reset Welcome </button>   */}
       <Route exact={true} path='/chats/:jobid/:userid' render={this.renderChat} />
       <Route exact={true} path='/' render={this.renderHome}/>
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {FacebookLogin} from 'react-facebook-login-component';
+// import {FacebookLogin} from 'react-facebook-login-component';
+import FacebookLogin from 'react-facebook-login';
 
 
 // This Login Component will render the FB login
@@ -70,21 +71,44 @@ class Login extends Component {
   componentWillMount = () =>{
     this.getpos();
   }
-
+  fakeLogin = () => {
+    this.getpos();
+    fetch('/login', {
+      method: 'POST',
+      credentials: 'same-origin',
+      // headers: JSON.stringify({cookie: 'token=54321'}),
+      body: JSON.stringify({}),
+    })
+    .then((x) => x.json())
+    .then((y) => {
+      // if (!y.status) {
+      //   throw new Error('FAILED LOGIN');
+      // }
+      this.props.dispatch({
+        type: 'USER_UPDATE',
+        payload: y.user,
+      });
+    });
+    this.setState({loading: false});
+  }
   render() {
     return (
       <div>
       <FacebookLogin
-      socialId="132248777635494"
+      appId="132248777635494"
       language="en_US"
       scope="public_profile,email"
-      responseHandler={this.responseFacebook}
+      callback={this.responseFacebook}
+      onClick={this.responseFacebook}
+      autoLoad={true}
       xfbml={true}
       fields="id,email,name,picture.type(large)"
-      version="v2.5"
+      // version="v2.5"
       className="facebook-login"
       buttonText="Login With Facebook"
+      redirectUri='https://localhost:3000/'
       />
+      <button onClick={this.fakeLogin}>Fake Login</button>
       </div>
     );
   }

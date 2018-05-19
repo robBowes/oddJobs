@@ -140,13 +140,15 @@ class WelcomeStaging extends Component {
             placeholder="to"
           />
           </div>
+
+          
           <div className="interestsWrapper">
           <h2 className="welcomeHeader"> I'm interested in: </h2>
           <div className="interestsButtonWrapper">
           {this.mapCheckBoxes(this.state.boxCategories)}
           </div>
           </div>
-          <div className="buttonWrapper">
+          <div className="buttonWrapper2">
           <button
             type="submit"
             className="welcomeButton"

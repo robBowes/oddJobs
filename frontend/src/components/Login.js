@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-// import {FacebookLogin} from 'react-facebook-login-component';
+//import {FacebookLogin} from 'react-facebook-login-component';
 import FacebookLogin from 'react-facebook-login';
 
 
@@ -43,6 +43,7 @@ class Login extends Component {
     });
   };
   responseFacebook = (response) => {
+    
     console.log(response);
     this.getpos();
     response.location={};
@@ -54,10 +55,11 @@ class Login extends Component {
       })
       .then((x) => x.json())
       .then((y) => {
+        console.log(y)
         if (!y.status) {
           throw new Error('FAILED LOGIN');
         }
-        this.props.dispatch({
+        this.props.dispatch({ 
           type: 'USER_UPDATE',
           payload: y.user,
         });
@@ -103,7 +105,7 @@ class Login extends Component {
       autoLoad={true}
       xfbml={true}
       fields="id,email,name,picture.type(large)"
-      // version="v2.5"
+      //version="v2.5"
       className="facebook-login"
       buttonText="Login With Facebook"
       redirectUri={window.location.href}

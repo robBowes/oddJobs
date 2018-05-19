@@ -19,6 +19,7 @@ export default (state = {
         newState.welcomeStage = action.payload;
     }
     if (action.type === 'USER_UPDATE') {
+        console.log('test')
         newState = {...newState, ...action.payload};
         newState.loggedIn = true;
     }

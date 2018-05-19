@@ -108,23 +108,16 @@ class Swiper extends Component {
           jobid={jobsShown[i].id}
         >
           <img
-            style={{maxWidth: '100%', height: 'auto'}}
+            className="cardImage"
             draggable="false"
             src={jobsShown[i].picture}
             alt=""
           />
-          <div
-            style={{
-              fontSize: '10pt',
-              top: '0%',
-              backgroundColor: 'white',
-              position: 'absolute',
-            }}
-          >
+          <div className="bottomBar">
             <Link to={'/job' + jobsShown[i].id}>
               <button>details</button>
             </Link>
-            {jobsShown[i].jobTitle}
+            <span className="jobTitle">{jobsShown[i].jobTitle}</span>
           </div>
         </div>
       );
@@ -194,10 +187,13 @@ class Swiper extends Component {
       </div>
     ) : (
       <div className="swipeContainer">
-              <img className="logo" src='logo.png' alt='oddjobs logo'/>
+       <div className="addJobContainer"><Link to = "/listjob"><button className="addJobButton">+</button></Link></div>
+      <div className="logoContainer">
+              <img className="logo2" src='logo.png' alt='oddjobs logo'/>
+              </div>
 
 
-        SWIPER
+        <div className="stackContainer">
         <Swing
           className="stack"
           tagName="div"
@@ -218,6 +214,7 @@ class Swiper extends Component {
             <div />
           )}
         </Swing>
+        </div>
         <div>
           <button type="button" name="accept" onClick={this.swipeRight}>
             ACCEPT

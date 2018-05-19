@@ -47,9 +47,8 @@ const modify = async (user, newProps) =>{
     Object.assign(user, newProps);
     let status = true;
     let reason = '';
-    await user.save().catch((err)=>{
-        status = false;
-        reason = 'data rejected by database';
+    await user.save((err)=>{
+        if (err) console.log(err);
     });
     return {status, user, reason};
 };

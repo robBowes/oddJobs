@@ -63,8 +63,10 @@ const login = (Job, User)=> async (fb, cookie, User, user) => {
     ) return {status: false, reason: 'no facebook data'};
     if (!User) return {status: false, reason: 'server error'};
     let fbIsValid;
-    if (!user && fb) fbIsValid = r.checkFbToken(fb);
+    let newUser;
+    let ret = {status: true};
     try {
+        if (!user && fb) fbIsValid = r.checkFbToken(fb);
         if (!user) {
             user = await User.findOne({id: fb.id});
             if (!user) {
@@ -73,12 +75,14 @@ const login = (Job, User)=> async (fb, cookie, User, user) => {
             user.appToken = sha1(Date.now());
             user.save();
         }
+        newUser = await deepUser(Job, user, User);
+        ret.user = newUser;
     } catch (error) {
         console.log(error);
+        ret.status = false;
     }
 
-    let newUser = await deepUser(Job, user, User);
-    return {status: true, user: newUser};
+    return ret;
 };
 
 const newJob = (Job) => async (user, jobDetails = {}) => {
@@ -218,14 +222,19 @@ const completeJob = (Job, User) => async (user, body) => {
     if (!user) return {status: false, reason: 'no user information'};
     if (!body) return {status: false, reason: 'no job information'};
     if (!Job) return {status: false, reason: 'server error'};
-    let job = await Job.findOne({id: body.jobId});
-    if (!job) return {status: false, reason: 'job not found'};
-    job.complete(user.id);
-    job.save((err)=>{
-        if (err) console.log(err);
-    });
-    user.statistics.jobsCompleted++;
-    user.save();
+    let job;
+    try {
+        job = await Job.findOne({id: body.jobId});
+        if (!job) return {status: false, reason: 'job not found'};
+        job.complete(user.id);
+        job.save((err)=>{
+            if (err) console.log(err);
+        });
+        user.statistics.jobsCompleted++;
+        user.save();
+    } catch (error) {
+        console.log(error);
+    }
     return {status: true, job, user: await deepUser(Job, user, User)};
 };
 

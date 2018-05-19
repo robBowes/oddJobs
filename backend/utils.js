@@ -16,7 +16,8 @@ const checkFbToken = async (fb) => {
     const response = await fetch('https://graph.facebook.com/v2.11/debug_token?input_token='+fb.accessToken+'&access_token=132248777635494|cf197eb7bd32b8dfab5cced1ee7e9a16');
     let json;
     try {
-        await response.json();
+        let json = await response.json();
+        // console.log();
         return json.data.is_valid && json.data.user_id === fb.id;
     } catch (error) {
         console.log(error);

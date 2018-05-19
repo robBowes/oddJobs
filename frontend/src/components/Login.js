@@ -103,7 +103,7 @@ class Login extends Component {
       callback={this.responseFacebook}
       onClick={this.responseFacebook}
       autoLoad={true}
-      //xfbml={true}
+      xfbml={true}
       fields="id,email,name,picture.type(large)"
       //version="v2.5"
       className="facebook-login"

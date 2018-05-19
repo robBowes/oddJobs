@@ -225,7 +225,7 @@ const completeJob = (Job, User) => async (user, body) => {
         if (err) console.log(err);
     });
     user.statistics.jobsCompleted++;
-    user.save;
+    user.save();
     return {status: true, job, user: await deepUser(Job, user, User)};
 };
 

@@ -5,16 +5,16 @@ import Pairs from './containers/Pairs';
 import Settings from './containers/Settings.js';
 import Swipe from './containers/Swipe';
 import Welcome from './containers/Welcome';
-import Job from './containers/Job'
+import Job from './containers/Job';
 import {BrowserRouter, Link, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import WelcomeStaging from './components/WelcomeStaging';
 import WelcomeStaging2 from './components/WelcomeStaging2';
-import User from './containers/User.js'
+import User from './containers/User.js';
 import WelcomeStaging3 from './components/WelcomeStaging3';
-import NewJob from './components/NewJob'
-import ChatList from './components/ChatList.js'
-import Chat from './components/Chat'
+import NewJob from './components/NewJob';
+import ChatList from './components/ChatList.js';
+import Chat from './components/Chat';
 
 
 class App extends Component {
@@ -53,34 +53,34 @@ class App extends Component {
     }
   }
   renderUserDetails=(x)=>{
-    return <User id={x.match.params.id}/>
+    return <User id={x.match.params.id}/>;
   }
   resetWelcome = () => {
     this.props.dispatch({
     type: 'WELCOME_STATE',
     payload: 0,
-    })
+    });
   }
   renderNewJob = () => {
-    return (<NewJob/>)
+    return (<NewJob/>);
   }
   renderHome = () => {
     return (<div>
- 
+
   {this.props.loggedIn?(this.props.welcomeStage===3?<Swipe/>:''):<Landing/>}
-  </div>)
+  </div>);
   }
   renderJobDetails =(x)=>{
-    return <Job id={x.match.params.id}/>
+    return <Job id={x.match.params.id}/>;
   }
   renderSettings = () => {
-    return <Settings/>
+    return <Settings/>;
   }
   renderPairsList = () => {
-    return <Pairs/>
+    return <Pairs/>;
   }
   renderChatList = (x) => {
-    return <ChatList id={x.match.params.id}/>
+    return <ChatList id={x.match.params.id}/>;
   }
   renderChat = (x) =>{
     return <Chat jobid={x.match.params.jobid} userid={x.match.params.userid} />;
@@ -98,6 +98,13 @@ class App extends Component {
       <Route exact={true} path="/job:id" render={this.renderJobDetails} />
       <Route exact={true} path="/currentjobs" render={this.renderPairsList} />
       <Route exact={true} path="/chats/:id" render={this.renderChatList} />
+      <Route exact={false} path='/?code*' render={({history})=>{
+        return (
+          <div>
+          {history.push('/')}
+          </div>
+        );
+        }}/>
        {this.props.loggedIn?(this.props.welcomeStage===0?<WelcomeStaging/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===1?<WelcomeStaging2/>:''):''}
        {this.props.loggedIn?(this.props.welcomeStage===2?<WelcomeStaging3/>:''):''}

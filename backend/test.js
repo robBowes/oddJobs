@@ -377,8 +377,8 @@ describe('Server', () => {
             assert.isTrue(reply.job.dealMade, reply.job.dealsOfferedByHelpers);
         });
     });
-    describe('create job, pair with job, send chat messages by both users'()=>{
-        
+    describe('create job, pair with job, send chat messages by both users', ()=>{
+
     });
 });
 

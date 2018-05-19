@@ -99,14 +99,14 @@ class Login extends Component {
       language="en_US"
       scope="public_profile,email"
       callback={this.responseFacebook}
-      onClick={this.responseFacebook}
+      // onClick={this.responseFacebook}
       autoLoad={true}
       xfbml={true}
       fields="id,email,name,picture.type(large)"
       // version="v2.5"
       className="facebook-login"
       buttonText="Login With Facebook"
-      redirectUri='https://localhost:3000/'
+      redirectUri={window.location.href}
       />
       <button onClick={this.fakeLogin}>Fake Login</button>
       </div>

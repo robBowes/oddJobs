@@ -65,7 +65,7 @@ const JobSchema = new mongoose.Schema({
     jobPay: {type: String, default: '0'},
     patronId: {type: String, required: true},
     picture: {type: String, required: true},
-    helperId: String,
+    helperId: {type: String, default: ''},
     pairedHelpers: [String],
     dealsOfferedByPatron: [String],
     dealsOfferedByHelpers: [String],
@@ -145,6 +145,18 @@ JobSchema.methods.addMessage = async function(user, message, partner) {
 JobSchema.methods.removeHelper = function(id) {
     this.pairedHelpers = this.pairedHelpers.filter((helper)=>helper!== id);
     this.save();
+};
+
+JobSchema.methods.complete = function(id) {
+    let userIsPatron = user.id ===this.patronId;
+    if (userIsPatron) {
+        this.completedByPatron = true;
+    } else {
+        this.completedByHelper = true;
+    }
+    if (this.completedByHelper && this.completedByPatron) {
+        this.completedDate = Date.now();
+    }
 };
 
 const Job = mongoose.model('Job', JobSchema);

@@ -136,19 +136,22 @@ const allJobs = (Job) => async (user, location) => {
         !location.lat
     ) return {status: false, reason: 'no location information'};
     // user.location = location;
-    user.update();
+    // user.update();
     let jobs = await Job.find();
     jobs = jobs.map((el)=>el.toObject());
     jobs = jobs.filter((job)=>!job.dealMade);
-    // console.log(jobs);
     jobs = jobs.filter((job)=>{
         let distance = r.distanceBetween(job, user)/1000;
-        // console.log(distance);
         let max = parseFloat(user.maxDistance);
-        console.log(distance, max);
         return distance < max;
     }
     );
+    jobs = jobs.filter((job)=>{
+        let jobPrice = parseInt(job.jobPay);
+        let max = user.maxPrice;
+        let min = user.minPrice;
+        return jobPrice<=max && jobPrice>=min;
+    });
     return {status: true, content: jobs};
 };
 
@@ -202,6 +205,15 @@ const sendMessage = (Job, User) => async (user, body) => {
     return {status: true, user: newUser};
 };
 
+const completeJob = (Job) => async (user, body) => {
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!body) return {status: false, reason: 'no job information'};
+    if (!Job) return {status: false, reason: 'server error'};
+    let job = await Job.findOne({id: body.jobId});
+    if (!job) return {status: false, reason: 'job not found'};
+    job.complete(userId);
+};
+
 module.exports = {
     modify,
     newJob,
@@ -215,6 +227,7 @@ module.exports = {
     rejectJob,
     sendMessage,
     deepUser,
+    completeJob,
 };
 
 

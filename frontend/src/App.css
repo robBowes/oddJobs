@@ -1,4 +1,7 @@
 
+a { 
+    color: inherit; 
+    text-decoration: inherit;} 
 
 body {
   width: 100vw;
@@ -398,43 +401,34 @@ width: 100%;
 }
 
 .stack {
-    width: 300px;
-    height: 250px;
-    background: #cccccc;
+    width: 80vw;
     position: relative;
-    left: 35%;
-    margin-left: -100px;
-    border-radius: 10px;
+    margin: 0 auto;
   }
 
 .bottomBar{
     min-height: 6vh;
-    border-bottom: solid 1px #ccc;
-    border-left: solid 1px #ccc;
-    border-right: solid 1px #ccc;
-    background-color: white;
 }
 
-.cardImage{
-    height: 100%;
-    width: auto;
+.wholeCard{
     position: relative;
-    min-height: 100%;
-    max-height: 100%;
+    height: fit-content;
 }
-
 .card {
-  width: 300px;
-  height: 250px;
   list-style: none;
   background: #fff;
-  border-radius: 5px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+  border-radius: 11px;
+  /* box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.2); */
   text-align: center;
   box-sizing: border-box;
   cursor: default;
+}
+
+.cardImage{
+    min-height: 30vh;
+    position: relative;
+    max-width: 100%;
+    border-radius: 11px 11px 0px 0px;
 }
 

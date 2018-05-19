@@ -113,12 +113,12 @@ class Swiper extends Component {
             src={jobsShown[i].picture}
             alt=""
           />
+        <Link to={'/job' + jobsShown[i].id}>
           <div className="bottomBar">
-            <Link to={'/job' + jobsShown[i].id}>
-              <button>details</button>
-            </Link>
+              {/* <button>details</button> */}
             <span className="jobTitle">{jobsShown[i].jobTitle}</span>
           </div>
+          </Link>
         </div>
       );
     }

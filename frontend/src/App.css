@@ -6,6 +6,20 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.userBubble{
+text-align:right;
+margin-right:10%;
+margin-top:1%
+
+}
+.partnerBubble{
+text-align: left;
+margin-left:10%;
+margin-top:1%
+}
+ul{
+    -webkit-padding-start: 0;
+}
 /* Styling Welcome Stage 1 */
 .logo {
   width: 40%;

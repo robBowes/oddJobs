@@ -96,15 +96,22 @@ JobSchema.methods.addHelper = function(helperId) {
     }
 };
 
-JobSchema.methods.addDeal = function(userId, counterParty) {
-    console.log(userId, this.patronId);
-    if (userId === this.patronId) {
-        this.dealsOfferedByPatron = [...this.dealsOfferedByPatron, counterParty];
+JobSchema.methods.addDeal = async function(userId, counterParty) {
+    let userIsPatron = userId === this.patronId;
+    if (userIsPatron) {
+        if (!counterParty) throw new Error('counterparty must exist');
+        // this.dealsOfferedByPatron = [
+        //     ...this.dealsOfferedByPatron, counterParty,
+        // ];
+        this.dealsOfferedByPatron.push(counterParty);
     } else if (!this.dealsOfferedByHelpers.some((helper)=>helper===userId)) {
-        this.dealsOfferedByHelpers = [...this.dealsOfferedByHelpers, userId];
+        // this.dealsOfferedByHelpers = [...this.dealsOfferedByHelpers, userId];
+        this.dealsOfferedByHelpers.push(userId);
     }
     let match = this.dealsOfferedByPatron.find((patronDeal)=>{
-        return this.dealsOfferedByHelpers.some((helperDeal)=>helperDeal===patronDeal);
+        return this.dealsOfferedByHelpers.some(
+            (helperDeal)=>helperDeal===patronDeal
+        );
     });
     if (!!match) {
         this.helperId = match;
@@ -113,9 +120,10 @@ JobSchema.methods.addDeal = function(userId, counterParty) {
         this.dealsOfferedByHelpers = [];
         this.dealsOfferedByPatron = [];
         this.dealMade = true;
+        this.markModified('dealMade');
     }
-    this.save();
-    return this.toObject();
+    delete this.__v;
+    return this;
 };
 
 JobSchema.methods.removePatron = function() {
@@ -137,7 +145,9 @@ JobSchema.methods.addMessage = async function(user, message, partner) {
         this.messages = [...this.messages, chatRoom];
     }
     let chatId = this.messages.findIndex((m)=>m.userId === chatRoom);
-    chatRoom.messages = chatRoom.messages.concat({userId: user.id, message: message});
+    chatRoom.messages = chatRoom.messages.concat(
+        {userId: user.id, message: message}
+    );
     this.messages[chatId] = chatRoom;
     await this.save();
 };
@@ -148,7 +158,7 @@ JobSchema.methods.removeHelper = function(id) {
 };
 
 JobSchema.methods.complete = function(id) {
-    let userIsPatron = user.id ===this.patronId;
+    let userIsPatron = id ===this.patronId;
     if (userIsPatron) {
         this.completedByPatron = true;
     } else {

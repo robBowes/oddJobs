@@ -135,17 +135,19 @@ const allJobs = (Job) => async (user, location) => {
         !location.lng ||
         !location.lat
     ) return {status: false, reason: 'no location information'};
-    // user.location = location;
-    // user.update();
+    // console.log(location);
+    user.location = location;
+    user.save();
     let jobs = await Job.find();
     jobs = jobs.map((el)=>el.toObject());
     jobs = jobs.filter((job)=>!job.dealMade);
     jobs = jobs.filter((job)=>{
-        let distance = r.distanceBetween(job, user)/1000;
-        let max = parseFloat(user.maxDistance);
+        // console.log(user.location);
+        let distance = r.distanceBetween(job, user);
+        let max = parseFloat(user.maxDistance)*1000;
+        // console.log(distance, max);
         return distance < max;
-    }
-    );
+    });
     jobs = jobs.filter((job)=>{
         let jobPrice = parseInt(job.jobPay);
         let max = user.maxPrice;
@@ -171,8 +173,15 @@ const offerDeal = (Job, User) => async (user, body) =>{
     if (!body.jobId) return {status: false, reason: 'no job information'};
     let job = await Job.findOne({id: body.jobId});
     if (!job) return {status: false, reason: 'job not found'};
-    if (job.patronId === user.id && !body.counterParty) return {status: false, reason: 'no counterparty id'};
+    if (job.patronId === user.id && !body.counterParty) {
+        return {status: false, reason: 'no counterparty id'};
+    }
+    user.statistics.jobsAccepted++;
+    await user.save();
     let jobWithDeal = await job.addDeal(user.id, body.counterParty);
+    job.save((err)=>{
+        if (err) console.log(err);
+    });
     return {status: true, job: jobWithDeal};
 };
 
@@ -205,13 +214,19 @@ const sendMessage = (Job, User) => async (user, body) => {
     return {status: true, user: newUser};
 };
 
-const completeJob = (Job) => async (user, body) => {
+const completeJob = (Job, User) => async (user, body) => {
     if (!user) return {status: false, reason: 'no user information'};
     if (!body) return {status: false, reason: 'no job information'};
     if (!Job) return {status: false, reason: 'server error'};
     let job = await Job.findOne({id: body.jobId});
     if (!job) return {status: false, reason: 'job not found'};
-    job.complete(userId);
+    job.complete(user.id);
+    job.save((err)=>{
+        if (err) console.log(err);
+    });
+    user.statistics.jobsCompleted++;
+    user.save;
+    return {status: true, job, user: await deepUser(Job, user, User)};
 };
 
 module.exports = {

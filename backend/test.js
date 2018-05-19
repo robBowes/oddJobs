@@ -156,17 +156,7 @@ describe('Server', () => {
             assert.isOk(job.location);
         });
         it('fails when no body is entered', async () => {
-            // test add job endpoint with bad data
-            login = await fetch('http://localhost:4000/addJob',
-            {
-                method: 'PUT',
-                body: JSON.stringify({}),
-                headers: {
-                    cookie1,
-                },
-                credentials: 'same-origin',
-            });
-            json = await login.json();
+            let json = await putUser1('/addJob');
             assert(!json.status, 'test addJob should fail');
             assert(!json.job, 'test addJob should not return job');
         });
@@ -256,7 +246,7 @@ describe('Server', () => {
             assert.isNotTrue(json.status, 'should return false status');
         });
         it('returns at least one job when good information', async () =>{
-            let json = await postUser1('/allJobs', {location: {lat: '39', lng: '-94'}});
+            let json = await postUser1('/allJobs', {location: {lat: '45.5', lng: '-73.5'}});
             assert.isTrue(json.status, 'should return true status');
             assert.isOk(json.content, 'should include content');
             assert.isArray(json.content, 'content is array');
@@ -283,35 +273,62 @@ describe('Server', () => {
         });
     });
     describe('deal endpoint', () =>{
+        let jobId;
         it('returns false if not given a job ID', async () =>{
             let json = await putUser1('/deal');
             assert.isFalse(json.status, 'should return false');
             assert.isOk(json.reason, 'should include reason');
             assert.isNotOk(json.job, 'should not include job');
         });
+        it('adds a test job', async () =>{
+            let reply = await putUser1('/addJob', testJobInfo);
+            assert.isTrue(reply.status, reply.reason);
+            jobId = reply.job.id;
+            assert.isOk(jobId, 'Job id exists');
+        });
         it('returns false if not receiving user info', async () =>{
-            let json = await putNoCookie('/deal', {jobId: '12345'} );
+            let json = await putNoCookie('/deal', {jobId} );
             assert.isFalse(json.status, 'should return false');
             assert.isOk(json.reason, 'should include reason');
             assert.isNotOk(json.job, 'should not include job');
         });
         it('returns true and job when user2 is helper on user1 job', async () =>{
-            let json = await putUser2('/deal', {jobId: newJobId});
-            assert.isTrue(json.status, json.reason + newJobId);
+            let json = await putUser2('/deal', {jobId});
+            assert.isTrue(json.status, json.reason + jobId);
             assert.isOk(json.job, 'should include reason');
             assert.nestedInclude(json.job.dealsOfferedByHelpers, user2Id, 'at least pair is present');
         });
         it('when deal is offered by patron, counterparty shows in deals offered by patron', async () =>{
-            let json = await putUser1('/deal', {jobId: newJobId, counterParty: user2Id});
+            let json = await putUser1('/deal', {jobId, counterParty: user2Id});
             assert.isTrue(json.status, json.reason);
             assert.isOk(json.job, 'should include reason');
-            // assert.nestedInclude(json.job.dealsOfferedByPatron, user2Id, 'at least pair is present');
+            assert.isTrue(json.job.dealMade, json.job.toString());
+            // console.log(json.job);
         });
-        it('returns match true when a match was made', async () =>{
-            let json = await postUser1('/job', {id: newJobId});
-            assert.isTrue(json.status, json.reason);
-            assert.isTrue(json.job.dealMade, json.job.dealsOfferedByPatron);
-            assert.lengthOf(json.job.dealsOfferedByHelpers, 0, 'deals offered by helpers is empty');
+        // it('returns match true when a match was made', async () =>{
+        //     let json = await postUser1('/job', {id: jobId});
+        //     assert.isTrue(json.status, json.reason);
+        //     assert.lengthOf(json.job.dealsOfferedByHelpers, 0, 'deals offered by helpers is empty' + json.job.dealsOfferedByHelpers.toString());
+        //     assert.lengthOf(json.job.dealsOfferedByPatron, 0, 'deals offered by patron is empty' + json.job.dealsOfferedByPatron.toString());
+        // });
+        it('cannot be completed without job id', async ()=>{
+            let reply = await putUser1('/completeJob');
+            assert.isFalse(reply.status);
+        });
+        it('can be completed by helper', async ()=> {
+            let reply = await putUser2('/completeJob', {jobId});
+            assert.isTrue(reply.status, reply.reason);
+            assert.isTrue(reply.job.dealMade);
+            // assert.isOk(reply.job);
+            assert.isTrue(reply.job.completedByHelper);
+        });
+        it('can be completed by patron and shows completed by helper', async ()=> {
+            let reply = await putUser1('/completeJob', {jobId});
+            assert.isTrue(reply.status, reply.reason);
+            assert.isTrue(reply.job.dealMade);
+            assert.isOk(reply.job);
+            assert.isTrue(reply.job.completedByPatron);
+            assert.isTrue(reply.job.completedByHelper);
         });
     });
     describe('create, reject, find job as patron', ()=>{
@@ -346,7 +363,6 @@ describe('Server', () => {
             assert.oneOf(user2Id, reply.job.pairedHelpers, 'user is in list of helpers');
         });
         it('returns false if patron offers deal with no counterparty', async ()=>{
-            // console.log(jobId2);
             let reply = await putUser1('/deal', {jobId: jobId2});
             assert.isNotTrue(reply.status, reply.reason);
         });
@@ -358,10 +374,11 @@ describe('Server', () => {
         it('a deal is offered by the helper', async ()=>{
             let reply = await putUser2('/deal', {jobId: jobId2});
             assert.isTrue(reply.status, reply.reason);
-            // console.log(reply.job);
-            // assert.oneOf(user2Id, reply.job.dealsOfferedByHelpers, 'user is in list of deals offered by helpers');
             assert.isTrue(reply.job.dealMade, reply.job.dealsOfferedByHelpers);
         });
+    });
+    describe('create job, pair with job, send chat messages by both users'()=>{
+        
     });
 });
 

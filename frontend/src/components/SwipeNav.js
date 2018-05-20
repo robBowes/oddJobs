@@ -9,7 +9,7 @@ import {Link} from "react-router-dom"
 
 class SwipeNav extends Component {
   render() {
-      return (<div>
+      return (<div className="swipeNav">
       <div className="navBar">
       <Link className="settingsLink" to='/settings'><button className="imageButton"><img className="navImage" src="/settings.png"/></button></Link> 
       <Link className="jobsLink" to='/currentjobs'><button className="imageButton"><img className="navImage" src="/chats.png"/></button></Link>

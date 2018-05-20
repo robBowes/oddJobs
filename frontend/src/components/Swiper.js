@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import Swing from "react-swing";
 import { Link } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
-import SwipeNav from './../components/SwipeNav.js';
-
+import SwipeNav from "./../components/SwipeNav.js";
 
 // The main function of the app
 // A constantly rotating pair of jobs giving the impression of continuous flow
@@ -116,9 +115,9 @@ class Swiper extends Component {
           <Link to={"/job" + jobsShown[i].id}>
             <div className="bottomBar">
               <div className="jobDetails">
-              <span className="jobDistance">{"20km"}</span>
-              <span className="jobTitle">{jobsShown[i].jobTitle}</span>
-              <span className="jobPay">{"$"+jobsShown[i].jobPay}</span>
+                <span className="jobDistance">{"20km"}</span>
+                <span className="jobTitle">{jobsShown[i].jobTitle}</span>
+                <span className="jobPay">{"$" + jobsShown[i].jobPay}</span>
               </div>
             </div>
           </Link>
@@ -219,16 +218,14 @@ class Swiper extends Component {
             )}
           </Swing>
         </div>
-        <div>
-        <SwipeNav/>
-          <div className="acceptReject">
-        <button type="button" onClick={this.swipeLeft}>
+        <SwipeNav />
+        <div className="acceptReject">
+          <button className="swipeButton" type="button" onClick={this.swipeLeft}>
             Reject
           </button>
-          <button type="button" name="accept" onClick={this.swipeRight}>
+          <button className="swipeButton" type="button" name="accept" onClick={this.swipeRight}>
             ACCEPT
           </button>
-          </div>
         </div>
       </div>
     );

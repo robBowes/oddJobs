@@ -495,8 +495,8 @@ margin-bottom: 10%;
 .navBar{
   width: 100%;
   padding-top: 7%;
-  position: absolute;
-  height: 7%;
+  position: relative;
+  height: 7vh;
 }
 
 .settingsLink{
@@ -515,5 +515,20 @@ margin-bottom: 10%;
 }
 
 .navImage{
-  width: 50%;
+  width: 9vw;
+}
+
+.acceptReject{
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.swipeButton{
+  border: solid 3vw #eaeaea;
+  background: #fff;
+  border-radius: 50%;
+  width: 30vw;
+  height: 30vw;
+  margin-left: -2vw;
 }

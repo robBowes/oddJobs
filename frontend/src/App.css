@@ -461,8 +461,6 @@ margin-bottom: 10%;
   box-sizing: border-box;
   cursor: default;
   position: absolute;
-<<<<<<< HEAD
-=======
   top: 0;
   left: 0;
   bottom: 0;
@@ -485,7 +483,6 @@ margin-bottom: 10%;
   left: 0;
   bottom: 0;
   right: 0;
->>>>>>> 30a9bf7e99f56abc94d5fbd1fe10003a815c66a4
 }
 
 .cardImage{

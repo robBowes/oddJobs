@@ -400,6 +400,7 @@ flex-flow: column;
 
 .logoContainer{
 width: 100%;
+margin-bottom: 10%;
 }
 
 .logo2{
@@ -409,15 +410,14 @@ width: 100%;
 }
 
 .stackContainer{
-    margin-top: 5vh;
-    width: 100%;
-    height: 40vh;
+  position: relative;
+  width: 80%;
+  padding-top: 80%;
+  margin: 0 auto;
 }
 
 .stack {
-    width: 80vw;
-    position: relative;
-    margin: 0 auto;
+
   }
 
 .bottomBar{
@@ -433,14 +433,18 @@ width: 100%;
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 11px;
-  /* box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.2); */
   text-align: center;
   box-sizing: border-box;
   cursor: default;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .cardImage{
-    min-height: 30vh;
+    height: 80%;
     position: relative;
     max-width: 100%;
     border-radius: 11px 11px 0px 0px;

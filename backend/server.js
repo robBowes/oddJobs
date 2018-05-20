@@ -49,6 +49,7 @@ app.use(express.static('data/images'));
 
 app.post('/login', async (req, res)=>{
     verbose('login user Id: ' + req.body.id);
+    console.log('$$$$$$$$$$$'+req);
     let ret = {status: true};
     try {
         let fb = req.body;

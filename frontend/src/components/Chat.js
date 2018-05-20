@@ -44,7 +44,8 @@ class Chat extends Component {
           compare[compare.length - 3] === "chats"
         ) {
             console.log(this.props.user.id===jobFound.patronId)
-            let offerCheck = this.props.user.id === jobFound.patronId ? jobFound.dealsOfferedByHelpers.some(x => x === this.props.user.id) : 
+            let offerCheck = this.props.user.id === jobFound.patronId ? 
+            jobFound.dealsOfferedByHelpers.some(x => x === this.props.userid) : 
             jobFound.dealsOfferedByPatron.some(
                     x => {
                         

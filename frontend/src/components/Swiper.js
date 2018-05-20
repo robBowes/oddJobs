@@ -132,6 +132,7 @@ class Swiper extends Component {
     return newStack;
   };
   componentWillMount = (props) => {
+    console.log(this.props.user)
     fetch('/allJobs', {
       method: 'POST',
       credentials: 'same-origin',
@@ -139,6 +140,7 @@ class Swiper extends Component {
     })
       .then((x) => x.json())
       .then((y) => {
+        console.log(y)
         this.props.dispatch({
           type: 'UPDATE_JOBS',
           payload: y.content,

@@ -86,7 +86,7 @@ dbTests = async () => {
 
 const fetchConstructor = (cookie, method) => {
     let options = {
-        headers: {cookie: cookie},
+    headers: {cookie: cookie},
         method: method,
         credentials: 'same-origin',
     };
@@ -111,7 +111,7 @@ const putUser2 = fetchConstructor(cookie2, 'PUT');
 let testJobInfo = {
     jobDescription: 'test',
     jobTitle: 'test',
-    location: {lat: '45', lng: '-38'},
+    location: {lat: '45.525', lng: '-73.595'},
     picture: '253200.jpg',
 };
 
@@ -129,14 +129,14 @@ describe('Server', () => {
                 'login without cookie or facebook access token should fail'
             );
         });
-        // it('logs in with test cookie', async () => {
-        //     let reply = await postUser1('/login');
-        //     assert.isTrue(reply.status, reply.reason);
-        //     assert(reply.status && reply.user.name === 'TEST',
-        //     'test cookie should return test user' );
-        //     assert.isArray(reply.user.pairs, 'user pairs should be included in user object');
-        //     assert.isArray(reply.user.jobsListed, 'user pairs should be included in user object');
-        // });
+        it('logs in with test cookie', async () => {
+            let reply = await postUser1('/login');
+            assert.isTrue(reply.status, reply.reason);
+            assert(reply.status && reply.user.name === 'TEST',
+            'test cookie should return test user' );
+            assert.isArray(reply.user.pairs, 'user pairs should be included in user object');
+            assert.isArray(reply.user.jobsListed, 'user pairs should be included in user object');
+        });
     });
     describe('user 1 add job', () => {
         it('returns a job on the endpoint', async () => {
@@ -378,7 +378,17 @@ describe('Server', () => {
         });
     });
     describe('create job, pair with job, send chat messages by both users', ()=>{
-
+        let jobId;
+        it('creates a job and returns a job ID', async ()=>{
+            let reply = await putUser1('/addJob', testJobInfo);
+            assert.isTrue(reply.status, reply.reason);
+            jobId = reply.job.id;
+            assert.isOk(jobId);
+            assert.lengthOf(job.pairedHelpers, 0);
+        });
+        it('can be paired by user 2', async ()=>{
+            let reply = await putUser2('pair');
+        });
     });
 });
 

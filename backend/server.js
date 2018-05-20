@@ -35,6 +35,7 @@ const makeDeal = oddJobs.offerDeal(Job, User);
 const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
+const backOut = oddJobs.backOut(Job, User);
 
 const verbose = (obj) => {
     if (false)console.log(obj);

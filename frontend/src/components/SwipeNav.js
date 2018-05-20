@@ -9,9 +9,11 @@ import {Link} from "react-router-dom"
 
 class SwipeNav extends Component {
   render() {
-      return (<div>SWIPE NAV TOOLS<br/>
-      <Link to='/settings'><button>SETTINGS</button></Link> <Link to='/currentjobs'><button>CHAT</button></Link>
-      <br/>
+      return (<div className="swipeNav">
+      <div className="navBar">
+      <Link className="settingsLink" to='/settings'><button className="imageButton"><img className="navImage" src="/settings.png"/></button></Link> 
+      <Link className="jobsLink" to='/currentjobs'><button className="imageButton"><img className="navImage" src="/chats.png"/></button></Link>
+      </div>
       <Link to={'/user'+this.props.id}><button>user</button></Link>
       <Link to={'/chatTest'}><button>CHAT TEST</button></Link>
       </div>)

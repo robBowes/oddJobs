@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const app = express();
 const cookieParser = require('cookie-parser');
 const sha1 = require('sha1');
-const http = require('http').Server(app, '/messages');
+// const http = require('http').Server(app, '/messages');
 const io = require('socket.io')();
 
 
@@ -35,6 +35,7 @@ const makeDeal = oddJobs.offerDeal(Job, User);
 const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
+const backOut = oddJobs.backOut(Job, User);
 
 const verbose = (obj) => {
     if (false)console.log(obj);
@@ -55,7 +56,7 @@ app.post('/login', async (req, res)=>{
         let fb = req.body;
         let appToken = req.cookies.token;
         if (appToken) ret.user = await userFromToken(req.cookies.token);
-        ret = await login(fb, req.cookies.token, User, ret.user);
+        if (!ret.user) ret = await login(fb, req.cookies.token, ret.user);
         if (ret.status) res.cookie('token', ret.user.appToken);
     } catch (error) {
         console.log(error);
@@ -130,8 +131,9 @@ app.post('/user', async (req, res)=>{
     let ret;
     let user = await userFromToken(req.cookies.token);
     verbose(user + 'user');
-    if (user.id ===req.body.id) ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
-    else ret = await findUser(req.body);
+    if (user.id ===req.body.id) {
+        ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
+    } else ret = await findUser(req.body);
     res.json(ret);
 });
 
@@ -151,6 +153,12 @@ app.put('/sendMessage', async (req, res)=>{
 app.put('/uploadImage', (req, res)=>{
     let ret = oddJobs.uploadImage(req);
     res.json(ret);
+});
+
+app.put('/backOut', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
+    let reply = await backOut(user, req.body);
+    res.json(reply);
 });
 
 io.on('connection', function(client) {

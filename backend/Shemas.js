@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+/*
+ Error handling middleware
+*/
+const handleE11000 = function(error, res, next) {
+    if (error.name === 'MongoError' && error.code === 11000) {
+        next(new Error('There was a duplicate key error'));
+    } else {
+        next();
+    }
+};
+
 const UserSchema = new mongoose.Schema({
     id: {type: String, unique: true, required: true},
     accessToken: String,
@@ -168,6 +179,9 @@ JobSchema.methods.complete = function(id) {
         this.completedDate = Date.now();
     }
 };
+
+
+JobSchema.post('save', handleE11000);
 
 const Job = mongoose.model('Job', JobSchema);
 // const User = mongoose.model('User', UserSchema);

@@ -400,6 +400,7 @@ flex-flow: column;
 
 .logoContainer{
 width: 100%;
+margin-bottom: 10%;
 }
 
 .logo2{
@@ -409,20 +410,42 @@ width: 100%;
 }
 
 .stackContainer{
-    margin-top: 5vh;
-    width: 100%;
-    height: 40vh;
-    margin-bottom: 20%;
+  position: relative;
+  width: 80%;
+  padding-top: 80%;
+  margin: 0 auto;
 }
 
 .stack {
-    width: 80vw;
-    position: relative;
-   margin: 0 auto;
+
   }
 
 .bottomBar{
-    min-height: 6vh;
+    height: 20%;
+}
+
+.jobPay{
+  right: 15%;
+  position: absolute;
+}
+
+.jobDistance{
+  left: 15%;
+  position: absolute;
+}
+
+.jobDetails{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  float: left;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  font-size: 4vw;
+  font-weight: 300;
 }
 
 .wholeCard{
@@ -434,17 +457,81 @@ width: 100%;
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 11px;
-  /* box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.2); */
   text-align: center;
   box-sizing: border-box;
   cursor: default;
   position: absolute;
+<<<<<<< HEAD
+=======
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.noCards{
+  background-image: url(/nothing.png);
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  list-style: none;
+  border-radius: 11px;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: default;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+>>>>>>> 30a9bf7e99f56abc94d5fbd1fe10003a815c66a4
 }
 
 .cardImage{
-    min-height: 30vh;
+    height: 80%;
     position: relative;
     max-width: 100%;
     border-radius: 11px 11px 0px 0px;
 }
 
+.navBar{
+  width: 100%;
+  padding-top: 7%;
+  position: relative;
+  height: 7vh;
+}
+
+.settingsLink{
+  left: 3%;
+  position: absolute;
+}
+
+.jobsLink{
+  right: 3%;
+  position: absolute;
+}
+
+.imageButton{
+  border: 0; 
+  background: transparent;
+}
+
+.navImage{
+  width: 9vw;
+}
+
+.acceptReject{
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.swipeButton{
+  border: solid 3vw #eaeaea;
+  background: #fff;
+  border-radius: 50%;
+  width: 30vw;
+  height: 30vw;
+  margin-left: -2vw;
+}

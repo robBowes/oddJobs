@@ -492,3 +492,28 @@ margin-bottom: 10%;
     border-radius: 11px 11px 0px 0px;
 }
 
+.navBar{
+  width: 100%;
+  padding-top: 7%;
+  position: absolute;
+  height: 7%;
+}
+
+.settingsLink{
+  left: 3%;
+  position: absolute;
+}
+
+.jobsLink{
+  right: 3%;
+  position: absolute;
+}
+
+.imageButton{
+  border: 0; 
+  background: transparent;
+}
+
+.navImage{
+  width: 50%;
+}

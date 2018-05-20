@@ -203,8 +203,8 @@ class Swiper extends Component {
           throwoutleft={this.reject}
           throwoutright={this.accept}
         >
-          <div style={{position: 'absolute', bottom: '20%', left: '10%'}}>
-            NO MORE CARDS
+          <div className="noCards">
+            
           </div>
           {this.state.cards ? (
             this.state.cards.map((x) => {

@@ -421,7 +421,15 @@ margin-bottom: 10%;
   }
 
 .bottomBar{
-    min-height: 6vh;
+    height: 20%;
+}
+
+.jobTitle{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  float: left;
+  transform: translate(-50%,-50%);
 }
 
 .wholeCard{
@@ -432,6 +440,24 @@ margin-bottom: 10%;
   list-style: none;
   background: #fff;
   border: 1px solid #ccc;
+  border-radius: 11px;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: default;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.noCards{
+  background-image: url(/nothing.png);
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  list-style: none;
   border-radius: 11px;
   text-align: center;
   box-sizing: border-box;

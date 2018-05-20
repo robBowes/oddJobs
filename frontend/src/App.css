@@ -424,12 +424,28 @@ margin-bottom: 10%;
     height: 20%;
 }
 
-.jobTitle{
+.jobPay{
+  right: 15%;
+  position: absolute;
+}
+
+.jobDistance{
+  left: 15%;
+  position: absolute;
+}
+
+.jobDetails{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   top: 50%;
   left: 50%;
+  width: 100%;
   float: left;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
+  font-size: 4vw;
+  font-weight: 300;
 }
 
 .wholeCard{

@@ -43,7 +43,6 @@ class Chat extends Component {
           compare[compare.length - 2] === this.props.jobid &&
           compare[compare.length - 3] === "chats"
         ) {
-            console.log(this.props.user.id===jobFound.patronId)
             let offerCheck = this.props.user.id === jobFound.patronId ? 
             jobFound.dealsOfferedByHelpers.some(x => x === this.props.userid) : 
             jobFound.dealsOfferedByPatron.some(
@@ -59,6 +58,7 @@ class Chat extends Component {
                     }
                   );   
           this.setState({
+            complete: (jobFound.completedByHelper&&jobFound.completedByPatron),
             loading: false,
             messages: chatFound ? chatFound.messages : [],
             job: jobFound,
@@ -68,7 +68,6 @@ class Chat extends Component {
               offerCheck2,
             deal: jobFound.dealMade
           });
-          console.log(this.state)
           this.getAllMsgs();
         }
       });
@@ -180,7 +179,6 @@ class Chat extends Component {
         if (y.status) {
             y.job.dealMade ? this.setState({ deal: true }) : null;
         if(this.props.user.id!==y.job.patronId){
-            console.log('test')
           y.job.dealsOfferedByHelpers.some(x=>x===this.props.user.id)
             ? this.setState({
                 offer: true
@@ -227,6 +225,30 @@ class Chat extends Component {
 
   }
 
+  completeJob=()=>{
+    fetch('/completeJob',{
+      method:'PUT',
+      credentials: 'same-origin',
+      body:JSON.stringify({jobId: this.props.jobid})
+    })
+    .then(x=>x.json())
+    .then(y=>{
+      console.log(y)
+      if(y.job.completedByHelper&&y.job.completedByPatron){
+        this.setState({complete: true})
+      }
+      return y
+    })
+    .then(z=>{
+      let x = { id: this.state.job.id, message: (z.job.completedByHelper||z.job.completedByPatron)?"Job Complete Confirmed!":"The job is now Complete! Please confirm by clicking Complete Job! Have a wonderful day!", partner: this.state.partner };
+      fetch("/sendMessage", {
+        method: "PUT",
+        credentials: "same-origin",
+        body: JSON.stringify(x)
+      });
+    })
+  }
+
   renderMessages = () => {
     if (this.state.messages.length > 0) {
       return this.state.messages.map((x, i) => {
@@ -248,36 +270,35 @@ class Chat extends Component {
     }
   };
   render() {
-    return this.state.loading ? (
-      <div>LOAD</div>
-    ) : (
-      <div>
+    return this.state.loading ? <div>LOAD</div> : <div>
+        <div>
+    </div>
         <button onClick={this.goBack}>BACK</button>
         <button>HOME</button>
+        <div style={{position:'absolute', right:'5px',top:'0'}}>
+          {this.state.complete ? (
+            <button disabled>complete!</button>
+          ) : this.state.deal ? (
+            <button onClick={this.completeJob}>Complete Job</button>
+          ) : this.state.offer ? (
+            <button disabled>DEAL SENT</button>
+          ) : (
+            <button onClick={this.deal}>
+              {this.state.offered ? "CONFIRM!" : "SEND DEAL"}
+            </button>
+          )}</div>
         <div>
           {this.state.partnerName + ` - "` + this.state.job.jobTitle + `"`}
         </div>
-        <div
-          style={{ overflowY: "scroll", maxHeight: "82vh" }}
-          className="chatWindow"
-        >
+        <div style={{ overflowY: "scroll", maxHeight: "82vh" }} className="chatWindow">
           <ul style={{ listStyleType: "none" }}>{this.renderMessages()}</ul>
         </div>
-        <div
-          style={{ bottom: "0vh", position: "absolute" }}
-          className="chatInput"
-        >
+        <div style={{ bottom: "0vh", position: "absolute" }} className="chatInput">
           <form onSubmit={this.handleSubmit}>
             <input type="text" onChange={this.handleChange} id="chatbar" />
           </form>
-          {this.state.deal?<button>DEAL MADE</button>:this.state.offer ? (
-            <button>DEAL SENT</button>
-          ) : (
-            <button onClick={this.deal}>{this.state.offered?'CONFIRM!':'SEND DEAL'}</button>
-          )}
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 

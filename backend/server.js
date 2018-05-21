@@ -36,13 +36,15 @@ const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
 // const backOut = oddJobs.backOut(Job, User);
+const fs = require('fs');
+const https = require('https');
 
 const verbose = (obj) => {
     if (false)console.log(obj);
 };
 
-// let privateKey = fs.readFileSync('privkey.pem', 'utf8');
-// let certificate = fs.readFileSync('fullchain.pem', 'utf8');
+// let privateKey = fs.readFileSync('oddjobs.site/privkey.pem');
+// let certificate = fs.readFileSync('oddjobs.site/fullchain.pem', 'utf8');
 // let credentials = {key: privateKey, cert: certificate};
 // let httpsServer = https.createServer(credentials, app);
 
@@ -69,7 +71,7 @@ app.post('/login', async (req, res)=>{
     }
     // res.cookie('token', ret.user.appToken);
     // res.cookie('token', '12345');
-    // ret.user = await deepUser(Job, ret.user, User);
+    ret.user = await oddJobs.deepUser(Job, ret.user, User);
     res.json(ret);
 });
 

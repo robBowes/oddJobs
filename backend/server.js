@@ -67,9 +67,9 @@ app.post('/login', async (req, res)=>{
         let appToken = req.cookies.token;
         if (appToken) {
             ret.user = await userFromToken(req.cookies.token);
+            if (ret.user) ret.user = await oddJobs.deepUser(Job, ret.user, User );
         }
         if (!ret.user) ret = await login(fb, req.cookies.token, User, ret.user);
-        if (ret.user) ret.user = await oddJobs.deepUser(Job, ret.user, User );
         if (ret.status) res.cookie('token', ret.user.appToken);
     } catch (error) {
         console.log(error);

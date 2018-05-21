@@ -107,7 +107,7 @@ class Login extends Component {
       // version="v2.5"
       className="facebook-login"
       buttonText="Login With Facebook"
-      // redirectUri={window.location.href}
+      redirectUri={window.location.href}
       />
       <button onClick={this.fakeLogin}>Fake Login</button>
       </div>

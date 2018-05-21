@@ -21,3 +21,5 @@ render(){
 }
 
 }
+
+mapStateToProps

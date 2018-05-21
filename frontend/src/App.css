@@ -156,7 +156,7 @@ input{
 }
 
 /* styling welcome stage 2 */
-.welcomeStage2, .newJobPage, .pairsPage {
+.welcomeStage2, .newJobPage, .pairsPage, .loginContainer {
   display: flex;
   flex-direction: column;
 }
@@ -727,10 +727,10 @@ margin-bottom: 10%;
 
 .jobTitleHeader{
   position: relative;
-  top: 3%;
-  left: -9%;
+  top: 12%;
+  left: -7%;
   color: white;
-  font-size: 2.5vh;
+  font-size: 2vh;
   font-weight: 400;
 }
 
@@ -754,7 +754,7 @@ margin-bottom: 10%;
 }
 
 .pairedJobCard{
-  background-color: #cccccc;
+  background-color: #636363;
   height: 14vh;
   width: 86%;
   margin-left: 8%;
@@ -794,13 +794,23 @@ margin-bottom: 10%;
 .jobDetailsHeader{
   width: 100%;
   position: relative;
-  left: -9%;
+  left: -7%;
   top: 9%;
-  font-size: 1.8vh;
+  font-size: 1.5vh;
   color: white;
   font-weight: 350;
 }
 
+/* login page */
+
+.loginContainer{
+  padding-top: 20%;
+}
+
+.facebookButtonContainer{
+  padding-top: 25%;
+  text-align: center;
+}
 
 
 @media only screen and (min-width: 600px) {

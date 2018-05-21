@@ -25,11 +25,11 @@ describe('OddJobs', function() {
     let randomString = [
         'test1', 'test2', 'test3', 'test4', 'test5',
     ][Math.floor(Math.random() * 5)];
-    after(() => {
-        Job.deleteMany({
-            jobTitle: 'test',
-        }, (err) => err ? console.log(err) : null);
-    });
+        // after(() => {
+        //     Job.deleteMany({
+        //         jobTitle: 'test',
+        //     }, (err) => err ? console.log(err) : null);
+        // });
     let user;
     before(async ()=>{
         user = await User.findOne({
@@ -305,12 +305,12 @@ describe('Server', () => {
             assert.isTrue(json.job.dealMade, json.job.toString());
             // console.log(json.job);
         });
-        // it('returns match true when a match was made', async () =>{
-        //     let json = await postUser1('/job', {id: jobId});
-        //     assert.isTrue(json.status, json.reason);
-        //     assert.lengthOf(json.job.dealsOfferedByHelpers, 0, 'deals offered by helpers is empty' + json.job.dealsOfferedByHelpers.toString());
-        //     assert.lengthOf(json.job.dealsOfferedByPatron, 0, 'deals offered by patron is empty' + json.job.dealsOfferedByPatron.toString());
-        // });
+        it('returns match true when a match was made', async () =>{
+            let json = await postUser1('/job', {id: jobId});
+            assert.isTrue(json.status, json.reason);
+            assert.lengthOf(json.job.dealsOfferedByHelpers, 0, 'deals offered by helpers is empty' + json.job.dealsOfferedByHelpers.toString());
+            assert.lengthOf(json.job.dealsOfferedByPatron, 0, 'deals offered by patron is empty' + json.job.dealsOfferedByPatron.toString());
+        });
         it('cannot be completed without job id', async ()=>{
             let reply = await putUser1('/completeJob');
             assert.isFalse(reply.status);

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 /*
- Error handling middleware
+Error handling middleware
 */
 const handleE11000 = function(error, res, next) {
     if (error.name === 'MongoError' && error.code === 11000) {
@@ -178,6 +178,14 @@ JobSchema.methods.complete = function(id) {
     if (this.completedByHelper && this.completedByPatron) {
         this.completedDate = Date.now();
     }
+};
+
+JobSchema.methods.backOut = function(userid, jobId) {
+    let userIsPatron = userid ===this.patronId;
+    this.dealMade = false;
+    this.helperId = '';
+    this.dealDate = 0;
+    this.pairs = [];
 };
 
 

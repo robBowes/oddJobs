@@ -14,7 +14,7 @@ class SwipeNav extends Component {
       <Link className="settingsLink" to='/settings'><button className="imageButton"><img className="navImage" src="/settings.png"/></button></Link> 
       <Link className="jobsLink" to='/currentjobs'><button className="imageButton"><img className="navImage" src="/chats.png"/></button></Link>
       </div>
-      <Link to={'/user'+this.props.id}><button>user</button></Link>
+      {/* <Link to={'/user'+this.props.id}><button>user</button></Link> */}
       </div>)
   }
 }

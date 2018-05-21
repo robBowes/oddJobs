@@ -191,7 +191,7 @@ class Swiper extends Component {
       <div className="swipeContainer">
         <div className="addJobContainer">
           <Link to="/listjob">
-            <button className="addJobButton">+</button>
+            <button className="addJobButton"><span className="addJobInner">+</span></button>
           </Link>
         </div>
         <div className="logoContainer">
@@ -220,11 +220,9 @@ class Swiper extends Component {
         </div>
         <SwipeNav />
         <div className="acceptReject">
-          <button className="swipeButton" type="button" onClick={this.swipeLeft}>
-            Reject
+          <button id="x" className="swipeButton" type="button" onClick={this.swipeLeft}>
           </button>
-          <button className="swipeButton" type="button" name="accept" onClick={this.swipeRight}>
-            ACCEPT
+          <button id="check" className="swipeButton" type="button" name="accept" onClick={this.swipeRight}>
           </button>
         </div>
       </div>

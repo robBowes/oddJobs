@@ -375,7 +375,7 @@ flex-flow: column;
 
 .addJobContainer{
     width: 100%;
-    height: 15vh;
+    height: 10vh;
 }
 
 .addJobButton{
@@ -387,15 +387,27 @@ flex-flow: column;
     font-size: 1.5em;
     background: #82da05;
     text-align: center;
-    width: 30px;
-    height: 30px;
+    width: 7%;
+    padding-top: 7%;
     text-decoration: none;
     font-weight: bold;
     border: none;
     position: relative;
-    margin-left: 80%;
+    margin-left: 82%;
     margin-top: 10%;
     line-height: 0px;
+}
+
+.addJobInner{
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    float: left;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    font-size: 5vw;
 }
 
 .logoContainer{
@@ -500,12 +512,12 @@ margin-bottom: 10%;
 }
 
 .settingsLink{
-  left: 3%;
+  left: 9%;
   position: absolute;
 }
 
 .jobsLink{
-  right: 3%;
+  right: 9%;
   position: absolute;
 }
 
@@ -525,10 +537,46 @@ margin-bottom: 10%;
 }
 
 .swipeButton{
-  border: solid 3vw #eaeaea;
+  border: solid 2vw #eaeaea;
   background: #fff;
   border-radius: 50%;
-  width: 30vw;
-  height: 30vw;
+  width: 25%;
+  padding-top: 20%;
   margin-left: -2vw;
+  margin-bottom: 5vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+}
+
+#x{
+  background-image: url(/x.png);
+}
+
+#check{
+  background-image: url(/check.png);
+}
+
+.acceptRejectImage{
+
+}
+
+@media only screen and (min-width: 600px) {
+  body {
+    box-sizing: border-box;
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+  .swipeButton{
+    border: solid 2vw #eaeaea;
+  }
+  .navImage{
+    width: 5vw;
+  }
+  .jobDetails{
+    font-size: 2vw;
+  }
+  .addJobInner{
+    font-size: 3vw;
+  }
 }

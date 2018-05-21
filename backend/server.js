@@ -38,7 +38,6 @@ const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
 // const backOut = oddJobs.backOut(Job, User);
-const https = require('https');
 
 const verbose = (obj) => {
     if (false)console.log(obj);

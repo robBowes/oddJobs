@@ -16,6 +16,14 @@ body {
   font-size:13pt;
 }
 
+input, textarea{
+  border-radius: 8px;
+}
+
+button:focus{
+outline: none;
+}
+
 .userBubble{
   vertical-align: right;
 right:0px;
@@ -140,6 +148,7 @@ input{
 .welcomeInputMinMax:focus {
   outline: solid 1px #82da05;
 }
+
 .lineBreaks {
   padding-top: 1%;
   padding-bottom: 1%;
@@ -672,30 +681,82 @@ margin-bottom: 10%;
 }
 
 .jobTitleHeader{
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  float: left;
-  -webkit-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-  font-size: 3vh;
+  top: 3%;
+  left: -9%;
+  color: white;
+  font-size: 2.5vh;
   font-weight: 400;
 }
 
 .pairJobPic{
-  float:left;
+  float: left;
   border-radius: 50%;
   border: solid 2px white;
-  width: 15vh;
-  height: 15vh;
+  width: 10vh;
+  height: 10vh;
+  margin-top: 2vh;
+  margin-left: 1vh;
 }
 
 .listedJobCard{
   background-color: #82da05;
+  height: 17%;
+  width: 86%;
+  margin-left: 8%;
+  border-radius: 10px;
+  position: relative;
 }
+
+.pairedJobCard{
+  background-color: #cccccc;
+  height: 14vh;
+  width: 86%;
+  margin-left: 8%;
+  border-radius: 10px;
+  position: relative;
+}
+
+.pairedDealCard{
+  background-color: #63aa00;
+  height: 14vh;
+  width: 86%;
+  margin-left: 8%;
+  border-radius: 10px;
+  position: relative;
+}
+
+.removeJob{
+    position: absolute;
+    left: 1%;
+    color: white;
+    font-size: 2vh;
+    border: none;
+    background-color: transparent;
+    z-index: 2;
+}
+
+.goToChatsArrow{
+  color: white;
+  font-size: 5vh;
+  position: absolute;
+  right: 2%;
+  top: 24%;
+  border: none;
+  background-color: transparent;
+}
+
+.jobDetailsHeader{
+  width: 100%;
+  position: relative;
+  left: -9%;
+  top: 9%;
+  font-size: 1.8vh;
+  color: white;
+  font-weight: 350;
+}
+
+
 
 @media only screen and (min-width: 600px) {
   body {

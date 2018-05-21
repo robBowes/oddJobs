@@ -252,20 +252,12 @@ class Chat extends Component {
   renderMessages = () => {
     if (this.state.messages.length > 0) {
       return this.state.messages.map((x, i) => {
-        return (
-          <li
-            className={
-              this.props.user.id === x.userId ? "userBubble" : "partnerBubble"
-            }
-            id={x.id}
-            key={i}
-          >
-            {
-              //(x.userId===this.props.user.id?this.state.name:this.state.partnerName) + ": " +
-              x.message
-            }
-          </li>
-        );
+        return <div className="messages" style={{ flexDirection: this.props.user.id === x.userId ? "row-reverse" : "row" }}>
+            <li className={this.props.user.id === x.userId ? "userBubble" : "partnerBubble"} id={x.id} key={i}>
+              {//(x.userId===this.props.user.id?this.state.name:this.state.partnerName) + ": " +
+                x.message}
+            </li>
+          </div>;
       });
     }
   };
@@ -276,6 +268,7 @@ class Chat extends Component {
         <button onClick={this.goBack}>BACK</button>
         <button>HOME</button>
         <div style={{position:'absolute', right:'5px',top:'0'}}>
+        <button>Reject</button>
           {this.state.complete ? (
             <button disabled>complete!</button>
           ) : this.state.deal ? (

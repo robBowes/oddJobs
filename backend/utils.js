@@ -10,7 +10,7 @@ const makeNewUser = (user) => {
 };
 
 // const uri = 'mongodb+srv://user:1111@cluster0-b37en.mongodb.net/test?retryWrites=true';
- const uri = 'mongodb+srv://user:1111@cluster0-b37en.mongodb.net/test';
+const uri = 'mongodb+srv://user:1111@cluster0-b37en.mongodb.net/test';
 // Jordans mongo server
 // const uri = 'mongodb://user:1111@ds129670.mlab.com:29670/tester';
 

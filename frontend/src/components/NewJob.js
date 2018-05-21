@@ -125,11 +125,14 @@ class NewJob extends Component {
     return (
       <div className="newJobPage">
       
-      <button className="backButton" onClick={this.goBack}>Back</button>
+      <button className="backButton" onClick={this.goBack}>{"< Back"}</button>
   
         <h1 className="pageTitle">
           New Job
         </h1>
+         <div className="split">
+         <hr/>
+         </div>
            
          <form onSubmit={this.handleSubmit}>
 
@@ -178,6 +181,8 @@ class NewJob extends Component {
           onChange={this.uploadPicture}
           accept="image/*"
           />
+
+          <div className="buttonWrapper2">
           <button
             type="submit"
             className="submitButton"
@@ -190,6 +195,7 @@ class NewJob extends Component {
             >
             Submit
           </button>    
+          </div>
         </form>
       </div>
     );

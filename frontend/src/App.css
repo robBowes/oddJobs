@@ -10,16 +10,42 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.userBubble{
-text-align:right;
-margin-right:10%;
-margin-top:1%
+.messages{
+  display:flex;
+  color:rgb(7, 6, 6);
+  font-size:13pt;
+}
 
+.userBubble{
+  vertical-align: right;
+right:0px;
+margin-right:10%;
+margin-left: 20%;
+margin-top:2%;
+background-color: rgb(240, 238, 238);
+border: none;
+padding:8px;
+padding-right: 12px;
+border-radius: 9px 0px 17px 9px;
+display: inline-block;
+box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.274);
 }
 .partnerBubble{
+  color:white;
+vertical-align: left;
 text-align: left;
 margin-left:10%;
-margin-top:1%
+margin-right: 20%;
+margin-top:1%;
+background-color: #82da05;
+border: none;
+padding:8px;
+padding-left: 12px;
+border-radius: 0px 9px 9px 17px;
+display: inline-block;
+box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.274);
+
+
 }
 ul{
     -webkit-padding-start: 0;
@@ -54,7 +80,7 @@ input{
   bottom: 5%;
   text-align: center;
 }
-.welcomeButton {
+.welcomeButton, .submitButton {
   -webkit-border-radius: 10;
   -moz-border-radius: 10;
   border-radius: 10px;
@@ -66,13 +92,18 @@ input{
   text-decoration: none;
   border: none;
 }
-.welcomeButton:hover {
+.welcomeButton:hover{
+  background: #7ac902;
+  text-decoration: none;
+}
+
+.submitButton:hover {
   background: #7ac902;
   text-decoration: none;
 }
 
 /* styling welcome stage 2 */
-.welcomeStage2 {
+.welcomeStage2, .newJobPage {
   display: flex;
   flex-direction: column;
 }
@@ -352,6 +383,21 @@ input[type="checkbox"]:checked + label {
     padding-top: 6%;
 }
 
+.userRating1{
+  color: #3e3e3e;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.5em; 
+  width: 100%;
+  text-align: center;
+  padding-top: 6%;
+}
+
+.userDetailsDivider{
+  width: 100%;
+  height: 7vh;
+}
+
 .descriptionDetailsWrapper{
     text-align: center;
     padding: 0% 6% 6% 6%;
@@ -375,7 +421,7 @@ flex-flow: column;
 
 .addJobContainer{
     width: 100%;
-    height: 15vh;
+    height: 10vh;
 }
 
 .addJobButton{
@@ -387,15 +433,27 @@ flex-flow: column;
     font-size: 1.5em;
     background: #82da05;
     text-align: center;
-    width: 30px;
-    height: 30px;
+    width: 7%;
+    padding-top: 7%;
     text-decoration: none;
     font-weight: bold;
     border: none;
     position: relative;
-    margin-left: 80%;
+    margin-left: 82%;
     margin-top: 10%;
     line-height: 0px;
+}
+
+.addJobInner{
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    float: left;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    font-size: 5vw;
 }
 
 .logoContainer{
@@ -500,12 +558,12 @@ margin-bottom: 10%;
 }
 
 .settingsLink{
-  left: 3%;
+  left: 9%;
   position: absolute;
 }
 
 .jobsLink{
-  right: 3%;
+  right: 9%;
   position: absolute;
 }
 
@@ -525,10 +583,104 @@ margin-bottom: 10%;
 }
 
 .swipeButton{
-  border: solid 3vw #eaeaea;
+  border: solid 2vw #eaeaea;
   background: #fff;
   border-radius: 50%;
-  width: 30vw;
-  height: 30vw;
+  width: 25%;
+  padding-top: 20%;
   margin-left: -2vw;
+  margin-bottom: 5vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+}
+
+#x{
+  background-image: url(/x.png);
+}
+
+#check{
+  background-image: url(/check.png);
+}
+
+.acceptRejectImage{
+
+}
+
+/* add job page */
+
+.formHeader{
+  color: #cccccc;
+  font-weight: 320;
+  text-align: left;
+  padding-left: 6%;
+  margin-bottom: 3%;
+}
+
+.jobInput {
+  width: 80%;
+  border: solid 1px #cccccc;
+  padding: 2%;
+  margin-left: 6%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222222;
+}
+.jobInput:focus {
+  outline: solid 1px #82da05;
+}
+
+.addressError{
+  text-align: center;
+  color: #9c0909;
+}
+
+.uploadButton{
+  width: 85%;
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #ffffff;
+  font-size: 15px;
+  background: #82da05;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-left: 6%;
+  text-decoration: none;
+  border: none;
+}
+
+.pageTitle{
+  color: #868686;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 380;
+  font-size: 2em;
+  width: 100%;
+  text-align: center;
+  padding-top: 15%;
+}
+
+.split{
+  width: 50%;
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: 600px) {
+  body {
+    box-sizing: border-box;
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+  .swipeButton{
+    border: solid 2vw #eaeaea;
+  }
+  .navImage{
+    width: 5vw;
+  }
+  .jobDetails{
+    font-size: 2vw;
+  }
+  .addJobInner{
+    font-size: 3vw;
+  }
 }

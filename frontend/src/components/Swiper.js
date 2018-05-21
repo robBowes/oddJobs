@@ -120,7 +120,7 @@ class Swiper extends Component {
                 <span className="jobPay">{"$" + jobsShown[i].jobPay}</span>
               </div>
             </div>
-          </Link>
+            </Link>
         </div>
       );
     }

@@ -33,10 +33,9 @@ class PairsList extends Component {
     })
   })
   }
-  // DUDE DRY, DON'T WRITE THE SAME FUNCTION TWICE
   mapListedJobs = () => {
     let listedJobs = [...this.props.user.jobsListed];
-    console.log(listedJobs);
+    console.log("LISTED JOBS",listedJobs);
     return listedJobs.map((x) => {
       return (
         <div className="listedJobCard">
@@ -51,7 +50,7 @@ class PairsList extends Component {
   }
   mapPairedJobs =() => {
     let pairedJobs = [...this.props.user.pairs];
-    console.log(pairedJobs);
+    console.log("PAIRED JOBS",pairedJobs);
     return pairedJobs.map((x) => {
       return (
         <div className="pairedJobCard">

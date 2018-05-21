@@ -384,10 +384,20 @@ describe('Server', () => {
             assert.isTrue(reply.status, reply.reason);
             jobId = reply.job.id;
             assert.isOk(jobId);
-            assert.lengthOf(job.pairedHelpers, 0);
+            assert.lengthOf(reply.job.pairedHelpers, 0);
         });
         it('can be paired by user 2', async ()=>{
-            let reply = await putUser2('pair');
+            let reply = await putUser2('/pair', {id: jobId});
+            assert.isTrue(reply.status, reply.reason);
+            assert.lengthOf(reply.job.pairedHelpers, 1);
+        });
+        it('can be messaged by user 1', async ()=>{
+            let reply = await putUser1('/sendMessage', {id: jobId, message: 'test', partner: user2Id});
+            assert.isTrue(reply.status, reply.reason);
+            assert.isOk(reply.user);
+            console.log(reply.user.jobsListed.find((job)=>job.id===jobId).messages[0].messages);
+            assert.lengthOf(reply.user.jobsListed.find((job)=>job.id===jobId).messages, 1);
+            assert.equal(reply.user.jobsListed.find((job)=>job.id===jobId).messages[0].messages.message, 'test');
         });
     });
 });

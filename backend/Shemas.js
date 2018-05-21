@@ -63,6 +63,11 @@ UserSchema.methods.clean = function() {
     return cleanUser;
 };
 
+UserSchema.methods.backOut = function(jobId) {
+    this.statistics.jobsCanceled++;
+    this.pairs = this.pairs.filter((job)=>job.id!==jobId);
+};
+
 const User = mongoose.model('User', UserSchema);
 
 const JobSchema = new mongoose.Schema({

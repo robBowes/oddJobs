@@ -46,6 +46,7 @@ app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));
 app.use(express.json({type: '*/*'}));
 app.use(cookieParser());
 app.use(express.static('data/images'));
+app.use(express.static('build'));
 
 
 app.post('/login', async (req, res)=>{
@@ -64,6 +65,7 @@ app.post('/login', async (req, res)=>{
     }
     // res.cookie('token', ret.user.appToken);
     // res.cookie('token', '12345');
+    ret.user = await deepUser(Job, ret.user, User);
     res.json(ret);
 });
 

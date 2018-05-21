@@ -43,8 +43,8 @@ const verbose = (obj) => {
     if (false)console.log(obj);
 };
 
-let privateKey = fs.readFileSync('./oddjobs.site/privkey.pem', 'utf8');
-let certificate = fs.readFileSync('./oddjobs.site/fullchain.pem', 'utf8');
+let privateKey = fs.readFileSync('privkey.pem', 'utf8');
+let certificate = fs.readFileSync('fullchain.pem', 'utf8');
 let credentials = {key: privateKey, cert: certificate};
 let httpsServer = https.createServer(credentials, app);
 

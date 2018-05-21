@@ -38,7 +38,7 @@ class PairsList extends Component {
     console.log("LISTED JOBS",listedJobs);
     return listedJobs.map((x) => {
       return (
-        <div className="listedJobCard">
+        <div className={x.dealMade?"pairedDealCard":"listedJobCard"}>
            <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
            <img className="pairJobPic" src={x.picture} alt="Pair List Job Image"/>
            <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - Patron" }</h3>
@@ -53,7 +53,7 @@ class PairsList extends Component {
     console.log("PAIRED JOBS",pairedJobs);
     return pairedJobs.map((x) => {
       return (
-        <div className="pairedJobCard">
+        <div className={x.dealMade?"pairedDealCard":"pairedJobCard"}>
            <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button> 
            <img className="pairJobPic" src={x.picture} alt="Pair List Job Image"/>
            <h3 className="jobDetailsHeader">{"$"+x.jobPay + " - "+Math.floor(x.distance/1000)+"km" }</h3>

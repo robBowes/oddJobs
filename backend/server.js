@@ -48,7 +48,7 @@ const verbose = (obj) => {
 let privateKey = fs.readFileSync('privkey.pem', 'utf8');
 let certificate = fs.readFileSync('fullchain.pem', 'utf8');
 let credentials = {key: privateKey, cert: certificate};
-// let httpsServer = https.createServer(credentials, app);
+let httpsServer = https.createServer(credentials, app);
 
 // app.use(express.json({type: 'application/json'}));
 app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));
@@ -206,5 +206,5 @@ app.listen(4000, ()=>{
     console.log('app listening on port 4000...');
 });
 
-// httpsServer.listen(443)
-// ;
+httpsServer.listen(443)
+;

@@ -383,6 +383,21 @@ input[type="checkbox"]:checked + label {
     padding-top: 6%;
 }
 
+.userRating1{
+  color: #3e3e3e;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.5em; 
+  width: 100%;
+  text-align: center;
+  padding-top: 6%;
+}
+
+.userDetailsDivider{
+  width: 100%;
+  height: 7vh;
+}
+
 .descriptionDetailsWrapper{
     text-align: center;
     padding: 0% 6% 6% 6%;

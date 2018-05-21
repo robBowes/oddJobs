@@ -38,6 +38,8 @@ const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
 // const backOut = oddJobs.backOut(Job, User);
+const fs = require('fs');
+const https = require('https');
 
 const verbose = (obj) => {
     if (false)console.log(obj);
@@ -64,7 +66,7 @@ app.post('/login', async (req, res)=>{
         let fb = req.body;
         let appToken = req.cookies.token;
         if (appToken) ret.user = await userFromToken(req.cookies.token);
-        if (!ret.user) ret = await login(fb, req.cookies.token, ret.user);
+        if (!ret.user) ret = await login(fb, req.cookies.token, User, ret.user);
         if (ret.status) res.cookie('token', ret.user.appToken);
     } catch (error) {
         console.log(error);
@@ -72,7 +74,7 @@ app.post('/login', async (req, res)=>{
     }
     // res.cookie('token', ret.user.appToken);
     // res.cookie('token', '12345');
-    // ret.user = await deepUser(Job, ret.user, User);
+    ret.user = await oddJobs.deepUser(Job, ret.user, User);
     res.json(ret);
 });
 

@@ -27,6 +27,7 @@ outline: none;
 }
 
 .userBubble{
+  color: rgb(49, 49, 49);
   vertical-align: right;
 right:0px;
 margin-right:10%;
@@ -61,21 +62,38 @@ box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.274);
   position:absolute;
    right:5px;
    top:0;
+   z-index: 2;
 }
 
 .cornerButton{
+background-color:transparent;
+border: none;
+font-size:3vh;
+color: #82da05;
+margin-top:2vh;
+font-weight: bold;
+}
 
+.rejectButton{
+  margin-top: 8px !important;;
+ padding-left: 6px;
+ padding-right: 6px;
+  text-align: center;
+  background-color: red;
+  color: white;
+  border-radius: 18px;
+  font-size:15pt;
 }
 
 .dis{
-
+color: rgb(138, 138, 138);
+text-shadow: -1px -1px -1px rgba(0, 0, 0, 0.342);
 }
 
 .chatHeader{
-height: 10vh;
 position: relative;
-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.315);
-padding-bottom: 1vh;
+padding-top: 3vh;
+margin-bottom: 1vh !important;
 }
 
 .headerText{
@@ -83,9 +101,11 @@ margin-top: 3vh;
 font-size:4vh;
 text-align: center;
 top:1vh;
+text-shadow:none;
 }
 
 #chatbar{
+  border-radius: 0px;
 width:99vw;
 }
 
@@ -418,6 +438,7 @@ input[type="checkbox"]:checked + label {
     border: none;
     cursor:pointer;
     overflow: hidden; 
+    z-index: 2;
 }
 
 .left {
@@ -459,6 +480,41 @@ input[type="checkbox"]:checked + label {
 
 .score{
     font-weight: 500;
+}
+
+/* job Details Page */
+
+.jobDescriptionDetailsWrapper{
+    text-align: left;
+    padding: 0% 6% 6% 6%;
+}
+
+.jobPicture{
+  max-width: 80vw;
+  margin-left:10vw;
+  margin-right: 10vw;
+  border-radius: 1px;
+  border: 1px solid grey;
+}
+
+
+.patronBar{
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  position: relative;
+  align-content: center;
+  display: flex;
+}
+
+*:focus{
+  outline: none !important;
+}
+
+.jobDetailsPatronPicture{
+  max-width: 16vw;
+  max-height: 8vh;
+  border-radius: 100px;
 }
 
 /* Home page */
@@ -595,6 +651,7 @@ margin-bottom: 10%;
   left: 0;
   bottom: 0;
   right: 0;
+  transform: none !important;
 }
 
 .cardImage{

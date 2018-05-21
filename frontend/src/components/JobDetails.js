@@ -13,34 +13,57 @@ class JobDetails extends Component {
             loading: true
         }
     }
+    componentWillReceiveProps=props=>{
+        console.log(props)
+    }
     componentDidMount=()=>{
-        this.setState({
-          loading: false,
-          job: this.props.jobs.filter(x => {
+        let job = this.props.jobs.filter(x => {
             return x.id === this.props.id
           })[0]
-        });
+          console.log(job)
+        fetch('/user',{
+            method:'POST',
+            credentials: 'same-origin',
+            body: JSON.stringify({id: job.patronId })
+        })
+        .then(x=>x.json())
+        .then(y=>{
+            console.log(y)
+        this.setState({
+          loading: false,
+          job: job,
+          patron: y.user
+        })})
+
     }
   render() {
       return this.state.loading ? <div>
           <MoonLoader color="#000000" loading={this.state.loading} />
         </div> : <div>
+            <div>
+          <div className="pageTitle">
+            {this.props.jobs ? this.state.job.jobTitle + " - " + "$" + this.state.job.jobPay : null}
+            </div>
+            <br />
+          </div>
+          <div className="userPictureContainer">
+            <img className="jobPicture" src={this.props.jobs ? this.state.job.picture : ""} alt="" />
+            <br />
+          </div>
+          <div className="patronBar">
+            <img className="jobDetailsPatronPicture" src={this.state.patron.picture.data.url} />
+            <div className="welcomeName">{this.state.patron.name} </div>
+          </div>
+          <div className="jobDescriptionDetailsWrapper">
+          
+          Details:
+          <br/>{this.props.jobs ? this.state.job.jobDescription : null}
           <br />
-          {// this.props.jobs[this.props.id].jobTitle
-          this.props.jobs ? this.state.job.jobTitle : null}
           <br />
-          <img style={{ maxWidth: "300px" }} src={this.props.jobs ? this.state.job.picture : ""} alt="" />
           <br />
-          DESCRIPTION:{//this.props.jobs[this.props.id].jobDescription
-          this.props.jobs ? this.state.job.jobDescription : null}
-          <br />
-          PAY: {//this.props.jobs[this.props.id].jobPay
-          this.props.jobs ? "$" + this.state.job.jobPay : "FREE"}
-          <br />
-          SELLER ID:{//this.props.jobs[this.props.id].patronId
-          this.props.jobs ? this.state.job.patronId : null}
-          <br />
-          {this.props.id}
+          <div className='smallTextId'>
+          {this.props.id}</div>
+          </div>
         </div>;
   }
 }

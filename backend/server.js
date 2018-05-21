@@ -8,16 +8,9 @@ const mongoose = require('mongoose');
 const app = express();
 const cookieParser = require('cookie-parser');
 const sha1 = require('sha1');
-const http = require('http').Server(app, '/messages');
-const https = require('https');
+// const http = require('http').Server(app, '/messages');
 const io = require('socket.io')();
-const fs = require('fs');
 
-let privateKey = fs.readFileSync('oddjobs.site/privkey.pem', 'utf8');
-let certificate = fs.readFileSync('oddjobs.site/fullchain.pem', 'utf8');
-
-let credentials = {key: privateKey, cert: certificate};
-let httpsServer = https.createServer(credentials, app);
 
 const Schemas = require('./Shemas.js');
 const User = Schemas.User;
@@ -42,6 +35,7 @@ const makeDeal = oddJobs.offerDeal(Job, User);
 const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
+const backOut = oddJobs.backOut(Job, User);
 
 const verbose = (obj) => {
     if (false)console.log(obj);
@@ -52,17 +46,17 @@ app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));
 app.use(express.json({type: '*/*'}));
 app.use(cookieParser());
 app.use(express.static('data/images'));
-app.use(express.static('build'));
 
 
 app.post('/login', async (req, res)=>{
     verbose('login user Id: ' + req.body.id);
+    console.log('$$$$$$$$$$$'+req);
     let ret = {status: true};
     try {
         let fb = req.body;
         let appToken = req.cookies.token;
         if (appToken) ret.user = await userFromToken(req.cookies.token);
-        ret = await login(fb, req.cookies.token, User, ret.user);
+        if (!ret.user) ret = await login(fb, req.cookies.token, ret.user);
         if (ret.status) res.cookie('token', ret.user.appToken);
     } catch (error) {
         console.log(error);
@@ -70,7 +64,6 @@ app.post('/login', async (req, res)=>{
     }
     // res.cookie('token', ret.user.appToken);
     // res.cookie('token', '12345');
-    ret.user = await deepUser(Job, ret.user, User);
     res.json(ret);
 });
 
@@ -138,8 +131,9 @@ app.post('/user', async (req, res)=>{
     let ret;
     let user = await userFromToken(req.cookies.token);
     verbose(user + 'user');
-    if (user.id ===req.body.id) ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
-    else ret = await findUser(req.body);
+    if (user.id ===req.body.id) {
+        ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
+    } else ret = await findUser(req.body);
     res.json(ret);
 });
 
@@ -159,6 +153,12 @@ app.put('/sendMessage', async (req, res)=>{
 app.put('/uploadImage', (req, res)=>{
     let ret = oddJobs.uploadImage(req);
     res.json(ret);
+});
+
+app.put('/backOut', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
+    let reply = await backOut(user, req.body);
+    res.json(reply);
 });
 
 io.on('connection', function(client) {
@@ -188,7 +188,6 @@ app.post('*', (req, res)=>{
 });
 
 io.listen(8000);
-// app.listen(4000, ()=>{
-//     console.log('app listening on port 4000...');
-// });
-httpsServer.listen(443);
+app.listen(4000, ()=>{
+    console.log('app listening on port 4000...');
+});

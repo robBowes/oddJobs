@@ -1,7 +1,7 @@
-
-a { 
-    color: inherit; 
-    text-decoration: inherit;} 
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
 
 body {
   width: 100vw;
@@ -12,50 +12,50 @@ body {
 
 /*chat window*/
 
-.messages{
-  display:flex;
-  color:rgb(7, 6, 6);
-  font-size:13pt;
+.messages {
+  display: flex;
+  color: rgb(7, 6, 6);
+  font-size: 13pt;
 }
 
-input, textarea{
+input,
+textarea {
   border-radius: 8px;
 }
 
-button:focus{
-outline: none;
+button:focus {
+  outline: none;
 }
 
 .userBubble{
   color: rgb(49, 49, 49);
   vertical-align: right;
-right:0px;
-margin-right:10%;
-margin-left: 20%;
-margin-top:2%;
-background-color: rgb(240, 238, 238);
-border: none;
-padding:8px;
-padding-right: 12px;
-border-radius: 9px 0px 17px 9px;
-display: inline-block;
-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.274);
+  right: 0px;
+  margin-right: 10%;
+  margin-left: 20%;
+  margin-top: 2%;
+  background-color: rgb(240, 238, 238);
+  border: none;
+  padding: 8px;
+  padding-right: 12px;
+  border-radius: 9px 0px 17px 9px;
+  display: inline-block;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.274);
 }
-.partnerBubble{
-  color:white;
-vertical-align: left;
-text-align: left;
-margin-left:10%;
-margin-right: 20%;
-margin-top:1%;
-background-color: #82da05;
-border: none;
-padding:8px;
-padding-left: 12px;
-border-radius: 0px 9px 9px 17px;
-display: inline-block;
-box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.274);
-
+.partnerBubble {
+  color: white;
+  vertical-align: left;
+  text-align: left;
+  margin-left: 10%;
+  margin-right: 20%;
+  margin-top: 1%;
+  background-color: #82da05;
+  border: none;
+  padding: 8px;
+  padding-left: 12px;
+  border-radius: 0px 9px 9px 17px;
+  display: inline-block;
+  box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.274);
 }
 
 .dealButtonsContainer{
@@ -109,19 +109,19 @@ text-shadow:none;
 width:99vw;
 }
 
-.chatWindow{
-overflow-y: scroll;
-max-height: 78vh;
+.chatWindow {
+  overflow-y: scroll;
+  max-height: 78vh;
 }
 
-.chatInput{
+.chatInput {
   bottom: 0vh;
-   position: absolute;
+  position: absolute;
 }
 
-ul{
-    -webkit-padding-start: 0;
-    list-style-type: none;
+ul {
+  -webkit-padding-start: 0;
+  list-style-type: none;
 }
 /* Styling Welcome Stage 1 */
 .logo {
@@ -135,7 +135,7 @@ ul{
   text-align: center;
 }
 
-input{
+input {
   font-size: 1em;
 }
 
@@ -153,7 +153,8 @@ input{
   bottom: 5%;
   text-align: center;
 }
-.welcomeButton, .submitButton {
+.welcomeButton,
+.submitButton {
   -webkit-border-radius: 10;
   -moz-border-radius: 10;
   border-radius: 10px;
@@ -165,7 +166,7 @@ input{
   text-decoration: none;
   border: none;
 }
-.welcomeButton:hover{
+.welcomeButton:hover {
   background: #7ac902;
   text-decoration: none;
 }
@@ -176,7 +177,10 @@ input{
 }
 
 /* styling welcome stage 2 */
-.welcomeStage2, .newJobPage, .pairsPage {
+.welcomeStage2,
+.newJobPage,
+.pairsPage,
+.loginContainer {
   display: flex;
   flex-direction: column;
 }
@@ -442,44 +446,44 @@ input[type="checkbox"]:checked + label {
 }
 
 .left {
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
 }
 
 /* user details page */
 
-.userRating{
-    color: #3e3e3e;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    font-size: 2em; 
-    width: 100%;
-    text-align: center;
-    padding-top: 6%;
-}
-
-.userRating1{
+.userRating {
   color: #3e3e3e;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.5em; 
+  font-size: 2em;
   width: 100%;
   text-align: center;
   padding-top: 6%;
 }
 
-.userDetailsDivider{
+.userRating1 {
+  color: #3e3e3e;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.5em;
+  width: 100%;
+  text-align: center;
+  padding-top: 6%;
+}
+
+.userDetailsDivider {
   width: 100%;
   height: 7vh;
 }
 
-.descriptionDetailsWrapper{
-    text-align: center;
-    padding: 0% 6% 6% 6%;
+.descriptionDetailsWrapper {
+  text-align: center;
+  padding: 0% 6% 6% 6%;
 }
 
-.score{
-    font-weight: 500;
+.score {
+  font-weight: 500;
 }
 
 /* job Details Page */
@@ -519,65 +523,61 @@ input[type="checkbox"]:checked + label {
 
 /* Home page */
 
-
-
-
-
-.swipeContainer{
-display: flex;
-flex-wrap: wrap;
-flex-flow: column;
+.swipeContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
 }
 
-.addJobContainer{
-    width: 100%;
-    height: 10vh;
+.addJobContainer {
+  width: 100%;
+  height: 10vh;
 }
 
-.addJobButton{
-    -webkit-border-radius: 10;
-    -moz-border-radius: 10;
-    border-radius: 5px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #ffffff;
-    font-size: 1.5em;
-    background: #82da05;
-    text-align: center;
-    width: 7%;
-    padding-top: 7%;
-    text-decoration: none;
-    font-weight: bold;
-    border: none;
-    position: relative;
-    margin-left: 82%;
-    margin-top: 10%;
-    line-height: 0px;
+.addJobButton {
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 5px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #ffffff;
+  font-size: 1.5em;
+  background: #82da05;
+  text-align: center;
+  width: 7%;
+  padding-top: 7%;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  position: relative;
+  margin-left: 82%;
+  margin-top: 10%;
+  line-height: 0px;
 }
 
-.addJobInner{
+.addJobInner {
   position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    float: left;
-    -webkit-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    font-size: 5vw;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  float: left;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 5vw;
 }
 
-.logoContainer{
-width: 100%;
-margin-bottom: 10%;
+.logoContainer {
+  width: 100%;
+  margin-bottom: 10%;
 }
 
-.logo2{
-    width: 40%;
-    display: block;
-    margin: 0 auto;
+.logo2 {
+  width: 40%;
+  display: block;
+  margin: 0 auto;
 }
 
-.stackContainer{
+.stackContainer {
   position: relative;
   width: 80%;
   padding-top: 80%;
@@ -585,40 +585,39 @@ margin-bottom: 10%;
 }
 
 .stack {
-
-  }
-
-.bottomBar{
-    height: 20%;
 }
 
-.jobPay{
+.bottomBar {
+  height: 20%;
+}
+
+.jobPay {
   right: 15%;
   position: absolute;
 }
 
-.jobDistance{
+.jobDistance {
   left: 15%;
   position: absolute;
 }
 
-.jobDetails{
+.jobDetails {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   top: 50%;
   left: 50%;
   width: 100%;
   float: left;
-  -webkit-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   font-size: 4vw;
   font-weight: 300;
 }
 
-.wholeCard{
-    position: relative;
-    height: fit-content;
+.wholeCard {
+  position: relative;
+  height: fit-content;
 }
 .card {
   list-style: none;
@@ -635,7 +634,7 @@ margin-bottom: 10%;
   right: 0;
 }
 
-.noCards{
+.noCards {
   background-image: url(/nothing.png);
   -webkit-background-size: contain;
   -moz-background-size: contain;
@@ -654,46 +653,46 @@ margin-bottom: 10%;
   transform: none !important;
 }
 
-.cardImage{
-    height: 80%;
-    position: relative;
-    max-width: 100%;
-    border-radius: 11px 11px 0px 0px;
+.cardImage {
+  height: 80%;
+  position: relative;
+  max-width: 100%;
+  border-radius: 11px 11px 0px 0px;
 }
 
-.navBar{
+.navBar {
   width: 100%;
   padding-top: 7%;
   position: relative;
   height: 7vh;
 }
 
-.settingsLink{
+.settingsLink {
   left: 9%;
   position: absolute;
 }
 
-.jobsLink{
+.jobsLink {
   right: 9%;
   position: absolute;
 }
 
-.imageButton{
-  border: 0; 
+.imageButton {
+  border: 0;
   background: transparent;
 }
 
-.navImage{
+.navImage {
   width: 9vw;
 }
 
-.acceptReject{
+.acceptReject {
   width: 100%;
   position: relative;
   text-align: center;
 }
 
-.swipeButton{
+.swipeButton {
   border: solid 2vw #eaeaea;
   background: #fff;
   border-radius: 50%;
@@ -706,21 +705,20 @@ margin-bottom: 10%;
   background-size: 50%;
 }
 
-#x{
+#x {
   background-image: url(/x.png);
 }
 
-#check{
+#check {
   background-image: url(/check.png);
 }
 
-.acceptRejectImage{
-
+.acceptRejectImage {
 }
 
 /* add job page */
 
-.formHeader{
+.formHeader {
   color: #cccccc;
   font-weight: 320;
   text-align: left;
@@ -740,12 +738,12 @@ margin-bottom: 10%;
   outline: solid 1px #82da05;
 }
 
-.addressError{
+.addressError {
   text-align: center;
   color: #9c0909;
 }
 
-.uploadButton{
+.uploadButton {
   width: 85%;
   -webkit-border-radius: 10;
   -moz-border-radius: 10;
@@ -761,7 +759,7 @@ margin-bottom: 10%;
   border: none;
 }
 
-.pageTitle{
+.pageTitle {
   color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 380;
@@ -771,27 +769,27 @@ margin-bottom: 10%;
   padding-top: 15%;
 }
 
-.split{
+.split {
   width: 50%;
   margin: 0 auto;
 }
 
 /* Job Pairs Page */
 
-.jobsList{
+.jobsList {
   text-align: center;
 }
 
-.jobTitleHeader{
+.jobTitleHeader {
   position: relative;
-  top: 3%;
-  left: -9%;
+  top: 12%;
+  left: -7%;
   color: white;
-  font-size: 2.5vh;
+  font-size: 2vh;
   font-weight: 400;
 }
 
-.pairJobPic{
+.pairJobPic {
   float: left;
   border-radius: 50%;
   border: solid 2px white;
@@ -801,7 +799,7 @@ margin-bottom: 10%;
   margin-left: 1vh;
 }
 
-.listedJobCard{
+.listedJobCard {
   background-color: #82da05;
   height: 17%;
   width: 86%;
@@ -810,8 +808,8 @@ margin-bottom: 10%;
   position: relative;
 }
 
-.pairedJobCard{
-  background-color: #cccccc;
+.pairedJobCard {
+  background-color: #636363;
   height: 14vh;
   width: 86%;
   margin-left: 8%;
@@ -819,7 +817,7 @@ margin-bottom: 10%;
   position: relative;
 }
 
-.pairedDealCard{
+.pairedDealCard {
   background-color: #63aa00;
   height: 14vh;
   width: 86%;
@@ -828,17 +826,17 @@ margin-bottom: 10%;
   position: relative;
 }
 
-.removeJob{
-    position: absolute;
-    left: 1%;
-    color: white;
-    font-size: 2vh;
-    border: none;
-    background-color: transparent;
-    z-index: 2;
+.removeJob {
+  position: absolute;
+  left: 1%;
+  color: white;
+  font-size: 2vh;
+  border: none;
+  background-color: transparent;
+  z-index: 2;
 }
 
-.goToChatsArrow{
+.goToChatsArrow {
   color: white;
   font-size: 5vh;
   position: absolute;
@@ -848,17 +846,26 @@ margin-bottom: 10%;
   background-color: transparent;
 }
 
-.jobDetailsHeader{
+.jobDetailsHeader {
   width: 100%;
   position: relative;
-  left: -9%;
+  left: -7%;
   top: 9%;
-  font-size: 1.8vh;
+  font-size: 1.5vh;
   color: white;
   font-weight: 350;
 }
 
+/* login page */
 
+.loginContainer {
+  padding-top: 20%;
+}
+
+.facebookButtonContainer {
+  padding-top: 25%;
+  text-align: center;
+}
 
 @media only screen and (min-width: 600px) {
   body {
@@ -866,19 +873,26 @@ margin-bottom: 10%;
     padding-left: 20%;
     padding-right: 20%;
   }
-  .swipeButton{
+  .swipeButton {
     border: solid 2vw #eaeaea;
   }
-  .navImage{
+  .navImage {
     width: 5vw;
   }
-  .jobDetails{
+  .jobDetails {
     font-size: 2vw;
   }
-  .addJobInner{
+  .addJobInner {
     font-size: 3vw;
   }
+  .welcomeText {
+    position: fixed;
+    left: 0%;
+    top: 45%;
+  }
+  .buttonWrapper {
+    position: fixed;
+    bottom: 5%;
+    left: 0%;
+  }
 }
-
-
-

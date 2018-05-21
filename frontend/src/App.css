@@ -10,16 +10,42 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.userBubble{
-text-align:right;
-margin-right:10%;
-margin-top:1%
+.messages{
+  display:flex;
+  color:rgb(7, 6, 6);
+  font-size:13pt;
+}
 
+.userBubble{
+  vertical-align: right;
+right:0px;
+margin-right:10%;
+margin-left: 20%;
+margin-top:2%;
+background-color: rgb(240, 238, 238);
+border: none;
+padding:8px;
+padding-right: 12px;
+border-radius: 9px 0px 17px 9px;
+display: inline-block;
+box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.274);
 }
 .partnerBubble{
+  color:white;
+vertical-align: left;
 text-align: left;
 margin-left:10%;
-margin-top:1%
+margin-right: 20%;
+margin-top:1%;
+background-color: #82da05;
+border: none;
+padding:8px;
+padding-left: 12px;
+border-radius: 0px 9px 9px 17px;
+display: inline-block;
+box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.274);
+
+
 }
 ul{
     -webkit-padding-start: 0;

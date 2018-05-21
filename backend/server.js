@@ -1,3 +1,31 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const oddJobs = require('./oddJobs');
+const r = require('./utils.js');
+const testData = require('./testData.json');
+const fetch = require('node-fetch');
+const mongoose = require('mongoose');
+const app = express();
+const cookieParser = require('cookie-parser');
+const sha1 = require('sha1');
+// const http = require('http').Server(app, '/messages');
+const io = require('socket.io')();
+const fs = require('fs');
+const https = require('https');
+
+
+const Schemas = require('./Shemas.js');
+const User = Schemas.User;
+const Job = Schemas.Job;
+
+mongoose.connect(r.uri, {autoIndex: false});
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', ()=>{
+    console.log('connected to mongoose server');
+});
+
 const userFromToken = r.findToken(User);
 const createNewJob = oddJobs.newJob(Job);
 const findJob = oddJobs.findJob(Job);
@@ -10,7 +38,6 @@ const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
 // const backOut = oddJobs.backOut(Job, User);
-const fs = require('fs');
 const https = require('https');
 
 const verbose = (obj) => {

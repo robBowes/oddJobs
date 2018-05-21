@@ -22,6 +22,26 @@ class Swiper extends Component {
   componentWillReceiveProps = props => {
     //
   };
+
+  componentDidMount=()=>{
+    setInterval(()=>{
+      fetch('/user',{
+        method:'POST',
+        credentials: 'same-origin',
+        body: JSON.stringify({id: this.props.user.id})
+      })
+      .then(x=>x.json())
+      .then(y=>{
+        console.log('update', y)
+        this.props.dispatch({
+          type:'USER_UPDATE',
+          payload: y.user
+        })
+      })
+    },
+    30000)
+  }
+
   swipeRight = x => {
     if (this.state.cards.length > 0) {
       const target = this.refs.stack.refs[
@@ -88,7 +108,8 @@ class Swiper extends Component {
     let filterOwn = jobs.filter(x => {
       return x.patronId !== this.props.user.id;
     });
-    let jobsShown = filterOwn.filter(x => {
+    
+    let filterRej = filterOwn.filter(x => {
       for (let i = 0; i < this.props.rejected.length; i++) {
         if (this.props.rejected[i] === x.id) {
           return false;
@@ -96,6 +117,19 @@ class Swiper extends Component {
       }
       return true;
     });
+
+    console.log(filterRej)
+
+    let jobsShown = filterRej.filter(x=>{
+      for (let i = 0;i<this.props.user.pairs.length;i++){
+        if(this.props.user.pairs[i].id===x.id){
+          return false
+        }
+      }
+      return true
+    })
+
+    console.log(jobsShown)
 
     for (let i = 0; i < jobsShown.length; i++) {
       newStack = newStack.concat(

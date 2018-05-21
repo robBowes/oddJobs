@@ -263,30 +263,29 @@ class Chat extends Component {
   };
   render() {
     return this.state.loading ? <div>LOAD</div> : <div>
-        <div>
-    </div>
+        <div />
         <button onClick={this.goBack}>BACK</button>
         <button>HOME</button>
-        <div style={{position:'absolute', right:'5px',top:'0'}}>
-        <button>Reject</button>
-          {this.state.complete ? (
-            <button disabled>complete!</button>
-          ) : this.state.deal ? (
-            <button onClick={this.completeJob}>Complete Job</button>
-          ) : this.state.offer ? (
-            <button disabled>DEAL SENT</button>
-          ) : (
-            <button onClick={this.deal}>
+        <div className="dealButtonsContainer">
+          <button>Reject</button>
+          {this.state.complete ? <button className="cornerButton dis" disabled>
+              complete!
+            </button> : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
+              Complete Job
+            </button> : this.state.offer ? <button className="cornerButton dis" disabled>
+              DEAL SENT
+            </button> : <button className="cornerButton" onClick={this.deal}>
               {this.state.offered ? "CONFIRM!" : "SEND DEAL"}
-            </button>
-          )}</div>
-        <div>
+            </button>}
+        </div>
+        <div className='chatHeader'>
+        <div className='headerText'>
           {this.state.partnerName + ` - "` + this.state.job.jobTitle + `"`}
+        </div></div>
+        <div className="chatWindow">
+          <ul>{this.renderMessages()}</ul>
         </div>
-        <div style={{ overflowY: "scroll", maxHeight: "82vh" }} className="chatWindow">
-          <ul style={{ listStyleType: "none" }}>{this.renderMessages()}</ul>
-        </div>
-        <div style={{ bottom: "0vh", position: "absolute" }} className="chatInput">
+        <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
             <input type="text" onChange={this.handleChange} id="chatbar" />
           </form>

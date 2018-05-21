@@ -64,6 +64,7 @@ app.post('/login', async (req, res)=>{
     }
     // res.cookie('token', ret.user.appToken);
     // res.cookie('token', '12345');
+    // ret.user = await deepUser(Job, ret.user, User);
     res.json(ret);
 });
 

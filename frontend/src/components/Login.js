@@ -46,6 +46,7 @@ class Login extends Component {
     
     this.getpos();
     response.location={};
+    console.log(response)
     if (response.id) {
       fetch('/login', {
         method: 'POST',
@@ -54,6 +55,7 @@ class Login extends Component {
       })
       .then((x) => x.json())
       .then((y) => {
+        console.log(y)
         if (!y.status) {
           throw new Error('FAILED LOGIN');
         }

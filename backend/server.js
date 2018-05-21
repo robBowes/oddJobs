@@ -8,9 +8,14 @@ const mongoose = require('mongoose');
 const app = express();
 const cookieParser = require('cookie-parser');
 const sha1 = require('sha1');
+const fs = require('fs');
 // const http = require('http').Server(app, '/messages');
 const io = require('socket.io')();
 
+let privateKey = fs.readFileSync('privkey.pem', 'utf8');
+let certificate = fs.readFileSync('fullchain.pem', 'utf8');
+let credentials = {key: privateKey, cert: certificate};
+let httpsServer = https.createServer(credentials, app);
 
 const Schemas = require('./Shemas.js');
 const User = Schemas.User;
@@ -190,6 +195,7 @@ app.post('*', (req, res)=>{
 });
 
 io.listen(8000);
-app.listen(4000, ()=>{
-    console.log('app listening on port 4000...');
-});
+// app.listen(4000, ()=>{
+//     console.log('app listening on port 4000...');
+// });
+httpsServer.listen(443);

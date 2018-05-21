@@ -56,7 +56,7 @@ class Login extends Component {
         .then(y => {
           console.log(y);
           if (!y.status) {
-            throw new Error("FAILED LOGIN");
+            throw new Error(y.reason);
           }
           this.props.dispatch({
             type: "USER_UPDATE",

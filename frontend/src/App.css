@@ -10,6 +10,8 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/*chat window*/
+
 .messages{
   display:flex;
   color:rgb(7, 6, 6);
@@ -45,10 +47,53 @@ border-radius: 0px 9px 9px 17px;
 display: inline-block;
 box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.274);
 
+}
+
+.dealButtonsContainer{
+  position:absolute;
+   right:5px;
+   top:0;
+}
+
+.cornerButton{
 
 }
+
+.dis{
+
+}
+
+.chatHeader{
+height: 10vh;
+position: relative;
+box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.315);
+padding-bottom: 1vh;
+}
+
+.headerText{
+margin-top: 3vh;
+font-size:4vh;
+text-align: center;
+top:1vh;
+}
+
+#chatbar{
+width:99vw;
+}
+
+.chatWindow{
+overflow-y: scroll;
+max-height: 78vh;
+}
+
+.chatInput{
+  bottom: 0vh;
+   position: absolute;
+}
+
 ul{
     -webkit-padding-start: 0;
+    list-style-type: none;
 }
 /* Styling Welcome Stage 1 */
 .logo {

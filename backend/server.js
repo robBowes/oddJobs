@@ -13,6 +13,8 @@ const io = require('socket.io')();
 const fs = require('fs');
 const https = require('https');
 
+// let credentials = {key: privateKey, cert: certificate};
+// let httpsServer = https.createServer(credentials, app);
 
 const Schemas = require('./Shemas.js');
 const User = Schemas.User;

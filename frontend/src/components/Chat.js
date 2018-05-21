@@ -264,23 +264,24 @@ class Chat extends Component {
   render() {
     return this.state.loading ? <div>LOAD</div> : <div>
         <div />
-        <button onClick={this.goBack}>BACK</button>
-        <button>HOME</button>
+        <button className='backButton' onClick={this.goBack}>{'< Back'}</button>
         <div className="dealButtonsContainer">
-          <button>Reject</button>
+         {// <button className='cornerButton rejectButton'>Reject</button>
+         }
           {this.state.complete ? <button className="cornerButton dis" disabled>
-              complete!
+              Complete!
             </button> : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
               Complete Job
             </button> : this.state.offer ? <button className="cornerButton dis" disabled>
-              DEAL SENT
+              Deal Sent
             </button> : <button className="cornerButton" onClick={this.deal}>
-              {this.state.offered ? "CONFIRM!" : "SEND DEAL"}
+              {this.state.offered ? "Confirm" : "Send Deal"}
             </button>}
         </div>
         <div className='chatHeader'>
-        <div className='headerText'>
+        <div className='pageTitle'>
           {this.state.partnerName + ` - "` + this.state.job.jobTitle + `"`}
+        <div className='split'><hr/></div>
         </div></div>
         <div className="chatWindow">
           <ul>{this.renderMessages()}</ul>

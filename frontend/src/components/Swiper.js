@@ -24,22 +24,22 @@ class Swiper extends Component {
   };
 
   componentDidMount=()=>{
-    setInterval(()=>{
-      fetch('/user',{
-        method:'POST',
-        credentials: 'same-origin',
-        body: JSON.stringify({id: this.props.user.id})
-      })
-      .then(x=>x.json())
-      .then(y=>{
-        console.log('update', y)
-        this.props.dispatch({
-          type:'USER_UPDATE',
-          payload: y.user
-        })
-      })
-    },
-    30000)
+    // setInterval(()=>{
+    //   fetch('/user',{
+    //     method:'POST',
+    //     credentials: 'same-origin',
+    //     body: JSON.stringify({id: this.props.user.id})
+    //   })
+    //   .then(x=>x.json())
+    //   .then(y=>{
+    //     console.log('update', y)
+    //     this.props.dispatch({
+    //       type:'USER_UPDATE',
+    //       payload: y.user
+    //     })
+    //   })
+    // },
+    // 30000)
   }
 
   swipeRight = x => {
@@ -243,7 +243,7 @@ class Swiper extends Component {
             throwoutleft={this.reject}
             throwoutright={this.accept}
           >
-            <div className="noCards" />
+        <div className="noCards" />
             {this.state.cards ? (
               this.state.cards.map(x => {
                 return x;

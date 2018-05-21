@@ -103,7 +103,7 @@ input{
 }
 
 /* styling welcome stage 2 */
-.welcomeStage2, .newJobPage {
+.welcomeStage2, .newJobPage, .pairsPage {
   display: flex;
   flex-direction: column;
 }
@@ -665,6 +665,38 @@ margin-bottom: 10%;
   margin: 0 auto;
 }
 
+/* Job Pairs Page */
+
+.jobsList{
+  text-align: center;
+}
+
+.jobTitleHeader{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  float: left;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  font-size: 3vh;
+  font-weight: 400;
+}
+
+.pairJobPic{
+  float:left;
+  border-radius: 50%;
+  border: solid 2px white;
+  width: 15vh;
+  height: 15vh;
+}
+
+.listedJobCard{
+  background-color: #82da05;
+}
+
 @media only screen and (min-width: 600px) {
   body {
     box-sizing: border-box;
@@ -684,3 +716,6 @@ margin-bottom: 10%;
     font-size: 3vw;
   }
 }
+
+
+

@@ -65,7 +65,7 @@ app.post('/login', async (req, res)=>{
     }
     // res.cookie('token', ret.user.appToken);
     // res.cookie('token', '12345');
-    ret.user = await deepUser(Job, ret.user, User);
+    ret.user = await oddJobs.deepUser(Job, ret.user, User);
     res.json(ret);
 });
 
@@ -190,6 +190,6 @@ app.post('*', (req, res)=>{
 });
 
 io.listen(8000);
-app.listen(4000, ()=>{
-    console.log('app listening on port 4000...');
+app.listen(80, ()=>{
+    console.log('app listening on port 80...');
 });

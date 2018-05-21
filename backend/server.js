@@ -58,7 +58,7 @@ app.use(express.static('../frontend/build'));
 
 app.post('/login', async (req, res)=>{
     verbose('login user Id: ' + req.body.id);
-    console.log('$$$$$$$$$$$'+req);
+    // console.log('$$$$$$$$$$$'+req);
     let ret = {status: true};
     try {
         let fb = req.body;
@@ -67,7 +67,7 @@ app.post('/login', async (req, res)=>{
             ret.user = await userFromToken(req.cookies.token);
         }
         if (!ret.user) ret = await login(fb, req.cookies.token, User, ret.user);
-        ret.user = await oddJobs.deepUser(Job, ret.user, User );
+        if (ret.user) ret.user = await oddJobs.deepUser(Job, ret.user, User );
         if (ret.status) res.cookie('token', ret.user.appToken);
     } catch (error) {
         console.log(error);

@@ -44,7 +44,6 @@ class Login extends Component {
   };
   responseFacebook = (response) => {
     
-    console.log(response);
     this.getpos();
     response.location={};
     if (response.id) {
@@ -55,7 +54,6 @@ class Login extends Component {
       })
       .then((x) => x.json())
       .then((y) => {
-        console.log(y)
         if (!y.status) {
           throw new Error('FAILED LOGIN');
         }

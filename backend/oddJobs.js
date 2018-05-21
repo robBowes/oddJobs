@@ -208,10 +208,10 @@ const allJobs = (Job) => async (user, location) => {
     jobs = jobs.map((el)=>el.toObject());
     jobs = jobs.filter((job)=>!job.dealMade);
     jobs = jobs.filter((job)=>{
-        // console.log(user.location);
+        console.log(user.location);
         let distance = r.distanceBetween(job, user);
-        let max = parseFloat(user.maxDistance)*1000;
-        // console.log(distance, max);
+        let max = parseFloat(user.maxDistance)*100000;
+        console.log(distance, max);
         return distance < max;
     });
     jobs = jobs.filter((job)=>{

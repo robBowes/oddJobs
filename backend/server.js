@@ -9,8 +9,15 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const sha1 = require('sha1');
 const http = require('http').Server(app, '/messages');
+const https = require('https');
 const io = require('socket.io')();
+const fs = require('fs');
 
+let privateKey = fs.readFileSync('oddjobs.site/privkey.pem', 'utf8');
+let certificate = fs.readFileSync('oddjobs.site/fullchain.pem', 'utf8');
+
+let credentials = {key: privateKey, cert: certificate};
+let httpsServer = https.createServer(credentials, app);
 
 const Schemas = require('./Shemas.js');
 const User = Schemas.User;
@@ -181,6 +188,7 @@ app.post('*', (req, res)=>{
 });
 
 io.listen(8000);
-app.listen(4000, ()=>{
-    console.log('app listening on port 4000...');
-});
+// app.listen(4000, ()=>{
+//     console.log('app listening on port 4000...');
+// });
+httpsServer.listen(443);

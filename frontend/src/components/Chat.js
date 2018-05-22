@@ -298,7 +298,7 @@ class Chat extends Component {
           <ul>{this.renderMessages()}</ul>
         </div>
 
-         <div className="split"> <hr/> </div>
+         <div className="splitChat"> <hr/> </div>
 
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>

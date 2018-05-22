@@ -68,7 +68,7 @@ button:focus {
 .cornerButton {
   background-color: transparent;
   border: none;
-  font-size: 3vh;
+  font-size: 1.3em;
   color: #82da05;
   padding-top: 2vh;
   font-weight: bold;
@@ -139,6 +139,12 @@ button:focus {
   padding-bottom: 4vh;
   padding-top: 2%;
   width: 100%
+}
+
+.splitChat{
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: -2%;
 }
 
 ul {
@@ -453,11 +459,11 @@ input[type="checkbox"]:checked + label {
 /* End of welcome page 3 style */
 
 .backButton {
-  color: #222222;
+  color: #4a4a4a;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   position: absolute;
-  font-size: 1.5em;
+  font-size: 1.3em;
   left: 2%;
   top: 2%;
   background-color: Transparent;
@@ -804,6 +810,7 @@ input[type="checkbox"]:checked + label {
   width: 100%;
   position: relative;
   text-align: center;
+  left: 2%;
 }
 
 .swipeButton {
@@ -891,7 +898,7 @@ input[type="checkbox"]:checked + label {
   color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 350;
-  font-size: 7vw;
+  font-size: 6vw;
   width: 100%;
   text-align: center;
   padding-top: 11%;
@@ -1173,7 +1180,7 @@ input[type="checkbox"]:checked + label {
   }
 
   .pageTitle {
-    font-size: 30px;
+    font-size: 26px;
   }
 
   .jobDetailDescription {

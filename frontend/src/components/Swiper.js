@@ -182,6 +182,7 @@ class Swiper extends Component {
     })
       .then((x) => x.json())
       .then((y) => {
+        if (!y.status) console.log(y);
         this.props.dispatch({
           type: 'UPDATE_JOBS',
           payload: y.content,
@@ -203,13 +204,12 @@ class Swiper extends Component {
     })
       .then((x) => x.json())
       .then((y) => {
-        console.log(y.user);
+        if (!y.status) console.log(y);
         this.props.dispatch({
           type: 'USER_UPDATE',
           payload: y.user,
         });
       });
-    console.log('YES THIS JOB');
   };
 
   reject = (e) => {
@@ -221,7 +221,6 @@ class Swiper extends Component {
       type: 'LEFT_SWIPE',
       payload: jobId,
     });
-    console.log('NOT THIS JOB');
   };
 
   render() {

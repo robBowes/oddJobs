@@ -18,6 +18,7 @@ export default (state = {
         newState.loading = !state.loading;
     }
 
+
     return newState;
 };
 

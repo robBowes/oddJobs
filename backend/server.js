@@ -76,6 +76,7 @@ app.post('/login', async (req, res)=>{
         console.log(error);
         ret = {status: false, reason: error};
     }
+    if (!ret.status) console.log(ret.reason);
     // res.cookie('token', ret.user.appToken);
     // res.cookie('token', '12345');
     // ret.user = await oddJobs.deepUser(Job, ret.user, User);
@@ -86,6 +87,7 @@ app.put('/modify', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
     verbose(user?user.name:null + ' requests modify');
     let reply = await modify(user, req.body);
+    if (!reply.status) console.log(reply.reason);
     res.json(reply);
 });
 
@@ -94,6 +96,7 @@ app.post('/allJobs', async (req, res)=>{
     verbose(user?user.name:null + ' requests allJobs');
     let reply = await allJobs(user, req.body.location);
     if (!reply.status) console.log('all jobs request failed: ' + reply.reason);
+    if (!reply.status) console.log(reply.reason);
     res.json(reply);
 });
 
@@ -102,6 +105,7 @@ app.put('/pair', async (req, res)=>{
     verbose(user?user.name:null + ' makes a pair');
     let job = await pairJob(user, req.body);
     if (!job.status) console.log('pair failed: '+ job.reason);
+    if (!job.status) console.log(job.reason);
     res.json(job);
 });
 
@@ -111,6 +115,7 @@ app.put('/deal', async (req, res)=>{
     let job = await makeDeal(user, req.body);
     if (!job) throw new Error('error on deal');
     if (!job.status) console.log('Deal failed: ' + job.reason);
+    if (!job.status) console.log(job.reason);
     res.json(job);
 });
 
@@ -139,6 +144,7 @@ app.put('/addJob', async (req, res)=>{
     verbose(user?user.name:null + ' requests allJobs');
     let job = await createNewJob(user, req.body);
     if (!job.status) console.log('add job failed: ' + job.reason);
+    if (!job.status) console.log(job.reason);
     res.json(job);
 });
 
@@ -149,12 +155,14 @@ app.post('/user', async (req, res)=>{
     if (user.id && user.id ===req.body.id) {
         ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
     } else ret = await findUser(req.body);
+    if (!ret.status) console.log(ret.reason);
     res.json(ret);
 });
 
 app.post('/job', async (req, res)=>{
     verbose(user?user.name:null + ' job');
     let ret = await findJob(req.body);
+    if (!ret.status) console.log(ret.reason);
     res.json(ret);
 });
 
@@ -166,6 +174,7 @@ app.put('/sendMessage', async (req, res)=>{
         console.log(error);
     }
     let reply = await sendMessage(user, req.body);
+    if (!reply.status) console.log(reply.reason);
     res.json(reply);
 });
 

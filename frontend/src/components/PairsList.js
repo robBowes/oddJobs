@@ -15,6 +15,7 @@ class PairsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loggedIn: true,
     };
   }
   removeJob = (event) => {
@@ -31,6 +32,7 @@ class PairsList extends Component {
       type: 'MESSAGE_UPDATE',
       payload: y.user,
     });
+    this.setState({loggedIn: false});
   });
   }
   mapListedJobs = () => {
@@ -80,8 +82,10 @@ class PairsList extends Component {
     event.preventDefault();
     window.history.back();
   }
+  // componentDidMount = () => {
+  // }
   render() {
-    return !this.props.user.loggedIn?<div><MoonLoader color="#05FF05"/></div>:(
+    return !this.props.user.loggedIn?<div className="moonLoader" ><MoonLoader color="#05FF05"/></div>:(
       <div className="pairsPage">
       <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
       <h1 className="pageTitle">{'Current & Pending Jobs'}</h1>

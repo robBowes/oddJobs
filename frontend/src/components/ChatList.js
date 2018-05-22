@@ -58,7 +58,7 @@ class ChatList extends Component {
     window.history.back();
   }
   render() {
-    return !this.props.user.loggedIn?<div><MoonLoader color="#05FF05"/></div>:(
+    return !this.props.user.loggedIn?<div className="moonLoader"><MoonLoader color="#05FF05"/></div>:(
       <div className="chatsPage">
       <button className="backButton" onClick={this.goBack}>Back</button>
       <h1 className="chatsPageHeader">{this.getTitle()+' - Active Chats'}</h1>

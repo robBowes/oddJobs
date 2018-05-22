@@ -70,7 +70,7 @@ background-color:transparent;
 border: none;
 font-size:3vh;
 color: #82da05;
-margin-top:2vh;
+padding-top:2vh;
 font-weight: bold;
 }
 
@@ -93,7 +93,11 @@ text-shadow: -1px -1px -1px rgba(0, 0, 0, 0.342);
 .chatHeader{
 position: relative;
 padding-top: 0vh;
-margin-bottom: 1vh !important;
+margin-bottom: 1vw !important;
+}
+
+.chatSplit{
+  margin-bottom: 0 !important;
 }
 
 .headerText{
@@ -108,20 +112,32 @@ text-shadow:none;
 background:rgb(187, 187, 187);
 }
 
+.backButton:active{
+  background:#ccc;
+  color: darkgreen;
+}
+
 #chatbar{
-  border-radius: 0px;
-width:99vw;
+  width:80vw;
+  padding: 1vw;
+  border: solid 2px #ccc;
 }
 
 .chatWindow {
   overflow-y: scroll;
-  max-height: 78vh;
+  max-height: 67vh;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.712);
 }
 
 .chatInput {
-  bottom: 0vh;
-  position: absolute;
+      bottom: 0vh;
+    position: absolute;
+    padding-bottom: 4vh;
+    padding-top: 2%;
+    padding-left: 8vw;
+    padding-right: 8vw; 
 }
+
 
 ul {
   -webkit-padding-start: 0;
@@ -448,6 +464,7 @@ input[type="checkbox"]:checked + label {
     cursor:pointer;
     overflow: hidden; 
     z-index: 2;
+    transition: all 0.8s ease-in-out !important;
 }
 
 .left {
@@ -832,7 +849,7 @@ margin-top: 8%;
   text-align: center;
   padding-top: 11%;
   margin-bottom: 0%;
-  margin-top: 2vh;
+  padding-top: 8.1vh;
 }
 
 
@@ -909,16 +926,19 @@ margin-top: 8%;
   border: none;
   background-color: transparent;
   z-index: 2;
+  font-weight: bold;
 }
 
 .goToChatsArrow {
-  color: black;
+  color: white;
   font-size: 5vh;
   position: absolute;
   right: 2%;
   top: 24%;
   border: none;
   background-color: transparent;
+  font-weight: bold;
+
 }
 
 .jobDetailsHeader {

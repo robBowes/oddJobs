@@ -276,7 +276,7 @@ class Chat extends Component {
         <div className='chatHeader'>
         <div className='pageTitle'>
           {this.state.partnerName + ' - "' + this.state.job.jobTitle + '"'}
-        <div className='split'><hr/></div>
+        <div className='split chatSplit'><hr/></div>
         </div></div>
         <div className="chatWindow">
           <ul>{this.renderMessages()}</ul>

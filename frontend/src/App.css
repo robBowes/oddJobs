@@ -104,8 +104,8 @@ top:1vh;
 text-shadow:none;
 }
 
-.swipeButton:focus{
-color:green;
+.swipeButton:active{
+background:rgb(187, 187, 187);
 }
 
 #chatbar{
@@ -553,6 +553,7 @@ margin-top: 8%;
 }
 
 .jobDetailsPatronPicture{
+  margin-right:7%;
   max-width: 16vw;
   max-height: 8vh;
   border-radius: 100px;
@@ -746,14 +747,15 @@ margin-top: 8%;
 .swipeButton {
   border: solid 2vw #eaeaea;
   background: #fff;
-  border-radius: 50%;
-  width: 25%;
-  padding-top: 20%;
-  margin-left: -2vw;
-  margin-bottom: 5vw;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 50%;
+     border-radius: 50%;
+    width: 25%;
+    padding-top: 20%;
+    margin-left: -2.8vw;
+    margin-bottom: 5vw;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: 50% !important;
+    transition: all 0.2s ease-in-out;
 }
 
 #x {
@@ -795,9 +797,12 @@ margin-top: 8%;
 }
 
 .uploadButton {
+  opacity: 0;
+  width: 100%;
+}
+
+.uploadWrapper{
   width: 85%;
-  -webkit-border-radius: 10;
-  -moz-border-radius: 10;
   border-radius: 10px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #ffffff;
@@ -810,6 +815,17 @@ margin-top: 8%;
   border: none;
 }
 
+.fileText{
+  position: absolute;
+  margin-left: 1%;
+  font-weight: 300;
+}
+
+.fileText:hover{
+  font-weight: 400;
+}
+
+
 .pageTitle {
   color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -819,7 +835,10 @@ margin-top: 8%;
   text-align: center;
   padding-top: 11%;
   margin-bottom: 0%;
+  margin-top: 2vh;
 }
+
+
 
 .split {
   width: 50%;
@@ -931,12 +950,98 @@ margin-top: 8%;
   text-align: center;
 }
 
+
 /* Chatslist */
 
 
+@media only screen and (min-width: 436px) {
+  body {
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 436px;
+  }
+  .stackContainer{
+    max-width: 351px;
+    height: 351px;
+    max-height: 351px;
+    padding-top: 0px;
+  }
+
+  .jobDetails{
+    font-size:15px;
+  }
+
+  .logo2{
+    width: 175px;
+  }
+
+  .logoContainer{
+    margin-bottom: 35px;
+  }
 
 
-@media only screen and (min-width: 600px) {
+  .addJobContainer{
+    width: 351px;
+    margin: 0 auto;
+    height: 80px;
+  }
+
+  .addJobButton{
+    width: 32px;
+    height: 32px;
+    padding-top: 0px;
+    margin-left: 90%;
+  }
+
+  .addJobInner{
+    font-size: 18px;
+  }
+
+  .navBar {
+    width: 351px;
+    padding-top: 25px;
+    position: relative;
+    height: 86px;
+    margin: 0 auto;
+  }
+
+  .navImage {
+    width: 40px;
+}
+
+.jobsLink {
+  right: -3px;
+}
+
+.settingsLink {
+  left: -3px;
+}
+
+  .app {
+    max-height: 100vh;
+  }
+  .swipeButton {
+    border: solid 10px #eaeaea;
+    width: 109px;
+    height: 109px;
+    padding-top: 0px;
+    margin-left: -15px;
+  }
+ 
+  .welcomeText {
+    position: fixed;
+    left: 0%;
+    top: 45%;
+  }
+  .buttonWrapper {
+    position: fixed;
+    bottom: 5%;
+    left: 0%;
+  }
+}
+
+
+/* @media only screen and (min-width: 600px) {
   body {
     box-sizing: border-box;
     padding-left: 20%;
@@ -967,4 +1072,4 @@ margin-top: 8%;
     bottom: 5%;
     left: 0%;
   }
-}
+} */

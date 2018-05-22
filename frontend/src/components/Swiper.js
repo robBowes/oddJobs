@@ -53,10 +53,10 @@ class Swiper extends Component {
 
       // get Target Dom Element
       const el = ReactDOM.findDOMNode(target);
-
+      console.log(el)
       // stack.getCard
       const card = this.state.stack.getCard(el);
-
+      console.log("CARD",card, "STACK", this.state.stack)
       // throwOut method call
       card.throwOut(0, 0, Swing.DIRECTION.RIGHT);
     }

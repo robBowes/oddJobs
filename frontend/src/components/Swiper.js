@@ -136,6 +136,7 @@ class Swiper extends Component {
       }
       return true;
     });
+    if (jobsShown.length===0) this.allPicturesLoaded(0);
 
     console.log(jobsShown);
 

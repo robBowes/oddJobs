@@ -39,7 +39,7 @@ class App extends Component {
     })
     .then((x) => x.json())
     .then((y) => {
-        if (!y.status) console.log(y.user);
+        if (!y.status) console.log(y);
       if (y.status) {
       this.props.dispatch({
         type: 'USER_UPDATE',

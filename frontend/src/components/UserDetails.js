@@ -14,18 +14,18 @@ class UserDetails extends Component {
         };
     }
     componentDidMount=()=>{
-        console.log(this.props)
-        fetch('/user',{
-            method:'POST',
+        console.log(this.props);
+        fetch('/user', {
+            method: 'POST',
             credentials: 'same-origin',
-            body: JSON.stringify({id: this.props.userid})
+            body: JSON.stringify({id: this.props.userid}),
         })
-        .then(x=>x.json())
-        .then(y=>{
-        console.log(y)
+        .then((x)=>x.json())
+        .then((y)=>{
+        if (!y.status) console.log(y);
         this.setState({loading: false, user: y.user});
-        this.props.dispatch({type: 'TOGGLE_LOADING'})
-        })
+        this.props.dispatch({type: 'TOGGLE_LOADING'});
+        });
     }
     calcScore = () => {
         if (!!this.state.user.statistics.jobsCompleted) return 100;
@@ -42,7 +42,7 @@ class UserDetails extends Component {
       return this.state.loading?<div/>:<div className="welcomeStage2">
           <div className="userDetailsDivider" />
           <div className="userPictureContainer">
-            <img className="userPicture" src={this.state.user ? this.state.user.picture.data.url : "loading image"} alt="" />
+            <img className="userPicture" src={this.state.user ? this.state.user.picture.data.url : 'loading image'} alt="" />
           </div>
           <h2 className="welcomeName">{this.state.user?this.state.user.name:''}</h2>
 
@@ -52,7 +52,7 @@ class UserDetails extends Component {
 
           <div className="userRating">
             User Score - <span className="score">
-              {this.calcScore() + "%"}
+              {this.calcScore() + '%'}
             </span>
           </div>
 

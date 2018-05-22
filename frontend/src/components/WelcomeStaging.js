@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Animate from 'react-smooth';
 
 // A series of three unique steps for onboarding users on
 // initial login. Will walk users through configuring
@@ -17,7 +18,9 @@ class WelcomeStaging extends Component {
   });
   }
   render() {
- return ( <div className='welcomeStage1'>
+ return ( 
+  <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
+ <div className='welcomeStage1'>
       <div className="logoWrapper">
       <img className="logo" src='logo.png' alt='oddjobs logo'/>
       </div>
@@ -35,6 +38,7 @@ class WelcomeStaging extends Component {
       </button>
       </div>
     </div>
+    </Animate>
   );
 }
 }

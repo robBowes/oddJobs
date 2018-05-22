@@ -230,7 +230,7 @@ class Chat extends Component {
   }
 
   completeJob=()=>{
-      let x = {id: this.state.job.id, message: (this.state.job.completedByHelper||this.state.job.completedByPatron)?'Job Complete Confirmed!':'The job is now Complete! Please confirm by clicking Complete Job! Have a wonderful day!', partner: this.state.partner};
+      let x = {id: this.state.job.id, message: (this.state.job.completedByHelper||this.state.job.completedByPatron)?'Job Complete Confirmed!':'The job is now Complete! Please confirm by clicking Complete Job!', partner: this.state.partner};
       fetch('/sendMessage', {
         method: 'PUT',
         credentials: 'same-origin',
@@ -298,9 +298,18 @@ class Chat extends Component {
         <div className="chatWindow" id='chatwindow'>
           <ul>{this.renderMessages()}</ul>
         </div>
+
+         <div className="split"> <hr/> </div>
+
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
+<<<<<<< HEAD
+            <input type="text" placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true}/>
+||||||| merged common ancestors
             <input type="text" onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true}/>
+=======
+            <input type="text" onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} placeholder='Type something...'/>
+>>>>>>> 9c97d84ee6797b9632bb8cf59fbac71370e8366e
           </form>
         </div>
       </div>;

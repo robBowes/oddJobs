@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { connect } from "react-redux";
-import Swing from "react-swing";
-import { Link } from "react-router-dom";
-import { MoonLoader } from "react-spinners";
-import SwipeNav from "./../components/SwipeNav.js";
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import {connect} from 'react-redux';
+import Swing from 'react-swing';
+import {Link} from 'react-router-dom';
+import {MoonLoader} from 'react-spinners';
+import SwipeNav from './../components/SwipeNav.js';
 
 // The main function of the app
 // A constantly rotating pair of jobs giving the impression of continuous flow
@@ -16,11 +16,11 @@ class Swiper extends Component {
     this.state = {
       stack: null,
       cards: [],
-      loading: true
+      loading: true,
     };
     this.numberOfPicturesLoaded = 0;
   }
-  componentWillReceiveProps = props => {
+  componentWillReceiveProps = (props) => {
     //
   };
 
@@ -43,7 +43,7 @@ class Swiper extends Component {
     // 30000)
   };
 
-  swipeRight = x => {
+  swipeRight = (x) => {
     if (this.state.cards.length > 0) {
       const target = this.refs.stack.refs[
         this.state.cards[this.state.cards.length - 1].ref
@@ -60,7 +60,7 @@ class Swiper extends Component {
     }
   };
 
-  swipeLeft = x => {
+  swipeLeft = (x) => {
     if (this.state.cards.length > 0) {
       // Swing Card Directions
 
@@ -82,13 +82,13 @@ class Swiper extends Component {
       // this.removeCard(b)
     }
   };
-  allPicturesLoaded = totalPics => {
+  allPicturesLoaded = (totalPics) => {
     this.numberOfPicturesLoaded++;
     if (this.numberOfPicturesLoaded >= totalPics) {
       this.props.dispatch({type: 'TOGGLE_LOADING'});
     }
   };
-  removeCard = e => {
+  removeCard = (e) => {
     // const target = e.target;
     // const el = ReactDOM.findDOMNode(target);
     // const card = this.state.stack.getCard(el);
@@ -96,7 +96,7 @@ class Swiper extends Component {
     // el.remove()
     let lat;
     let lng;
-    navigator.geolocation.getCurrentPosition(x => {
+    navigator.geolocation.getCurrentPosition((x) => {
       lat = x.coords.latitude;
       lng = x.coords.longitude;
     });
@@ -104,18 +104,18 @@ class Swiper extends Component {
     this.setState({
       cards: this.state.cards.filter((x, i) => {
         return parseInt(x.key) !== this.state.cards.length - 1;
-      })
+      }),
     });
   };
   renderCards = () => {
     let newStack = [];
     let jobs = this.props.jobs;
     if (!jobs) jobs = [];
-    let filterOwn = jobs.filter(x => {
+    let filterOwn = jobs.filter((x) => {
       return x.patronId !== this.props.user.id;
     });
 
-    let filterRej = filterOwn.filter(x => {
+    let filterRej = filterOwn.filter((x) => {
       for (let i = 0; i < this.props.rejected.length; i++) {
         if (this.props.rejected[i] === x.id) {
           return false;
@@ -126,7 +126,7 @@ class Swiper extends Component {
 
     console.log(filterRej);
 
-    let jobsShown = filterRej.filter(x => {
+    let jobsShown = filterRej.filter((x) => {
       for (let i = 0; i < this.props.user.pairs.length; i++) {
         if (this.props.user.pairs[i].id === x.id) {
           return false;
@@ -142,8 +142,8 @@ class Swiper extends Component {
       newStack = newStack.concat(
         <div
           key={i}
-          className={"card " + (parseInt(i) + 1)}
-          ref={"card" + (parseInt(i) + 1)}
+          className={'card ' + (parseInt(i) + 1)}
+          ref={'card' + (parseInt(i) + 1)}
           id={i}
           jobid={jobsShown[i].id}
         >
@@ -154,12 +154,12 @@ class Swiper extends Component {
             alt=""
             onLoad={() => this.allPicturesLoaded(jobsShown.length)}
           />
-          <Link to={"/job" + jobsShown[i].id}>
+          <Link to={'/job' + jobsShown[i].id}>
             <div className="bottomBar">
               <div className="jobDetails">
-                <span className="jobDistance">{"20km"}</span>
+                <span className="jobDistance">{'20km'}</span>
                 <span className="jobTitle">{jobsShown[i].jobTitle}</span>
-                <span className="jobPay">{"$" + jobsShown[i].jobPay}</span>
+                <span className="jobPay">{'$' + jobsShown[i].jobPay}</span>
               </div>
             </div>
           </Link>
@@ -167,63 +167,63 @@ class Swiper extends Component {
       );
     }
     this.props.dispatch({
-      type: "UPDATE_STACK",
-      payload: newStack
+      type: 'UPDATE_STACK',
+      payload: newStack,
     });
     if (this.state.cards.length === 0) {
-      this.setState({ cards: newStack });
+      this.setState({cards: newStack});
     }
     return newStack;
   };
-  componentWillMount = props => {
-    this.props.dispatch({ type: "TOGGLE_LOADING" });
-    fetch("/allJobs", {
-      method: "POST",
-      credentials: "same-origin",
-      body: JSON.stringify({ location: this.props.user.location })
+  componentWillMount = (props) => {
+    this.props.dispatch({type: 'TOGGLE_LOADING'});
+    fetch('/allJobs', {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: JSON.stringify({location: this.props.user.location}),
     })
-      .then(x => x.json())
-      .then(y => {
+      .then((x) => x.json())
+      .then((y) => {
         this.props.dispatch({
-          type: "UPDATE_JOBS",
-          payload: y.content
+          type: 'UPDATE_JOBS',
+          payload: y.content,
         });
         this.renderCards();
-        this.setState({ loading: false });
+        this.setState({loading: false});
       });
   };
-  accept = e => {
+  accept = (e) => {
     const target = e.target;
     const el = ReactDOM.findDOMNode(target);
     // const card = this.state.stack.getCard(el);
-    let jobId = target.getAttribute("jobid");
+    let jobId = target.getAttribute('jobid');
     console.log(jobId);
-    fetch("/pair", {
-      method: "PUT",
-      credentials: "same-origin",
-      body: JSON.stringify({ id: jobId })
+    fetch('/pair', {
+      method: 'PUT',
+      credentials: 'same-origin',
+      body: JSON.stringify({id: jobId}),
     })
-      .then(x => x.json())
-      .then(y => {
+      .then((x) => x.json())
+      .then((y) => {
         console.log(y.user);
         this.props.dispatch({
-          type: "USER_UPDATE",
-          payload: y.user
+          type: 'USER_UPDATE',
+          payload: y.user,
         });
       });
-    console.log("YES THIS JOB");
+    console.log('YES THIS JOB');
   };
 
-  reject = e => {
+  reject = (e) => {
     const target = e.target;
     const el = ReactDOM.findDOMNode(target);
     // const card = this.state.stack.getCard(el);
-    let jobId = target.getAttribute("jobid");
+    let jobId = target.getAttribute('jobid');
     this.props.dispatch({
-      type: "LEFT_SWIPE",
-      payload: jobId
+      type: 'LEFT_SWIPE',
+      payload: jobId,
     });
-    console.log("NOT THIS JOB");
+    console.log('NOT THIS JOB');
   };
 
   render() {
@@ -246,7 +246,7 @@ class Swiper extends Component {
           <Swing
             className="stack"
             tagName="div"
-            setStack={stack => this.setState({ stack: stack })}
+            setStack={(stack) => this.setState({stack: stack})}
             ref="stack"
             throwoutend={this.removeCard}
             throwoutleft={this.reject}
@@ -254,7 +254,7 @@ class Swiper extends Component {
           >
             <div className="noCards" />
             {this.state.cards ? (
-              this.state.cards.map(x => {
+              this.state.cards.map((x) => {
                 return x;
               })
             ) : (
@@ -283,11 +283,11 @@ class Swiper extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   rejected: state.data.rejected,
   cards: state.data.cards,
   jobs: state.data.jobs,
-  user: state.user
+  user: state.user,
 });
 
 export default connect(mapStateToProps)(Swiper);

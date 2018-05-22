@@ -43,7 +43,7 @@ const backOut = oddJobs.backOut(Job, User);
 const modify = oddJobs.modify(Job, User);
 
 const verbose = (obj) => {
-    if (true)console.log(obj);
+    if (false)console.log(obj);
 };
 
 let privateKey = fs.readFileSync('privkey.pem', 'utf8');
@@ -71,7 +71,7 @@ app.post('/login', async (req, res)=>{
         }
         if (!ret.user) ret = await login(fb, req.cookies.token, User, ret.user);
         if (ret.status) res.cookie('token', ret.user.appToken);
-        verbose('User: ' + user.name?user.name:'' + ' logs in');
+        verbose('User: ' + user?user.name:'' + ' logs in');
     } catch (error) {
         console.log(error);
         ret = {status: false, reason: error};

@@ -300,16 +300,9 @@ class Chat extends Component {
         <div className="chatWindow" id='chatwindow'>
           <ul>{this.renderMessages()}</ul>
         </div>
-<<<<<<< HEAD
 
          <div className="splitChat"> <hr/> </div>
 
-||||||| merged common ancestors
-
-         <div className="split"> <hr/> </div>
-
-=======
->>>>>>> 2690ec0d69da21ce31e8a1a4a350cb2900edc579
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
             <input type="text" ref='chat' placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />

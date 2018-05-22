@@ -728,6 +728,7 @@ input[type="checkbox"]:checked + label {
 }
 
 .wholeCard {
+  z-index: 10;
   position: relative;
   height: fit-content;
 }
@@ -1079,6 +1080,7 @@ input[type="checkbox"]:checked + label {
     height: 351px;
     max-height: 351px;
     padding-top: 0px;
+    z-index: 10;
   }
 
   .jobDetails {

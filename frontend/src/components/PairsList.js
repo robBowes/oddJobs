@@ -38,9 +38,9 @@ class PairsList extends Component {
   mapListedJobs = () => {
     let listedJobs = [...this.props.user.jobsListed];
     console.log('LISTED JOBS', listedJobs);
-    return listedJobs.map((x) => {
+    return listedJobs.map((x, i) => {
       return (
-        <div className={x.dealMade?'pairedDealCard':'listedJobCard'}>
+        <div className={x.dealMade?'pairedDealCard':'listedJobCard'} key={i+'list'}>
            <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button>
            <Link to={'/job'+x.id}>
 
@@ -59,9 +59,9 @@ class PairsList extends Component {
   mapPairedJobs =() => {
     let pairedJobs = [...this.props.user.pairs];
     console.log('PAIRED JOBS', pairedJobs);
-    return pairedJobs.map((x) => {
+    return pairedJobs.map((x, i) => {
       return (
-        <div className={x.dealMade?'pairedDealCard':'pairedJobCard'}>
+        <div className={x.dealMade?'pairedDealCard':'pairedJobCard'} key={i+'more pairs'}>
            <button name={x.id} className="removeJob" onClick={this.removeJob}>x</button>
             <Link to={'/job'+x.id}>
 

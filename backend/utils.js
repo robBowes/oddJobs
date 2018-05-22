@@ -20,6 +20,7 @@ const checkFbToken = async (fb) => {
     let json;
     try {
         let json = await response.json();
+        console.log(json);
         if (!json.data) return false;
         return json.data.is_valid && json.data.user_id === fb.id;
     } catch (error) {

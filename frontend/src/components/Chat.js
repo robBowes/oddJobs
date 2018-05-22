@@ -257,12 +257,16 @@ class Chat extends Component {
     let oldmsg = this.state.messages;
     if (this.state.messages.length > 0) {
       return this.state.messages.map((x, i) => {
-        return <div className="messages" style={{flexDirection: this.props.user.id === x.userId ? 'row-reverse' : 'row'}}>
-            <li className={this.props.user.id === x.userId ? 'userBubble' : 'partnerBubble'} id={x.id} key={i}>
-              {// (x.userId===this.props.user.id?this.state.name:this.state.partnerName) + ": " +
-                x.message}
-            </li>
-          </div>;
+        return  <Animate from='0' to='1' attributeName='opacity' duration='1000'>
+            <div className="messages" style={{ flexDirection: this.props.user.id === x.userId ? "row-reverse" : "row" }}>
+              
+              <li className={this.props.user.id === x.userId ? "userBubble" : "partnerBubble"} id={x.id} key={i}>
+                {// (x.userId===this.props.user.id?this.state.name:this.state.partnerName) + ": " +
+                  x.message}
+              </li>
+              
+            </div>
+          </Animate>;
       });
     }
 

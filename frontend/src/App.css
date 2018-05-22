@@ -16,7 +16,14 @@ body {
   display: flex;
   color: rgb(7, 6, 6);
   font-size: 13pt;
+
 }
+
+ul{
+      transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+}
+
 
 input,
 textarea {
@@ -41,6 +48,7 @@ button:focus {
   border-radius: 9px 0px 17px 9px;
   display: inline-block;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.274);
+  transition: all 0.5s ease-in-out;
 }
 .partnerBubble {
   color: white;
@@ -56,6 +64,8 @@ button:focus {
   border-radius: 0px 9px 9px 17px;
   display: inline-block;
   box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.274);
+    transition: all 0.5s ease-in-out;
+
 }
 
 .dealButtonsContainer {
@@ -118,9 +128,10 @@ button:focus {
 }
 
 #chatbar {
-  width: 100%;
   padding: 1vw;
   border: solid 1px #ccc;
+  width:80%;
+    margin-left:9%;
 }
 
 .chatWindow {
@@ -1193,6 +1204,11 @@ input[type="checkbox"]:checked + label {
 
   .chatTitleHeader {
     font-size: 18px;
+  }
+
+  #chatbar{
+    width: 100%;
+    margin-left:0%;
   }
 }
 

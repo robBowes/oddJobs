@@ -157,6 +157,9 @@ const allJobs = (Job) => async (user, location) => {
         return job.distance < max;
     });
     jobs = jobs.filter((job)=>{
+        return job.categories.some((cat)=>user.categories.some((cats)=>cats===cat));
+    });
+    jobs = jobs.filter((job)=>{
         let jobPrice = parseInt(job.jobPay);
         let max = user.maxPrice;
         let min = user.minPrice;

@@ -276,7 +276,7 @@ class Chat extends Component {
   }
 
   render() {
-    return this.state.loading ? <div>LOAD</div> : <div>
+    return this.state.loading ? <div/>: <div>
         <div />
         <button className='backButton' onClick={this.goBack}>{'< Back'}</button>
         <div className="dealButtonsContainer">

@@ -19,7 +19,7 @@ class Swiper extends Component {
       cards: [],
       loading: true,
     };
-    this.cardsLoaded = 0;
+    //this.cardsLoaded = 0;
   }
   componentWillReceiveProps = (props) => {
     //
@@ -84,10 +84,10 @@ class Swiper extends Component {
       // this.removeCard(b)
     }
   };
-  allCardsLoaded = (numberOfImages) =>{
-    this.cardsLoaded++;
-    if (this.cardsLoaded==numberOfImages) this.props.dispatch({type: 'TOGGLE_LOADING'});
-  }
+  // allCardsLoaded = (numberOfImages) =>{
+  //   this.cardsLoaded++;
+  //   if (this.cardsLoaded==numberOfImages) this.props.dispatch({type: 'TOGGLE_LOADING'});
+  // }
   removeCard = (e) => {
     // const target = e.target;
     // const el = ReactDOM.findDOMNode(target);
@@ -132,7 +132,7 @@ class Swiper extends Component {
       }
       return true;
     });
-    if (jobsShown.length === 0) this.allCardsLoaded(0);
+    //if (jobsShown.length === 0) this.allCardsLoaded(0);
     for (let i = 0; i < jobsShown.length; i++) {
       newStack = newStack.concat(
         <div
@@ -147,7 +147,7 @@ class Swiper extends Component {
             draggable="false"
             src={jobsShown[i].picture}
             alt=""
-            onLoad={()=>this.allCardsLoaded(jobsShown.length)}
+            //onLoad={()=>this.allCardsLoaded(jobsShown.length)}
           />
           <Link to={'/job' + jobsShown[i].id}>
             <div className="bottomBar">

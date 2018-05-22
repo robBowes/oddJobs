@@ -47,10 +47,14 @@ const modify = (Job, User) => async (user, newProps) =>{
     Object.assign(user, newProps);
     let status = true;
     let reason = '';
-    await user.save((err)=>{
-        if (err) console.log(err);
-    });
-    user = await deepUser(Job, user, User);
+    try {
+        await user.save((err)=>{
+            if (err) console.log(err);
+        });
+        user = await deepUser(Job, user, User);
+    } catch (error) {
+        console.log(error);
+    }
     return {status, user, reason};
 };
 

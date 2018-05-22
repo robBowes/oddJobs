@@ -139,6 +139,7 @@ class Chat extends Component {
         this.updateScroll();
       });
     // this.setState({messages: messages})
+    this.refs.chat.blur();
     document.getElementById('chatbar').value = '';
   };
 
@@ -272,6 +273,7 @@ class Chat extends Component {
     if(this.state.messages.length>0){
     objDiv.scrollTop = objDiv.scrollHeight}
   }
+
   render() {
     return this.state.loading ? <div>LOAD</div> : <div>
         <div />
@@ -299,7 +301,7 @@ class Chat extends Component {
         </div>
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
-            <input type="text" placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true}/>
+            <input type="text" ref='chat' placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
           </form>
         </div>
       </div>;

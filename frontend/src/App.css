@@ -770,7 +770,8 @@ input[type="checkbox"]:checked + label {
 .cardImage {
   height: 80%;
   position: relative;
-  max-width: 100%;
+  width: 100%;
+  object-fit: cover;
   border-radius: 11px 11px 0px 0px;
 }
 
@@ -1088,6 +1089,8 @@ input[type="checkbox"]:checked + label {
 
   .jobDetails{
     font-size:15px;
+    font-weight: 400;
+    color: #484848;
   }
 
   .logo2{

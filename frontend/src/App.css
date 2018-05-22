@@ -973,6 +973,43 @@ margin-top: 8%;
 
 /* Chatslist */
 
+.chatCard{
+  position: relative !important;
+}
+
+.chatUserPic{
+    float: left;
+    border-radius: 50%;
+    border: solid 2px white;
+    width: 10vh;
+    height: 10vh;
+    margin-top: 2vh;
+    margin-left: 1vh;
+}
+
+.removeChat{
+  position: absolute;
+  left: 1%;
+  color: white;
+  font-size: 2vh;
+  border: none;
+  background-color: transparent;
+  z-index: 2;
+  font-weight: bold;
+}
+
+.chatFlex{
+  display:flex;
+  position: relative;
+}
+
+.chatTitleHeader{
+  color:white;
+  position: relative;
+  top:2vh;
+  margin-left:2vw;
+  
+}
 
 @media only screen and (min-width: 436px) {
   body {

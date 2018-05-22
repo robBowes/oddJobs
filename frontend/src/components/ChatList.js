@@ -33,8 +33,8 @@ class ChatList extends Component {
       return (
         <div className="ChatCard listedJobCard">
            <button name={x.id} className="removeChat" onClick={this.removeChat}>x</button>
-           <img height="100px" width="100px" className="chatUserPic" src={x.picture.data.url} alt="Chat List User Image"/>
-           <h2 className="chatTitleHeader">{x.name}</h2>
+           <div className='chatFlex'><img height="100px" width="100px" className="chatUserPic" src={x.picture.data.url} alt="Chat List User Image"/>
+           <h2 className="chatTitleHeader">{x.name}</h2></div>
           <Link to={'/chats/'+this.props.id+'/'+x.id}> <button name={x.id} className="goToChatsArrow">{'>'}</button></Link>
         </div>
       );

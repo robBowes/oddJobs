@@ -22,8 +22,11 @@ class ChatList extends Component {
       return (
         <div className="ChatCard listedJobCard">
            <button name={job.patronId} className="removeChat" onClick={this.removeChat}>x</button>
+           <div className='chatFlex'>
+           <Link to={'/user'+job.patronId}>
            <img height="100px" width="100px" className="chatUserPic" src={job.patron.picture.data.url} alt="Chat List User Image"/>
-           <h2 className="chatTitleHeader">{job.patron.name}</h2>
+           </Link>
+           <div className="headerWrapper"><span className="chatTitleHeader">{job.patron.name}</span></div></div>
            <Link to={'/chats/'+this.props.id+'/'+job.patronId}> <button name={job.patronId} className="goToChatsArrow">{'>'}</button></Link>
         </div>
       );
@@ -37,7 +40,7 @@ class ChatList extends Component {
            <Link to={'/user'+x.id}>
            <img height="100px" width="100px" className="chatUserPic" src={x.picture.data.url} alt="Chat List User Image"/>
            </Link>
-           <h2 className="chatTitleHeader">{x.name}</h2></div>
+           <div className="headerWrapper"><span className="chatTitleHeader">{x.name}</span></div></div>
           <Link to={'/chats/'+this.props.id+'/'+x.id}> <button name={x.id} className="goToChatsArrow">{'>'}</button></Link>
         </div>
       );

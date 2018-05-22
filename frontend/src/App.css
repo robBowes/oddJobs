@@ -987,9 +987,10 @@ input[type="checkbox"]:checked + label {
   top: -5%;
   font-size: 1.5vh;
   color: white;
-  font-weight: 350;
+  font-weight: 300;
   margin-bottom: 1%;
 }
+
 
 .jobDetailsFlexer{
   display:flex;
@@ -1039,12 +1040,26 @@ input[type="checkbox"]:checked + label {
   position: relative;
 }
 
+.headerWrapper{
+  text-align: center;
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  width: 100%;
+  float: left;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
 .chatTitleHeader{
   color:white;
   position: relative;
-  margin:12% auto;
-  margin-left:2vw;
+  margin:19% auto;
+  margin-left:5vw;
   margin-right:2vw;
+  font-weight: 300;
+  font-size: 4.6vw;
 }
 
 @media only screen and (min-width: 436px) {
@@ -1160,6 +1175,10 @@ input[type="checkbox"]:checked + label {
 
 .jobDetailsStyling{
   font-size: 23px;
+}
+
+.chatTitleHeader{
+  font-size: 18px;
 }
 
 }

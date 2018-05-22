@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Login from './../components/Login.js'
+import Login from './../components/Login.js';
 
 class Landing extends Component {
     render() {

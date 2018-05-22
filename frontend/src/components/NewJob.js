@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 /* global google */
 
@@ -11,17 +11,17 @@ class NewJob extends Component {
       jobPay: '',
       jobAddress: '',
       jobDetails: '',
-      image:'',
+      image: '',
       geolocation: {},
       locationHasLoaded: false,
       imageHasLoaded: false,
       errorMessage: '',
     };
   }
-  handleClickSubmit = event => {
+  handleClickSubmit = (event) => {
     event.preventDefault();
     fetch('/addJob', {
-      method: "PUT",
+      method: 'PUT',
       credentials: 'same-origin',
       body: JSON.stringify({
         jobTitle: this.state.jobTitle,
@@ -29,31 +29,31 @@ class NewJob extends Component {
         location: this.state.geolocation,
         jobPay: this.state.jobPay,
         picture: this.state.image,
-      })
+      }),
     })
-    .then(x => x.json())
-    .then(y => {
-      if (!y.status) throw new Error(y.reason)
-    })
+    .then((x) => x.json())
+    .then((y) => {
+      if (!y.status) throw new Error(y.reason);
+    });
     window.history.back();
   };
-  handleTitleChange = event => {
+  handleTitleChange = (event) => {
     event.preventDefault();
-    this.setState({ jobTitle: event.target.value });
+    this.setState({jobTitle: event.target.value});
   };
-  handlePayChange = event => {
+  handlePayChange = (event) => {
     event.preventDefault();
-    this.setState({ jobPay: event.target.value });
+    this.setState({jobPay: event.target.value});
   };
-  handleAddressChange = event => {
+  handleAddressChange = (event) => {
     event.preventDefault();
-    this.setState({ jobAddress: event.target.value });
+    this.setState({jobAddress: event.target.value});
   };
-  handleDetailsChange = event => {
+  handleDetailsChange = (event) => {
     event.preventDefault();
-    this.setState({ jobDetails: event.target.value });
+    this.setState({jobDetails: event.target.value});
   };
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
   };
   getGoogleMaps() {
@@ -69,8 +69,8 @@ class NewJob extends Component {
         };
 
         // Load the Google Maps API
-        const script = document.createElement("script");
-        const API = "AIzaSyCbrOIME0qqdPjO-rgbqX_1L7uPxWvYbaw";
+        const script = document.createElement('script');
+        const API = 'AIzaSyCbrOIME0qqdPjO-rgbqX_1L7uPxWvYbaw';
         script.src = `https://maps.googleapis.com/maps/api/js?key=${API}&callback=resolveGoogleMapsPromise`;
         script.async = true;
         document.body.appendChild(script);
@@ -82,21 +82,21 @@ class NewJob extends Component {
   getGeocode = () => {
     this.getGoogleMaps().then((google) => {
       let geocoder = new google.maps.Geocoder();
-      geocoder.geocode( { 'address': this.state.jobAddress}, (results, status) => {
+      geocoder.geocode( {'address': this.state.jobAddress}, (results, status) => {
         if (status === 'OK') {
-          let lat = results[0].geometry.location.lat()
-          let lng = results[0].geometry.location.lng()
-          this.setState({geolocation: {lat,lng}, locationHasLoaded: true, errorMessage: ''})
+          let lat = results[0].geometry.location.lat();
+          let lng = results[0].geometry.location.lng();
+          this.setState({geolocation: {lat, lng}, locationHasLoaded: true, errorMessage: ''});
         } else {
-          this.setState({errorMessage: "Invalid Address"})
+          this.setState({errorMessage: 'Invalid Address'});
           console.log('Geocode was not successful for the following reason: ' + status);
         }
       });
-    })
+    });
   }
   uploadPicture = (event) => {
-    let image = event.target.files[0]
-    let filename = image.name
+    let image = event.target.files[0];
+    let filename = image.name;
     let extension = filename.split('.').pop();
     fetch('/uploadImage?ext=' + extension, {
       method: 'PUT',
@@ -124,16 +124,16 @@ class NewJob extends Component {
   render() {
     return (
       <div className="newJobPage">
-      
-      <button className="backButton" onClick={this.goBack}>{"< Back"}</button>
-  
+
+      <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
+
         <h1 className="pageTitle">
           New Job
         </h1>
          <div className="split">
          <hr/>
          </div>
-           
+
          <form onSubmit={this.handleSubmit}>
 
           <h2 className="formHeader"> Title: </h2>
@@ -174,9 +174,9 @@ class NewJob extends Component {
           />
 
           <h2 className="formHeader"> Details: </h2>
-          <input 
-          type="file" 
-          name="pic" 
+          <input
+          type="file"
+          name="pic"
           className="uploadButton"
           onChange={this.uploadPicture}
           accept="image/*"
@@ -187,14 +187,14 @@ class NewJob extends Component {
             type="submit"
             className="submitButton"
             onClick={this.handleClickSubmit}
-            disabled={!this.state.imageHasLoaded 
-              || !this.state.locationHasLoaded 
-              || this.state.jobTitle.length===0 
-            || this.state.jobDetails.length===0 
+            disabled={!this.state.imageHasLoaded
+              || !this.state.locationHasLoaded
+              || this.state.jobTitle.length===0
+            || this.state.jobDetails.length===0
             || this.state.jobPay.length===0 }
             >
             Submit
-          </button>    
+          </button>
           </div>
         </form>
       </div>
@@ -202,7 +202,7 @@ class NewJob extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(NewJob);

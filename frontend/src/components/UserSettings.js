@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 class UserSettings extends Component {
   constructor(props) {
@@ -11,78 +11,78 @@ class UserSettings extends Component {
       maxPrice: props.maxPrice,
       categories: props.categories,
       boxCategories: [
-        "general",
-        "lawncare",
-        "automotive",
-        "cleaning",
-        "plumbing",
-        "housekeeping",
-        "carpentry",
-        "pet care",
-        "it"
+        'general',
+        'lawncare',
+        'automotive',
+        'cleaning',
+        'plumbing',
+        'housekeeping',
+        'carpentry',
+        'pet care',
+        'it',
       ],
-      loading: true
+      loading: true,
     };
   }
-  componentWillReceiveProps = props => {
+  componentWillReceiveProps = (props) => {
     this.setState(props);
   };
-  handleSubmitButton = event => {
+  handleSubmitButton = (event) => {
     event.preventDefault();
-    fetch("/modify", {
-      method: "PUT",
-      credentials: "same-origin",
+    fetch('/modify', {
+      method: 'PUT',
+      credentials: 'same-origin',
       body: JSON.stringify({
         description: this.state.description,
         maxDistance: this.state.maxDistance,
         minPrice: this.state.minPrice,
         maxPrice: this.state.maxPrice,
-        categories: this.state.categories
-      })
+        categories: this.state.categories,
+      }),
     })
-      .then(x => x.json())
-      .then(y => {
+      .then((x) => x.json())
+      .then((y) => {
         console.log(y);
         if (!y.status) throw new Error(y.reason);
         this.props.dispatch({
-          type: "USER_UPDATE",
-          payload: y.user
+          type: 'USER_UPDATE',
+          payload: y.user,
         });
         this.goBack();
       });
   };
-  handleDescriptionChange = event => {
-    this.setState({ description: event.target.value });
+  handleDescriptionChange = (event) => {
+    this.setState({description: event.target.value});
   };
-  sliderChange = event => {
-    this.setState({ maxDistance: event.target.value });
+  sliderChange = (event) => {
+    this.setState({maxDistance: event.target.value});
   };
-  handleMinChange = event => {
+  handleMinChange = (event) => {
     event.preventDefault();
-    this.setState({ minPrice: event.target.value });
+    this.setState({minPrice: event.target.value});
   };
-  handleMaxChange = event => {
+  handleMaxChange = (event) => {
     event.preventDefault();
-    this.setState({ maxPrice: event.target.value });
+    this.setState({maxPrice: event.target.value});
   };
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
   };
-  tickChange = event => {
+  tickChange = (event) => {
     if (event.target.checked) {
       let newCategories = [...this.state.categories];
       newCategories = newCategories.concat(event.target.name);
-      this.setState({ categories: newCategories });
+      this.setState({categories: newCategories});
       return;
     }
     this.setState({
-      categories: this.state.categories.filter(x => x !== event.target.name)
+      categories: this.state.categories.filter((x) => x !== event.target.name),
     });
   };
-  mapCheckBoxes = categories => {
+  mapCheckBoxes = (categories) => {
     return categories.map((x, i) => {
       if (!this.props.categories) return;
-      let isSelected = this.state.categories.some(e => e === x);
+      let isSelected = this.state.categories.some((e) => e === x);
       return (
         <div className="tickBox">
           <input
@@ -105,7 +105,7 @@ class UserSettings extends Component {
     window.history.back();
   };
   componentDidMount = () => {
-    this.setState({ loading: false });
+    this.setState({loading: false});
   };
   render() {
     return this.state.loading ? (
@@ -119,7 +119,7 @@ class UserSettings extends Component {
         <div className="userPictureContainer">
           <img
             className="userPicture"
-            src={this.props.picture ? this.props.picture.data.url : ""}
+            src={this.props.picture ? this.props.picture.data.url : ''}
             alt="user profile"
           />
         </div>
@@ -140,7 +140,7 @@ class UserSettings extends Component {
           <div className="rangeWrapper">
             <h2 className="welcomeHeader"> Show Jobs Within: </h2>
             <div className="distanceReadout">
-              <p>{this.state.maxDistance + "km"}</p>
+              <p>{this.state.maxDistance + 'km'}</p>
             </div>
             <div className="lineBreaks">
               <hr />
@@ -167,8 +167,8 @@ class UserSettings extends Component {
               onChange={this.handleMinChange}
               type="number"
               placeholder="from"
-            />{" "}
-            -{" "}
+            />{' '}
+            -{' '}
             <input
               className="welcomeInputMinMax"
               value={this.state.maxPrice}
@@ -200,7 +200,7 @@ class UserSettings extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   picture: state.user.picture,
   description: state.user.description,
   maxDistance: state.user.maxDistance,

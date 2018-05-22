@@ -13,18 +13,18 @@ export default (state = {
         newState.picture = action.picture;
         newState.id = action.id;
         newState.loggedIn = action.loggedIn;
-        newState.jobsListed = action.jobslisted
+        newState.jobsListed = action.jobslisted;
     }
     if (action.type === 'WELCOME_STATE') {
         newState.welcomeStage = action.payload;
     }
     if (action.type === 'USER_UPDATE') {
-        console.log('test')
+        console.log('test');
         newState = {...newState, ...action.payload};
         newState.loggedIn = true;
     }
-    if (action.type === 'MESSAGE_UPDATE'){
-        newState = action.payload
+    if (action.type === 'MESSAGE_UPDATE') {
+        newState = action.payload;
         newState.loggedIn = true;
     }
     if (action.type === 'UPDATE_LOCATION') {

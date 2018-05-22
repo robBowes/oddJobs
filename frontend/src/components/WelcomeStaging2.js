@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 // A series of three unique steps for onboarding users on
-//initial login. Will walk users through configuring
-//their initial settings and explaining these settings
-//one step at a time. Each step will advance a users
-//welcome staging number. When users complete the third step
-//They are never shown this page again
+// initial login. Will walk users through configuring
+// their initial settings and explaining these settings
+// one step at a time. Each step will advance a users
+// welcome staging number. When users complete the third step
+// They are never shown this page again
 
 class WelcomeStaging extends Component {
   constructor(props) {
@@ -17,67 +17,67 @@ class WelcomeStaging extends Component {
       maxPayValue: 40,
       categories: [],
       boxCategories: [
-        "general",
-        "lawncare",
-        "automotive",
-        "cleaning",
-        "plumbing",
-        "housekeeping",
-        "carpentry",
-        "petcare",
-        "it"
+        'general',
+        'lawncare',
+        'automotive',
+        'cleaning',
+        'plumbing',
+        'housekeeping',
+        'carpentry',
+        'petcare',
+        'it',
       ],
     };
   }
-  handleClickNext = event => {
+  handleClickNext = (event) => {
     event.preventDefault();
-    fetch("/modify", {
-      method: "PUT",
-      credentials: "same-origin",
+    fetch('/modify', {
+      method: 'PUT',
+      credentials: 'same-origin',
       body: JSON.stringify({
         minPrice: this.state.minPayValue,
         maxPrice: this.state.maxPayValue,
         maxDistance: this.state.sliderValue,
         categories: this.state.categories,
-        welcomeStage: 2
-      })
+        welcomeStage: 2,
+      }),
     })
-      .then(x => x.json())
-      .then(y => {
+      .then((x) => x.json())
+      .then((y) => {
         console.log(y);
         if (!y.status) throw new Error(y.reason);
         this.props.dispatch({
-          type: "USER_UPDATE",
-          payload: y.user
+          type: 'USER_UPDATE',
+          payload: y.user,
         });
       });
   };
-  sliderChange = event => {
-    this.setState({ sliderValue: event.target.value });
+  sliderChange = (event) => {
+    this.setState({sliderValue: event.target.value});
   };
-  handleMinChange = event => {
+  handleMinChange = (event) => {
     event.preventDefault();
-    this.setState({ minPayValue: event.target.value });
+    this.setState({minPayValue: event.target.value});
   };
-  handleMaxChange = event => {
+  handleMaxChange = (event) => {
     event.preventDefault();
-    this.setState({ maxPayValue: event.target.value });
+    this.setState({maxPayValue: event.target.value});
   };
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
   };
-  tickChange = event => {
+  tickChange = (event) => {
     if (event.target.checked) {
       let newCategories = [...this.state.categories];
       newCategories = newCategories.concat(event.target.name);
-      this.setState({ categories: newCategories });
+      this.setState({categories: newCategories});
       return;
     }
     this.setState({
-      categories: this.state.categories.filter(x => x !== event.target.name)
+      categories: this.state.categories.filter((x) => x !== event.target.name),
     });
   };
-  mapCheckBoxes = categories => {
+  mapCheckBoxes = (categories) => {
     return categories.map((x, i) => {
       return (
         <div className="tickBox">
@@ -98,14 +98,14 @@ class WelcomeStaging extends Component {
     return (
       <div className="welcomeStage2">
         <h1 className="welcomeText2">
-          {" "}
+          {' '}
           Let's start by setting up your job preferences!
         </h1>
 
         <form className="welcomeForm" onSubmit={this.handleSubmit}>
           <div className="rangeWrapper">
             <h2 className="welcomeHeader"> Show Jobs Within: </h2>
-            <div className="distanceReadout"><p>{this.state.sliderValue + "km"}</p></div>
+            <div className="distanceReadout"><p>{this.state.sliderValue + 'km'}</p></div>
             <div className="lineBreaks">
             <hr />
             <div className="sliderInner">
@@ -130,8 +130,8 @@ class WelcomeStaging extends Component {
             onChange={this.handleMinChange}
             type="number"
             placeholder="from"
-          />{" "}
-          -{" "}
+          />{' '}
+          -{' '}
           <input
             className="welcomeInputMinMax"
             value={this.state.maxPayValue}
@@ -141,7 +141,7 @@ class WelcomeStaging extends Component {
           />
           </div>
 
-          
+
           <div className="interestsWrapper">
           <h2 className="welcomeHeader"> I'm interested in: </h2>
           <div className="interestsButtonWrapper">
@@ -163,8 +163,8 @@ class WelcomeStaging extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  //redux props import
+const mapStateToProps = (state) => ({
+  // redux props import
 });
 
 export default connect(mapStateToProps)(WelcomeStaging);

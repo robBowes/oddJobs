@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import UserSettings from './../components/UserSettings'
+import UserSettings from './../components/UserSettings';
 
 class Settings extends Component {
     render() {

@@ -6,7 +6,7 @@ import data from './data.js';
 const allReducers = combineReducers({
     example,
     user,
-    data
+    data,
 });
 
 export default allReducers;

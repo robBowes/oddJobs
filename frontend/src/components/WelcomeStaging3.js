@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 // A series of three unique steps for onboarding users on
-//initial login. Will walk users through configuring
-//their initial settings and explaining these settings
-//one step at a time. Each step will advance a users
-//welcome staging number. When users complete the third step
-//They are never shown this page again
+// initial login. Will walk users through configuring
+// their initial settings and explaining these settings
+// one step at a time. Each step will advance a users
+// welcome staging number. When users complete the third step
+// They are never shown this page again
 
 class WelcomeStaging extends Component {
   constructor(props) {
@@ -15,40 +15,40 @@ class WelcomeStaging extends Component {
       description: '',
     };
   }
-  handleClickNext = event => {
+  handleClickNext = (event) => {
     event.preventDefault();
     fetch('/modify', {
-      method: "PUT",
+      method: 'PUT',
       credentials: 'same-origin',
       body: JSON.stringify({
         description: this.state.description,
-        welcomeStage: 3
-      })
+        welcomeStage: 3,
+      }),
     })
-    .then(x => x.json())
-    .then(y => {
-      console.log(y)
-      if (!y.status) throw new Error(y.reason)
+    .then((x) => x.json())
+    .then((y) => {
+      console.log(y);
+      if (!y.status) throw new Error(y.reason);
       this.props.dispatch({
         type: 'USER_UPDATE',
         payload: y.user,
-      })
-    })
+      });
+    });
   };
-  handleChange = event => {
+  handleChange = (event) => {
     event.preventDefault();
-    this.setState({ description: event.target.value });
+    this.setState({description: event.target.value});
   };
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
   };
   render() {
     return <div className="welcomeStage3">
-        
+
         <div className="userPictureContainer">
         <img className="userPicture" src={this.props.picture} alt="user Profile" />
         </div>
-         
+
 
         <h1 className="welcomeName">  {this.props.name} </h1>
 
@@ -70,7 +70,7 @@ class WelcomeStaging extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   picture: state.user.picture.data.url,
   name: state.user.name,
 });

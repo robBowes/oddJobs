@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import UserDetails from './../components/UserDetails.js'
+import React, {Component} from 'react';
+import UserDetails from './../components/UserDetails.js';
 
 class User extends Component {
     goBack=()=>{

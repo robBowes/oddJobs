@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 // A series of three unique steps for onboarding users on
-//initial login. Will walk users through configuring
-//their initial settings and explaining these settings
-//one step at a time. Each step will advance a users
-//welcome staging number. When users complete the third step
-//They are never shown this page again
+// initial login. Will walk users through configuring
+// their initial settings and explaining these settings
+// one step at a time. Each step will advance a users
+// welcome staging number. When users complete the third step
+// They are never shown this page again
 
 class WelcomeStaging extends Component {
   handleClick = (event) => {
@@ -14,10 +14,10 @@ class WelcomeStaging extends Component {
     this.props.dispatch({
       type: 'WELCOME_STATE',
       payload: 1,
-  })
+  });
   }
   render() {
- return  (   <div className='welcomeStage1'>
+ return ( <div className='welcomeStage1'>
       <div className="logoWrapper">
       <img className="logo" src='logo.png' alt='oddjobs logo'/>
       </div>
@@ -25,9 +25,9 @@ class WelcomeStaging extends Component {
       <div className="textWrapper">
       <h1 className="welcomeText"> Welcome! </h1>
       </div>
-      
+
       <div className="buttonWrapper">
-      <button 
+      <button
       className='welcomeButton'
       onClick={this.handleClick}
       >
@@ -35,12 +35,12 @@ class WelcomeStaging extends Component {
       </button>
       </div>
     </div>
-  )
+  );
 }
 }
 
-const mapStateToProps = state => ({
-  //redux props import
+const mapStateToProps = (state) => ({
+  // redux props import
 });
 
 export default connect(mapStateToProps)(WelcomeStaging);

@@ -1,40 +1,40 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { MoonLoader } from "react-spinners";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {MoonLoader} from 'react-spinners';
 
-//This component renders the details for a given job
-//When viewing job details page
-//pic, description, pertinent info
+// This component renders the details for a given job
+// When viewing job details page
+// pic, description, pertinent info
 
 class JobDetails extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state={
-            loading: true
-        }
+            loading: true,
+        };
     }
-    componentWillReceiveProps=props=>{
-        console.log(props)
+    componentWillReceiveProps=(props)=>{
+        console.log(props);
     }
     componentDidMount=()=>{
-        let job = this.props.jobs.filter(x => {
-            return x.id === this.props.id
-          })[0]
-          console.log(job)
-        fetch('/user',{
-            method:'POST',
+        let job = this.props.jobs.filter((x) => {
+            return x.id === this.props.id;
+          })[0];
+          console.log(job);
+        fetch('/user', {
+            method: 'POST',
             credentials: 'same-origin',
-            body: JSON.stringify({id: job.patronId })
+            body: JSON.stringify({id: job.patronId}),
         })
-        .then(x=>x.json())
-        .then(y=>{
-            console.log(y)
+        .then((x)=>x.json())
+        .then((y)=>{
+            console.log(y);
         this.setState({
           loading: false,
           job: job,
-          patron: y.user
-        })})
-
+          patron: y.user,
+        });
+});
     }
   render() {
       return this.state.loading ? <div>
@@ -42,12 +42,12 @@ class JobDetails extends Component {
         </div> : <div>
             <div>
           <div className="pageTitle">
-            {this.props.jobs ? this.state.job.jobTitle + " - " + "$" + this.state.job.jobPay : null}
+            {this.props.jobs ? this.state.job.jobTitle + ' - ' + '$' + this.state.job.jobPay : null}
             </div>
             <br />
           </div>
           <div className="jobPictureContainer">
-            <img className="jobPicture" src={this.props.jobs ? this.state.job.picture : ""} alt="" />
+            <img className="jobPicture" src={this.props.jobs ? this.state.job.picture : ''} alt="" />
             <br />
           </div>
           <div className="patronBar">
@@ -55,7 +55,7 @@ class JobDetails extends Component {
             <div className="welcomeName">{this.state.patron.name} </div>
           </div>
           <div className="jobDescriptionDetailsWrapper">
-          
+
           <div className='jobDetailsStyling'>Details:</div>
           <br/>{this.props.jobs ? this.state.job.jobDescription : null}
           <br />
@@ -68,8 +68,8 @@ class JobDetails extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-    jobs: state.data.jobs
+const mapStateToProps = (state) => ({
+    jobs: state.data.jobs,
 });
 
 export default connect(mapStateToProps)(JobDetails);

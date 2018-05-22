@@ -19,7 +19,7 @@ class ChatList extends Component {
     if (!job) {
       let helperJobs = [...this.props.user.pairs];
       let job = helperJobs.find((x) => x.id === this.props.id);
-      console.log('1', job)
+      console.log('1', job);
       return (
         <div className="ChatCard">
            <button name={job.patronId} className="removeChat" onClick={this.removeChat}>x</button>
@@ -49,7 +49,7 @@ class ChatList extends Component {
     } else {
       let helperJobs = [...this.props.user.pairs];
       let job = helperJobs.find((x) => x.id === this.props.id);
-      console.log("2", job);
+      console.log('2', job);
       return job.jobTitle;
     }
   }

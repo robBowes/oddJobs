@@ -752,7 +752,7 @@ input[type="checkbox"]:checked + label {
   list-style: none;
   background: #fff;
   border: 1px solid #ccc;
-  border-radius: 11px;
+  border-radius: 5px;
   text-align: center;
   box-sizing: border-box;
   cursor: default;
@@ -770,7 +770,7 @@ input[type="checkbox"]:checked + label {
   -o-background-size: contain;
   background-size: contain;
   list-style: none;
-  border-radius: 11px;
+  border-radius: 5px;
   text-align: center;
   box-sizing: border-box;
   cursor: default;
@@ -787,7 +787,7 @@ input[type="checkbox"]:checked + label {
   position: relative;
   width: 100%;
   object-fit: cover;
-  border-radius: 11px 11px 0px 0px;
+  border-radius: 5px 5px 0px 0px;
 }
 
 .navBar {

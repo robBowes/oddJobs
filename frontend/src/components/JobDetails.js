@@ -17,9 +17,9 @@ class JobDetails extends Component {
         console.log(props);
     }
     componentDidMount=()=>{
-        console.log(this.props.jobs)
+        console.log(this.props.jobs);
         let job = this.props.jobs.filter((x) => {
-            console.log(x, this.props)
+            console.log(x, this.props);
             return x.id === this.props.id;
           })[0];
           console.log(job);
@@ -30,7 +30,7 @@ class JobDetails extends Component {
         })
         .then((x)=>x.json())
         .then((y)=>{
-            console.log(y);
+        if (!y.status) console.log(y);
         this.setState({
           loading: false,
           job: job,
@@ -47,7 +47,7 @@ class JobDetails extends Component {
             {this.props.jobs ? this.state.job.jobTitle + ' - ' + '$' + this.state.job.jobPay : null}
             </div>
             <div className='split'><hr/></div>
-           
+
           </div>
           <div className="jobPictureContainer">
             <img className="jobPicture" src={this.props.jobs ? this.state.job.picture : ''} alt="" />
@@ -61,7 +61,7 @@ class JobDetails extends Component {
 
           <div className='jobDetailsStyling'>Details:</div>
           {this.props.jobs ? this.state.job.jobDescription : null}
-         
+
           <div className='smallTextId'>
           {this.props.id}</div>
           </div>

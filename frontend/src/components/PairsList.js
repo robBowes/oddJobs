@@ -37,7 +37,6 @@ class PairsList extends Component {
   }
   mapListedJobs = () => {
     let listedJobs = [...this.props.user.jobsListed];
-    console.log('LISTED JOBS', listedJobs);
     return listedJobs.map((x, i) => {
       return (
         <div className={x.dealMade?'pairedDealCard':'listedJobCard'} key={i+'list'}>

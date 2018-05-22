@@ -120,8 +120,6 @@ class Swiper extends Component {
       return true;
     });
 
-    console.log(filterRej);
-
     let jobsShown = filterRej.filter((x)=>{
       for (let i = 0; i<this.props.user.pairs.length; i++) {
         if (this.props.user.pairs[i].id===x.id) {
@@ -130,9 +128,6 @@ class Swiper extends Component {
       }
       return true;
     });
-
-    console.log(jobsShown);
-
     for (let i = 0; i < jobsShown.length; i++) {
       newStack = newStack.concat(
         <div
@@ -198,13 +193,12 @@ class Swiper extends Component {
     })
       .then((x) => x.json())
       .then((y) => {
-        console.log(y.user);
+        if (!y.status) console.log(y);
         this.props.dispatch({
           type: 'USER_UPDATE',
           payload: y.user,
         });
       });
-    console.log('YES THIS JOB');
   };
 
   reject = (e) => {
@@ -216,7 +210,6 @@ class Swiper extends Component {
       type: 'LEFT_SWIPE',
       payload: jobId,
     });
-    console.log('NOT THIS JOB');
   };
 
   render() {

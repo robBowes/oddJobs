@@ -39,19 +39,21 @@ class NewJob extends Component {
       fetch('/user', {
         method: 'POST',
         credentials: 'same-origin',
-        body: JSON.stringify({id: this.props.user.id})
+        body: JSON.stringify({id: this.props.user.id}),
       })
-      .then(x=> x.json())
-      .then(y => {
-      if(!y.status) throw new Error(y.reason)
-      else{
-        console.log("IN DISPATCH", y)
+      .then((x)=> x.json())
+      .then((y) => {
+      if (!y.status) throw new Error(y.reason);
+      else {
+        console.log('IN DISPATCH', y);
       this.props.dispatch({
         type: 'USER_UPDATE',
         payload: y.user,
-    })}})
     });
-   
+}
+});
+    });
+
     window.history.back();
   };
   handleTitleChange = (event) => {
@@ -127,10 +129,9 @@ class NewJob extends Component {
       // if (!this.props.categories) return;
       let isSelected = this.state.categories.some((e) => e === x);
       return (
-        <div className="tickBox">
+        <div className="tickBox" key={i + 'tickbox'}>
           <input
             onChange={this.tickChange}
-            key={i}
             id={x}
             className="categoryCheckBox"
             type="checkbox"
@@ -240,7 +241,9 @@ class NewJob extends Component {
             </div>
           </div>
 
-          <h2 className="formHeader"> Details: </h2>
+          <h2 className="formHeader"> Upload an Image: </h2>
+          <div className="uploadWrapper">
+          <span className="fileText">Upload File</span>
           <input
           type="file"
           name="pic"
@@ -248,6 +251,7 @@ class NewJob extends Component {
           onChange={this.uploadPicture}
           accept="image/*"
           />
+          </div>
 
           <div className="buttonWrapper2">
           <button

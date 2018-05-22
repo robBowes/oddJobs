@@ -174,7 +174,7 @@ class Chat extends Component {
     })
       .then((x) => x.json())
       .then((y) => {
-        console.log(y);
+        if (!y.status) console.log(y);
         if (y.status) {
             y.job.dealMade ? this.setState({deal: true}) : null;
         if (this.props.user.id!==y.job.patronId) {

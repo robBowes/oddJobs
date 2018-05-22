@@ -42,7 +42,6 @@ class UserSettings extends Component {
     })
       .then((x) => x.json())
       .then((y) => {
-        console.log(y);
         if (!y.status) throw new Error(y.reason);
         this.props.dispatch({
           type: 'USER_UPDATE',

@@ -94,8 +94,10 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div className="App">
-      <div className='moonLoader' style={{zIndex: this.props.moonLoader?'10':'-10'}} >
+        <div className="innerMoonLoader" style={{zIndex: this.props.moonLoader?'10':'-10'}}>
+      <div className='moonLoader' >
         <MoonLoader color="#05ff05" loading={this.props.moonLoader} />
+        </div>
       </div>
       {/* <button onClick={this.resetWelcome}> Reset Welcome </button>   */}
       <Route exact={true} path='/chats/:jobid/:userid' render={this.renderChat} />

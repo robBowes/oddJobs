@@ -143,6 +143,7 @@ class NewJob extends Component {
             onChange={this.handleTitleChange}
             type="text"
             placeholder="Job title"
+            maxLength="30"
           />
 
           <h2 className="formHeader"> Pay: </h2>

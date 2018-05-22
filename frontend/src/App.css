@@ -833,7 +833,7 @@ margin-top: 8%;
 
 .listedJobCard {
   background-color: #82da05;
-  height: 17%;
+  height: 14vh;
   width: 86%;
   margin-left: 8%;
   border-radius: 10px;
@@ -848,6 +848,8 @@ margin-top: 8%;
   margin-left: 8%;
   border-radius: 10px;
   position: relative;
+    margin-bottom: 2vh;
+
 }
 
 .pairedDealCard {

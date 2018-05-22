@@ -10,7 +10,7 @@ class Job extends Component {
   render() {
       return (
             <div>
-                <button className ='backButton' onClick={this.goBack}>{'< Back'}</button>
+                <button className ='backButton' onClick={this.goBack}>{'❮ Back'}</button>
                 <JobDetails id={this.props.id}/>
 
             </div>

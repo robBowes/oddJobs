@@ -83,11 +83,30 @@ class PairsList extends Component {
   }
   // componentDidMount = () => {
   // }
+componentWillMount =()=>{
+  fetch("/user", {
+    method: "POST",
+    credentials: "same-origin",
+    body: JSON.stringify({ id: this.props.user.id })
+  })
+    .then(x => x.json())
+    .then(y => {
+      if (!y.status) throw new Error(y.reason);
+      else {
+        console.log("IN DISPATCH", y);
+        this.props.dispatch({ type: "USER_UPDATE", payload: y.user });
+      }
+    })
+    .then(z=>{
+      this.setState({userUpd: true})  
+    })
+}
+
   render() {
     return !this.props.user.loggedIn?<div className="moonLoader" ><MoonLoader color="#05FF05"/></div>:(
       <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
      <div className="pairsPage">  
-      <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
+      <button className="backButton" onClick={this.goBack}>{'❮ Back'}</button>
       <h1 className="pageTitle">{'Current & Pending Jobs'}</h1>
       <div className="split">
          <hr/>

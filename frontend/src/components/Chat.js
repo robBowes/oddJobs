@@ -257,7 +257,7 @@ class Chat extends Component {
     let oldmsg = this.state.messages;
     if (this.state.messages.length > 0) {
       return this.state.messages.map((x, i) => {
-        return  <Animate from='0' to='1' attributeName='opacity' duration='1000'>
+        return  <Animate from='0' to='1' attributeName='opacity' duration='600'>
             <div className="messages" style={{ flexDirection: this.props.user.id === x.userId ? "row-reverse" : "row" }}>
               
               <li className={this.props.user.id === x.userId ? "userBubble" : "partnerBubble"} id={x.id} key={i}>
@@ -285,13 +285,15 @@ class Chat extends Component {
       <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
     <div>
         <div />
-        <button className='backButton' onClick={this.goBack}>{'< Back'}</button>
+        <button className='backButton' onClick={this.goBack}>{'❮ Back'}</button>
         <div className="dealButtonsContainer">
          {// <button className='cornerButton rejectButton'>Reject</button>
          }
           {this.state.complete ? <button className="cornerButton dis" disabled>
               Complete!
-            </button> : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
+            </button> : this.state.completeSend?<button className="cornerButton dis" disabled>
+              Awaiting Reply...
+            </button>  : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
               Complete Job
             </button> : this.state.offer ? <button className="cornerButton dis" disabled>
               Deal Sent

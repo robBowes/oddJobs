@@ -10,7 +10,7 @@ class User extends Component {
     }
   render() {
     return <div>
-        <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
+        <button className="backButton" onClick={this.goBack}>{'❮ Back'}</button>
         <UserDetails userid={this.props.id}/>
       </div>;
   }

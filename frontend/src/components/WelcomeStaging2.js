@@ -16,7 +16,7 @@ class WelcomeStaging extends Component {
       sliderValue: 50,
       minPayValue: 0,
       maxPayValue: 40,
-      categories: [],
+      categories: ['general'],
       boxCategories: [
         'general',
         'lawncare',
@@ -80,6 +80,7 @@ class WelcomeStaging extends Component {
   };
   mapCheckBoxes = (categories) => {
     return categories.map((x, i) => {
+      let isSelected = this.state.categories.some((e) => e === x);
       return (
         <div className="tickBox">
         <input
@@ -89,6 +90,7 @@ class WelcomeStaging extends Component {
           className="categoryCheckBox"
           type="checkbox"
           name={x}
+          checked={isSelected}
         />
         <label className="tickLabel" htmlFor={x}>{x}</label>
         </div>

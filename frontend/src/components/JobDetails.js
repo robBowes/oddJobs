@@ -46,7 +46,7 @@ class JobDetails extends Component {
             </div>
             <br />
           </div>
-          <div className="userPictureContainer">
+          <div className="jobPictureContainer">
             <img className="jobPicture" src={this.props.jobs ? this.state.job.picture : ""} alt="" />
             <br />
           </div>
@@ -56,7 +56,7 @@ class JobDetails extends Component {
           </div>
           <div className="jobDescriptionDetailsWrapper">
           
-          Details:
+          <div className='jobDetailsStyling'>Details:</div>
           <br/>{this.props.jobs ? this.state.job.jobDescription : null}
           <br />
           <br />

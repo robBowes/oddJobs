@@ -5,10 +5,12 @@ import Swing from "react-swing";
 import { Link } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
 import SwipeNav from "./../components/SwipeNav.js";
+import { Card } from "swing";
 
 // The main function of the app
 // A constantly rotating pair of jobs giving the impression of continuous flow
 // users will select yes or no, swiping left or right on jobs
+
 
 class Swiper extends Component {
   constructor(props) {
@@ -24,6 +26,8 @@ class Swiper extends Component {
   };
 
   componentDidMount=()=>{
+    console.log(Card.config);
+
     // setInterval(()=>{
     //   fetch('/user',{
     //     method:'POST',

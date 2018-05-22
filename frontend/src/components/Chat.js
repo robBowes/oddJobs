@@ -226,27 +226,25 @@ class Chat extends Component {
   }
 
   completeJob=()=>{
-    fetch('/completeJob',{
-      method:'PUT',
-      credentials: 'same-origin',
-      body:JSON.stringify({jobId: this.props.jobid})
-    })
-    .then(x=>x.json())
-    .then(y=>{
-      console.log(y)
-      if(y.job.completedByHelper&&y.job.completedByPatron){
-        this.setState({complete: true})
-      }
-      return y
-    })
-    .then(z=>{
-      let x = { id: this.state.job.id, message: (z.job.completedByHelper||z.job.completedByPatron)?"Job Complete Confirmed!":"The job is now Complete! Please confirm by clicking Complete Job! Have a wonderful day!", partner: this.state.partner };
+      let x = { id: this.state.job.id, message: (this.state.job.completedByHelper||this.state.job.completedByPatron)?"Job Complete Confirmed!":"The job is now Complete! Please confirm by clicking Complete Job! Have a wonderful day!", partner: this.state.partner };
       fetch("/sendMessage", {
         method: "PUT",
         credentials: "same-origin",
         body: JSON.stringify(x)
-      });
+      })
+      .then(x=>{
+      if (this.state.job.completedByHelper && this.state.job.completedByPatron) {
+        this.setState({ complete: true });
+      }
+      })
+      .then(y=>{
+        fetch('/completeJob',{
+      method:'PUT',
+      credentials: 'same-origin',
+      body:JSON.stringify({jobId: this.props.jobid})
     })
+    .then(z=>z.json())
+  })
   }
 
   renderMessages = () => {

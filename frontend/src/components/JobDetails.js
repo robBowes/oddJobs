@@ -17,7 +17,9 @@ class JobDetails extends Component {
         console.log(props);
     }
     componentDidMount=()=>{
+        console.log(this.props.jobs)
         let job = this.props.jobs.filter((x) => {
+            console.log(x, this.props)
             return x.id === this.props.id;
           })[0];
           console.log(job);
@@ -44,6 +46,7 @@ class JobDetails extends Component {
           <div className="pageTitle">
             {this.props.jobs ? this.state.job.jobTitle + ' - ' + '$' + this.state.job.jobPay : null}
             </div>
+            <div className='split'><hr/></div>
             <br />
           </div>
           <div className="jobPictureContainer">
@@ -52,15 +55,13 @@ class JobDetails extends Component {
           </div>
           <div className="patronBar">
             <img className="jobDetailsPatronPicture" src={this.state.patron.picture.data.url} />
-            <div className="welcomeName">{this.state.patron.name} </div>
+            <div className="jobDetailsName">{this.state.patron.name} </div><div className='jobDetailsName'> - {this.props.jobs?this.state.job.distance + 'km':null} </div>
           </div>
           <div className="jobDescriptionDetailsWrapper">
 
           <div className='jobDetailsStyling'>Details:</div>
-          <br/>{this.props.jobs ? this.state.job.jobDescription : null}
-          <br />
-          <br />
-          <br />
+          {this.props.jobs ? this.state.job.jobDescription : null}
+         
           <div className='smallTextId'>
           {this.props.id}</div>
           </div>

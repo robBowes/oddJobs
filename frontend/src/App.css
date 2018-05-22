@@ -493,10 +493,23 @@ input[type="checkbox"]:checked + label {
 
 /* job Details Page */
 
+.jobDetailsName {
+  margin-top: 3vh;
+  color: #868686;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 350;
+  font-size: 5vw;
+  width: 100%;
+  text-align: center;
+}
+
+
 .jobDescriptionDetailsWrapper{
     text-align: left;
     padding: 0% 6% 6% 6%;
     margin-top: 5vh;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(51, 51, 51)
 }
 
 .jobPictureContainer{
@@ -504,12 +517,12 @@ margin-top: 8%;
 }
 
 .jobPicture{
-  min-width: 80vw;
-  max-width: 80vw;
-  margin-left:10vw;
-  margin-right: 10vw;
+  min-width: 90vw;
+  max-width: 90vw;
+  margin-left:5vw;
+  margin-right: 5vw;
   border-radius: 1px;
-  border: 1px solid grey;
+  border: 1px solid rgb(51, 51, 51);
 }
 
 .jobDetailsStyling{
@@ -527,9 +540,9 @@ margin-top: 8%;
 
 
 .patronBar{
-  width: 80vw;
-  margin-left: 10vw;
-  margin-right: 10vw;
+  width: 90vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
   position: relative;
   align-content: center;
   display: flex;
@@ -861,6 +874,7 @@ margin-top: 8%;
   margin-left: 8%;
   border-radius: 10px;
   position: relative;
+ margin-bottom: 2vh;
 }
 
 .removeJob {

@@ -4,7 +4,7 @@ a {
 }
 
 body {
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
   overflow-x: hidden !important;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -919,6 +919,9 @@ margin-top: 8%;
     box-sizing: border-box;
     padding-left: 20%;
     padding-right: 20%;
+  }
+  .app {
+    max-height: 100vh;
   }
   .swipeButton {
     border: solid 2vw #eaeaea;

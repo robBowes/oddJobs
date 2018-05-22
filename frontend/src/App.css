@@ -635,13 +635,18 @@ margin-top: 8%;
 }
 
 .jobPay {
-  right: 15%;
+  right: 5%;
   position: absolute;
 }
 
 .jobDistance {
-  left: 15%;
+  left: 5%;
   position: absolute;
+}
+
+.jobTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .jobDetails {

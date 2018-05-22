@@ -47,7 +47,7 @@ class JobDetails extends Component {
             {this.props.jobs ? this.state.job.jobTitle + ' - ' + '$' + this.state.job.jobPay : null}
             </div>
             <div className='split'><hr/></div>
-            <br />
+           
           </div>
           <div className="jobPictureContainer">
             <img className="jobPicture" src={this.props.jobs ? this.state.job.picture : ''} alt="" />
@@ -55,7 +55,7 @@ class JobDetails extends Component {
           </div>
           <div className="patronBar">
             <img className="jobDetailsPatronPicture" src={this.state.patron.picture.data.url} />
-            <div className="jobDetailsName">{this.state.patron.name} </div><div className='jobDetailsName'> - {this.props.jobs?this.state.job.distance + 'km':null} </div>
+            <div className="jobDetailsName">{this.state.patron.name} </div><div className='jobDetailsName'> - {this.props.jobs?this.state.job.distance/1000 + 'km':null} </div>
           </div>
           <div className="jobDescriptionDetailsWrapper">
 

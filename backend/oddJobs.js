@@ -172,7 +172,7 @@ const pairJob = (Job) => async (user, jobId) =>{
     let job = await Job.findOne(jobId);
     job.addHelper(user.id);
     await job.save();
-    let newUser = await deepUser(Job, user);
+    let newUser = await deepUser(Job, user, User);
     return {status: true, job, user: newUser};
 };
 
@@ -201,9 +201,9 @@ const rejectJob = (Job) => async (user, jobId) => {
     if (!job) return {status: false, reason: 'job not found'};
     if (user.id ===job.patronId) {
         job.removePatron();
-        return {status: true, user: await deepUser(Job, user)};
+        return {status: true, user: await deepUser(Job, user, User)};
     } else await job.removeHelper(user.id);
-    return {status: true, user: await deepUser(Job, user)};
+    return {status: true, user: await deepUser(Job, user, User)};
 };
 
 const sendMessage = (Job, User) => async (user, body) => {

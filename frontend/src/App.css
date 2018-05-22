@@ -104,8 +104,8 @@ top:1vh;
 text-shadow:none;
 }
 
-.swipeButton:focus{
-color:green;
+.swipeButton:active{
+background:rgb(187, 187, 187);
 }
 
 #chatbar{
@@ -553,6 +553,7 @@ margin-top: 8%;
 }
 
 .jobDetailsPatronPicture{
+  margin-right:7%;
   max-width: 16vw;
   max-height: 8vh;
   border-radius: 100px;
@@ -743,14 +744,15 @@ margin-top: 8%;
 .swipeButton {
   border: solid 2vw #eaeaea;
   background: #fff;
-  border-radius: 50%;
-  width: 25%;
-  padding-top: 20%;
-  margin-left: -2vw;
-  margin-bottom: 5vw;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 50%;
+     border-radius: 50%;
+    width: 25%;
+    padding-top: 20%;
+    margin-left: -2vw;
+    margin-bottom: 5vw;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: 50% !important;
+    transition: all 0.2s ease-in-out;
 }
 
 #x {
@@ -816,7 +818,10 @@ margin-top: 8%;
   text-align: center;
   padding-top: 11%;
   margin-bottom: 0%;
+  margin-top: 2vh;
 }
+
+
 
 .split {
   width: 50%;

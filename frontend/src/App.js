@@ -91,8 +91,7 @@ class App extends Component {
     this.props.dispatch({type: 'TOGGLE_LOADING'});
   }
   render() {
-    return (
-      <BrowserRouter>
+    return (<BrowserRouter>
       <div className="App">
         <div className="innerMoonLoader" style={{zIndex: this.props.moonLoader?'10':'-10'}}>
       <div className='moonLoader' >

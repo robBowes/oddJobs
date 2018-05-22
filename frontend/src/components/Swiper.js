@@ -5,6 +5,7 @@ import Swing from 'react-swing';
 import {Link} from 'react-router-dom';
 import {MoonLoader} from 'react-spinners';
 import SwipeNav from './../components/SwipeNav.js';
+import Animate from 'react-smooth';
 
 // The main function of the app
 // A constantly rotating pair of jobs giving the impression of continuous flow
@@ -226,7 +227,7 @@ class Swiper extends Component {
   render() {
     return this.state.loading ? (
       <div />
-    ) : (
+    ) : (<Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
       <div className="swipeContainer">
         <div className="addJobContainer">
           <Link to="/listjob">
@@ -276,6 +277,7 @@ class Swiper extends Component {
           />
         </div>
       </div>
+      </Animate>
     );
   }
 }

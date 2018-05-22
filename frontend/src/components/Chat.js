@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Animate from 'react-smooth';
 
 // //The Chat app that connects patron to helper to discuss
 // // job details
@@ -276,7 +277,9 @@ class Chat extends Component {
   }
 
   render() {
-    return this.state.loading ? <div>LOAD</div> : <div>
+    return this.state.loading ? <div></div> : (
+      <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
+    <div>
         <div />
         <button className='backButton' onClick={this.goBack}>{'< Back'}</button>
         <div className="dealButtonsContainer">
@@ -308,7 +311,8 @@ class Chat extends Component {
             <input type="text" ref='chat' placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
           </form>
         </div>
-      </div>;
+      </div>
+      </Animate>)
   }
 }
 

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {MoonLoader} from 'react-spinners';
 import {Link} from 'react-router-dom';
+import Animate from 'react-smooth';
 
 // The PairsList component will render a given users pairs
 // Pairs for jobs posted and jobs applied for will appear in different colors
@@ -84,7 +85,8 @@ class PairsList extends Component {
   // }
   render() {
     return !this.props.user.loggedIn?<div className="moonLoader" ><MoonLoader color="#05FF05"/></div>:(
-      <div className="pairsPage">
+      <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
+     <div className="pairsPage">  
       <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
       <h1 className="pageTitle">{'Current & Pending Jobs'}</h1>
       <div className="split">
@@ -94,7 +96,8 @@ class PairsList extends Component {
         {this.mapListedJobs()}
         {this.mapPairedJobs()}
         </div>
-      </div>
+      </div> 
+      </Animate>
     );
   }
 }

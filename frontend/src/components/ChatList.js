@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {MoonLoader} from 'react-spinners';
 import {Link} from 'react-router-dom';
+import Animate from 'react-smooth';
 
 class ChatList extends Component {
   constructor(props) {
@@ -63,6 +64,7 @@ class ChatList extends Component {
   }
   render() {
     return !this.props.user.loggedIn?<div className="moonLoader"><MoonLoader color="#05FF05"/></div>:(
+      <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
       <div className="chatsPage pairsPage">
       <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
       <h1 className="pageTitle">{this.getTitle()+' - Active Chats'}</h1>
@@ -73,6 +75,7 @@ class ChatList extends Component {
         {this.mapListedChats()}
         </div>
       </div>
+      </Animate>
     );
   }
 }

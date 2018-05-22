@@ -18,7 +18,6 @@ class UserDetails extends Component {
     }
     calcScore = () => {
         if (!!this.props.user.jobsCompleted) return 100;
-        console.log(this.props.jobsComplete);
         let jobsComplete = this.props.user.jobsCompleted.length;
         let jobsDeclined = this.props.user.jobsDeclined;
         let totalJobs = jobsComplete+jobsDeclined;

@@ -33,6 +33,7 @@ class Login extends Component {
       })
         .then((x) => x.json())
         .then((y) => {
+          if (!y.status) console.log(y);
           if (y.user) {
             this.props.dispatch({
               type: 'USER_UPDATE',
@@ -54,7 +55,7 @@ class Login extends Component {
       })
         .then((x) => x.json())
         .then((y) => {
-          console.log(y);
+          if (!y.status) console.log(y);
           if (!y.status) {
             throw new Error(y.reason);
           }

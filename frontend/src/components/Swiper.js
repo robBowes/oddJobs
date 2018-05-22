@@ -227,7 +227,7 @@ class Swiper extends Component {
   render() {
     return this.state.loading ? (
       <div />
-    ) : (<Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
+    ) : (<Animate to={'0.99'} from={'0.01'} attributeName="opacity" duration={1000}>
       <div className="swipeContainer">
         <div className="addJobContainer">
           <Link to="/listjob">

@@ -71,7 +71,7 @@ app.post('/login', async (req, res)=>{
         }
         if (!ret.user) ret = await login(fb, req.cookies.token, User, ret.user);
         if (ret.status) res.cookie('token', ret.user.appToken);
-        verbose('User: ' + user?user.name:'' + ' logs in');
+        verbose('User: logs in');
     } catch (error) {
         console.log(error);
         ret = {status: false, reason: error};

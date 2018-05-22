@@ -513,42 +513,69 @@ input[type="checkbox"]:checked + label {
 }
 
 /* job Details Page */
-
 .jobDetailsName {
-  margin-top: 3vh;
   color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 350;
-  font-size: 5vw;
+  font-weight: 330;
+  font-size: 20px;
   width: 100%;
   text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  float: left;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 4vw;
 }
-
-.jobDescriptionDetailsWrapper {
+.jobDetailsKm {
+  color: #868686;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 330;
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 87%;
+  width: 100%;
+  float: left;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 4vw;
+}
+.jobDescriptionDetailsWrapper{
   text-align: left;
   padding: 0% 6% 6% 6%;
   margin-top: 5vh;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: rgb(51, 51, 51);
+  color: rgb(51, 51, 51)
 }
 
 .jobPictureContainer {
-  margin-top: 8%;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .jobPicture {
-  min-width: 90vw;
-  max-width: 90vw;
-  margin-left: 5vw;
-  margin-right: 5vw;
+  width: 90%;
   border-radius: 1px;
-  border: 1px solid rgb(51, 51, 51);
+  border: 1px solid #ccc
 }
 
-.jobDetailsStyling {
-  font-size: 3vh;
+.jobDetailsStyling{
+  font-size: 5vw;
   color: grey;
   margin-bottom: 1vh;
+}
+
+.jobDetailDescription{
+  padding-left: 6%;
+  font-size: 4vw;
 }
 
 .smallTextId {
@@ -558,13 +585,14 @@ input[type="checkbox"]:checked + label {
   font-size: 8pt;
 }
 
-.patronBar {
-  width: 90vw;
-  margin-left: 5vw;
-  margin-right: 5vw;
+.patronBar{
+  width: 90%;
   position: relative;
-  align-content: center;
   display: flex;
+  margin: 0 auto;
+  padding-left: 4%;
+  padding-top: 1%;
+  margin-top: 2%;
 }
 
 *:focus {
@@ -573,8 +601,8 @@ input[type="checkbox"]:checked + label {
 
 .jobDetailsPatronPicture {
   margin-right: 7%;
-  max-width: 16vw;
-  max-height: 8vh;
+  width: 15vw;
+  max-height: 15vw;
   border-radius: 100px;
 }
 
@@ -863,8 +891,8 @@ input[type="checkbox"]:checked + label {
 .pageTitle {
   color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 380;
-  font-size: 2em;
+  font-weight: 350;
+  font-size: 7vw;
   width: 100%;
   text-align: center;
   padding-top: 11%;
@@ -1127,17 +1155,17 @@ input[type="checkbox"]:checked + label {
     bottom: 5%;
     left: 0%;
   }
-  .patronBar {
+  .patronBar{
     padding-left: 12px;
     padding-top: 4px;
     margin-top: 12px;
   }
-  .jobDetailsPatronPicture {
+  .jobDetailsPatronPicture{
     margin-right: 20px;
     width: 65px;
     max-height: 65px;
     border-radius: 100px;
-  }
+   }
 
   .jobDetailsName,
   .jobDetailsKm {

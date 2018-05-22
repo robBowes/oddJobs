@@ -84,10 +84,10 @@ class UserSettings extends Component {
       if (!this.props.categories) return;
       let isSelected = this.state.categories.some((e) => e === x);
       return (
-        <div className="tickBox">
+        <div className="tickBox" key={i+'categories'}>
           <input
             onChange={this.tickChange}
-            key={i}
+
             id={x}
             className="categoryCheckBox"
             type="checkbox"

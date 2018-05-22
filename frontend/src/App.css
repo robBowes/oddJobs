@@ -497,8 +497,8 @@ input[type="checkbox"]:checked + label {
   margin-top: 3vh;
   color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 350;
-  font-size: 5vw;
+  font-weight: 330;
+  font-size: 20px;
   width: 100%;
   text-align: center;
 }
@@ -513,16 +513,14 @@ input[type="checkbox"]:checked + label {
 }
 
 .jobPictureContainer{
-margin-top: 8%;
+  width: 100%;
+  text-align: center;
 }
 
 .jobPicture{
-  min-width: 90vw;
-  max-width: 90vw;
-  margin-left:5vw;
-  margin-right: 5vw;
+  width: 90%;
   border-radius: 1px;
-  border: 1px solid rgb(51, 51, 51);
+  border: 1px solid #ccc
 }
 
 .jobDetailsStyling{
@@ -540,12 +538,12 @@ margin-top: 8%;
 
 
 .patronBar{
-  width: 90vw;
-  margin-left: 5vw;
-  margin-right: 5vw;
+  width: 90%;
   position: relative;
-  align-content: center;
   display: flex;
+  margin: 0 auto;
+  padding-left: 7%;
+  padding-top: 5%;
 }
 
 *:focus{
@@ -553,9 +551,9 @@ margin-top: 8%;
 }
 
 .jobDetailsPatronPicture{
-  margin-right:7%;
-  max-width: 16vw;
-  max-height: 8vh;
+  margin-right: 7%;
+  width: 15vw;
+  max-height: 15vw;
   border-radius: 100px;
 }
 
@@ -1037,6 +1035,16 @@ margin-top: 8%;
     position: fixed;
     bottom: 5%;
     left: 0%;
+  }
+  .patronBar{
+    padding-left: 30px;
+    padding-top: 20px;
+  }
+  .jobDetailsPatronPicture{
+    margin-right: 20px;
+    width: 65px;
+    max-height: 65px;
+    border-radius: 100px;
   }
 }
 

@@ -19,6 +19,7 @@ class Swiper extends Component {
       cards: [],
       loading: true,
     };
+    this.cardsLoaded = 0;
   }
   componentWillReceiveProps = (props) => {
     //
@@ -83,7 +84,10 @@ class Swiper extends Component {
       // this.removeCard(b)
     }
   };
-
+  allCardsLoaded = (numberOfImages) =>{
+    this.cardsLoaded++;
+    if (this.cardsLoaded==numberOfImages) this.props.dispatch({type: 'TOGGLE_LOADING'});
+  }
   removeCard = (e) => {
     // const target = e.target;
     // const el = ReactDOM.findDOMNode(target);
@@ -142,6 +146,7 @@ class Swiper extends Component {
             draggable="false"
             src={jobsShown[i].picture}
             alt=""
+            onLoad={()=>this.allCardsLoaded(jobsShown.length)}
           />
           <Link to={'/job' + jobsShown[i].id}>
             <div className="bottomBar">
@@ -165,6 +170,7 @@ class Swiper extends Component {
     return newStack;
   };
   componentWillMount = (props) => {
+    this.props.dispatch({type: 'TOGGLE_LOADING'});
     fetch('/allJobs', {
       method: 'POST',
       credentials: 'same-origin',
@@ -213,12 +219,8 @@ class Swiper extends Component {
   };
 
   render() {
-    return this.state.loading ? (
-      <div className='moonLoader' >
-        <MoonLoader color="#05ff05" loading={this.state.loading} />
-      </div>
-    ) : (
-      <div className="swipeContainer">
+    return (
+      <div className="swipeContainer" >
         <div className="addJobContainer">
           <Link to="/listjob">
             <button className="addJobButton"><span className="addJobInner">+</span></button>
@@ -228,7 +230,7 @@ class Swiper extends Component {
           <img className="logo2" src="logo.png" alt="oddjobs logo" />
         </div>
 
-        <div className="stackContainer">
+        <div className="stackContainer" >
           <Swing
             className="stack"
             tagName="div"

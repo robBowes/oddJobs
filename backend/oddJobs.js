@@ -165,7 +165,7 @@ const allJobs = (Job) => async (user, location) => {
     return {status: true, content: jobs};
 };
 
-const pairJob = (Job) => async (user, jobId) =>{
+const pairJob = (Job, User) => async (user, jobId) =>{
     if (!user) return {status: false, reason: 'no user information'};
     if (!jobId.id) return {status: false, reason: 'no job information'};
     if (!Job) return {status: false, reason: 'server error'};
@@ -193,7 +193,7 @@ const offerDeal = (Job, User) => async (user, body) =>{
     return {status: true, job: jobWithDeal};
 };
 
-const rejectJob = (Job) => async (user, jobId) => {
+const rejectJob = (Job, User) => async (user, jobId) => {
     if (!user) return {status: false, reason: 'no user information'};
     if (!jobId) return {status: false, reason: 'no job information'};
     if (!Job) return {status: false, reason: 'server error'};

@@ -29,14 +29,14 @@ db.once('open', ()=>{
 });
 
 const userFromToken = r.findToken(User);
-const createNewJob = oddJobs.newJob(Job);
-const findJob = oddJobs.findJob(Job);
+const createNewJob = oddJobs.newJob(Job, User);
+const findJob = oddJobs.findJob(Job, User);
 const findUser = oddJobs.findUser(User);
-const allJobs = oddJobs.allJobs(Job);
-const pairJob = oddJobs.pairJob(Job);
+const allJobs = oddJobs.allJobs(Job, User);
+const pairJob = oddJobs.pairJob(Job, User);
 const login = oddJobs.login(Job, User);
 const makeDeal = oddJobs.offerDeal(Job, User);
-const rejectJob = oddJobs.rejectJob(Job);
+const rejectJob = oddJobs.rejectJob(Job, User);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
 const backOut = oddJobs.backOut(Job, User);

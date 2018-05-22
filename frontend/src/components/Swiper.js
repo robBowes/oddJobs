@@ -19,6 +19,7 @@ class Swiper extends Component {
       cards: [],
       loading: true,
     };
+    this.numberOfPicturesLoaded = 0;
   }
   componentWillReceiveProps = (props) => {
     //
@@ -83,7 +84,12 @@ class Swiper extends Component {
       // this.removeCard(b)
     }
   };
-
+  allPicturesLoaded = (totalPics) =>{
+    this.numberOfPicturesLoaded++;
+    if (this.numberOfPicturesLoaded >= totalPics) {
+      this.props.dispatch({type: 'TOGGLE_LOADING'});
+    }
+  }
   removeCard = (e) => {
     // const target = e.target;
     // const el = ReactDOM.findDOMNode(target);
@@ -147,6 +153,7 @@ class Swiper extends Component {
             draggable="false"
             src={jobsShown[i].picture}
             alt=""
+            onLoad={()=>this.allPicturesLoaded(jobsShown.length)}
           />
           <Link to={'/job' + jobsShown[i].id}>
             <div className="bottomBar">
@@ -170,6 +177,7 @@ class Swiper extends Component {
     return newStack;
   };
   componentWillMount = (props) => {
+    this.props.dispatch({type: 'TOGGLE_LOADING'});
     fetch('/allJobs', {
       method: 'POST',
       credentials: 'same-origin',

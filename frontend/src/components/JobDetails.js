@@ -17,7 +17,9 @@ class JobDetails extends Component {
         console.log(props);
     }
     componentDidMount=()=>{
+        console.log(this.props.jobs)
         let job = this.props.jobs.filter((x) => {
+            console.log(x, this.props)
             return x.id === this.props.id;
           })[0];
           console.log(job);

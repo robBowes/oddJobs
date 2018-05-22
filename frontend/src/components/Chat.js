@@ -283,7 +283,7 @@ class Chat extends Component {
         </div>
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
-            <input type="text" onChange={this.handleChange} id="chatbar" />
+            <input type="text" onChange={this.handleChange} id="chatbar" autocomplete='off' />
           </form>
         </div>
       </div>;

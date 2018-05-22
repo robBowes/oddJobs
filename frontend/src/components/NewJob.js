@@ -36,19 +36,22 @@ class NewJob extends Component {
     .then((x) => x.json())
     .then((y) => {
       if (!y.status) throw new Error(y.reason);
+      fetch('/user', {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: JSON.stringify({id: this.props.user.id})
+      })
+      .then(x=> x.json())
+      .then(y => {
+      if(!y.status) throw new Error(y.reason)
+      else{
+        console.log("IN DISPATCH", y)
+      this.props.dispatch({
+        type: 'USER_UPDATE',
+        payload: y.user,
+    })}})
     });
-    fetch('/user', {
-      method: 'POST',
-      credentials: 'same-origin',
-    })
-    .then(x=> x.json())
-    .then(y => {
-    if(!y.status) throw new Error(y.reason)
-    else{
-    this.props.dispatch({
-      type: 'USER_UPDATE',
-      payload: y.user,
-  })}})
+   
     window.history.back();
   };
   handleTitleChange = (event) => {
@@ -267,6 +270,7 @@ class NewJob extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
 export default connect(mapStateToProps)(NewJob);

@@ -40,6 +40,7 @@ const rejectJob = oddJobs.rejectJob(Job, User);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
 const backOut = oddJobs.backOut(Job, User);
+const modify = oddJobs.modify(Job, User);
 
 const verbose = (obj) => {
     if (true)console.log(obj);
@@ -84,7 +85,7 @@ app.post('/login', async (req, res)=>{
 app.put('/modify', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
     verbose(user?user.name:null + ' requests modify');
-    let reply = await oddJobs.modify(user, req.body);
+    let reply = await modify(user, req.body);
     res.json(reply);
 });
 

@@ -10,6 +10,7 @@ import SwipeNav from './../components/SwipeNav.js';
 // A constantly rotating pair of jobs giving the impression of continuous flow
 // users will select yes or no, swiping left or right on jobs
 
+
 class Swiper extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +25,7 @@ class Swiper extends Component {
   };
 
   componentDidMount=()=>{
+
     // setInterval(()=>{
     //   fetch('/user',{
     //     method:'POST',

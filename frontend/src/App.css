@@ -92,7 +92,7 @@ text-shadow: -1px -1px -1px rgba(0, 0, 0, 0.342);
 
 .chatHeader{
 position: relative;
-padding-top: 3vh;
+padding-top: 0vh;
 margin-bottom: 1vh !important;
 }
 
@@ -102,6 +102,10 @@ font-size:4vh;
 text-align: center;
 top:1vh;
 text-shadow:none;
+}
+
+.swipeButton:focus{
+color:green;
 }
 
 #chatbar{
@@ -492,14 +496,33 @@ input[type="checkbox"]:checked + label {
 .jobDescriptionDetailsWrapper{
     text-align: left;
     padding: 0% 6% 6% 6%;
+    margin-top: 5vh;
+}
+
+.jobPictureContainer{
+margin-top: 8%;
 }
 
 .jobPicture{
+  min-width: 80vw;
   max-width: 80vw;
   margin-left:10vw;
   margin-right: 10vw;
   border-radius: 1px;
   border: 1px solid grey;
+}
+
+.jobDetailsStyling{
+  font-size: 3vh;
+  color: grey;
+  margin-bottom: 1vh;
+}
+
+.smallTextId{
+  position: absolute;
+  bottom: 0%;
+  right:0%;
+  font-size: 8pt;
 }
 
 
@@ -788,12 +811,14 @@ input[type="checkbox"]:checked + label {
 }
 
 .jobTitleHeader {
+  display:inline;
   position: relative;
-  top: 12%;
-  left: -7%;
   color: white;
   font-size: 2vh;
   font-weight: 400;
+  max-width: 83%;
+  top: -20%;
+  margin-top: 1%;
 }
 
 .pairJobPic {
@@ -813,6 +838,7 @@ input[type="checkbox"]:checked + label {
   margin-left: 8%;
   border-radius: 10px;
   position: relative;
+  margin-bottom: 2vh;
 }
 
 .pairedJobCard {
@@ -857,12 +883,17 @@ input[type="checkbox"]:checked + label {
   width: 100%;
   position: relative;
   left: -7%;
-  top: 9%;
+  top: -5%;
   font-size: 1.5vh;
   color: white;
   font-weight: 350;
+  margin-bottom: 1%;
 }
 
+.jobDetailsFlexer{
+  display:flex;
+  flex-flow: column;
+}
 /* login page */
 
 .loginContainer {

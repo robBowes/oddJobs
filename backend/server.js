@@ -39,7 +39,7 @@ const makeDeal = oddJobs.offerDeal(Job, User);
 const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
-// const backOut = oddJobs.backOut(Job, User);
+const backOut = oddJobs.backOut(Job, User);
 
 const verbose = (obj) => {
     if (false)console.log(obj);
@@ -169,11 +169,11 @@ app.put('/uploadImage', (req, res)=>{
     res.json(ret);
 });
 
-// app.put('/backOut', async (req, res)=>{
-//     let user = await userFromToken(req.cookies.token);
-//     let reply = await backOut(user, req.body);
-//     res.json(reply);
-// });
+app.put('/backOut', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
+    let reply = await backOut(user, req.body);
+    res.json(reply);
+});
 
 io.on('connection', function(client) {
     console.log('a user connected');

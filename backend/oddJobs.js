@@ -143,13 +143,17 @@ const allJobs = (Job) => async (user, location) => {
     user.save();
     let jobs = await Job.find();
     jobs = jobs.map((el)=>el.toObject());
+    jobs = jobs.map((job)=>{
+        let distance = r.distanceBetween(job, user);
+        job.distance = distance;
+        return job;
+    });
     jobs = jobs.filter((job)=>!job.dealMade);
     jobs = jobs.filter((job)=>{
        // console.log(user.location);
-        let distance = r.distanceBetween(job, user);
+        // let distance = r.distanceBetween(job, user);
         let max = parseFloat(user.maxDistance)*100000;
-        // console.log(distance, max);
-        return distance < max;
+        return job.distance < max;
     });
     jobs = jobs.filter((job)=>{
         let jobPrice = parseInt(job.jobPay);

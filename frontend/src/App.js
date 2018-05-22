@@ -39,7 +39,7 @@ class App extends Component {
     .then((x) => x.json())
     .then((y) => {
       if (y.status) {
-        console.log(y.user)
+        console.log(y.user);
       this.props.dispatch({
         type: 'USER_UPDATE',
         payload: y.user,
@@ -90,7 +90,7 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div className="App">
-      <button onClick={this.resetWelcome}> Reset Welcome </button>  
+      {/* <button onClick={this.resetWelcome}> Reset Welcome </button>   */}
       <Route exact={true} path='/chats/:jobid/:userid' render={this.renderChat} />
       <Route exact={true} path='/' render={this.renderHome}/>
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>

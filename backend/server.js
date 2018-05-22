@@ -42,7 +42,7 @@ const completeJob = oddJobs.completeJob(Job, User);
 const backOut = oddJobs.backOut(Job, User);
 
 const verbose = (obj) => {
-    if (false)console.log(obj);
+    if (true)console.log(obj);
 };
 
 let privateKey = fs.readFileSync('privkey.pem', 'utf8');

@@ -15,6 +15,7 @@ import WelcomeStaging3 from './components/WelcomeStaging3';
 import NewJob from './components/NewJob';
 import ChatList from './components/ChatList.js';
 import Chat from './components/Chat';
+import {MoonLoader} from 'react-spinners';
 
 
 class App extends Component {
@@ -86,10 +87,16 @@ class App extends Component {
   renderChat = (x) =>{
     return <Chat jobid={x.match.params.jobid} userid={x.match.params.userid} />;
   }
+  componentDidMount = () => {
+    this.props.dispatch({type: 'TOGGLE_LOADING'});
+  }
   render() {
     return (
       <BrowserRouter>
       <div className="App">
+      <div className='moonLoader' style={{zIndex: this.props.moonLoader?'10':'-10'}} >
+        <MoonLoader color="#05ff05" loading={this.props.moonLoader} />
+      </div>
       {/* <button onClick={this.resetWelcome}> Reset Welcome </button>   */}
       <Route exact={true} path='/chats/:jobid/:userid' render={this.renderChat} />
       <Route exact={true} path='/' render={this.renderHome}/>
@@ -119,6 +126,7 @@ const mapStateToProps = (state) => ({
   example: state.example,
   loggedIn: state.user.loggedIn,
   welcomeStage: state.user.welcomeStage,
+  moonLoader: state.data.loading,
 });
 
 export default connect(mapStateToProps)(App);

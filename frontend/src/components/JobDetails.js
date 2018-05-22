@@ -14,7 +14,10 @@ class JobDetails extends Component {
         };
     }
     componentWillReceiveProps=(props)=>{
-        console.log(props);
+        // console.log(props);
+    }
+    componentWillMount = () => {
+        this.props.dispatch({type: 'TOGGLE_LOADING'});
     }
     componentDidMount=()=>{
         console.log(this.props.jobs);
@@ -36,12 +39,11 @@ class JobDetails extends Component {
           job: job,
           patron: y.user,
         });
+        this.props.dispatch({type: 'TOGGLE_LOADING'});
 });
     }
   render() {
-      return this.state.loading ? <div>
-          <MoonLoader color="#000000" loading={this.state.loading} />
-        </div> : <div>
+      return this.state.loading ? <div></div> : <div>
             <div>
           <div className="pageTitle">
             {this.props.jobs ? this.state.job.jobTitle + ' - ' + '$' + this.state.job.jobPay : null}

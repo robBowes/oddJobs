@@ -15,6 +15,7 @@ class UserDetails extends Component {
     }
     componentDidMount=()=>{
         this.setState({loading: false});
+        this.props.dispatch({type: 'TOGGLE_LOADING'});
     }
     calcScore = () => {
         if (!!this.props.user.jobsCompleted) return 100;
@@ -24,11 +25,11 @@ class UserDetails extends Component {
         if (totalJobs === 0) return 100;
         else return Math.floor((jobsComplete/totalJobs)*100);
     }
-
+    componentWillMount = () => {
+        this.props.dispatch({type: 'TOGGLE_LOADING'});
+    }
   render() {
-      return this.state.loading === true ? <div>
-          <MoonLoader color="#05ff05" loading={this.state.loading} />
-        </div> : <div className="welcomeStage2">
+      return <div className="welcomeStage2">
         <div className="userDetailsDivider"></div>
         <div className="userPictureContainer">
           <img className="userPicture" src={this.props.user.picture ? this.props.user.picture.data.url : 'loading image'} alt="" />

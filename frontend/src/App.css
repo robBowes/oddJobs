@@ -590,9 +590,12 @@ margin-top: 8%;
 }
 
 .moonLoader {
-  margin: 50% auto;
+  position: absolute;
+  margin: 0 auto;
+  padding: 40%;
   width: 10%;
-  height: 10%;
+  height: 100%;
+  background-color: white;
 }
 
 .addJobButton {
@@ -764,7 +767,7 @@ margin-top: 8%;
      border-radius: 50%;
     width: 25%;
     padding-top: 20%;
-    margin-left: -2vw;
+    margin-left: -2.8vw;
     margin-bottom: 5vw;
     background-position: center !important;
     background-repeat: no-repeat !important;
@@ -971,9 +974,94 @@ margin-top: 8%;
 /* Chatslist */
 
 
+@media only screen and (min-width: 436px) {
+  body {
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 436px;
+  }
+  .stackContainer{
+    max-width: 351px;
+    height: 351px;
+    max-height: 351px;
+    padding-top: 0px;
+  }
+
+  .jobDetails{
+    font-size:15px;
+  }
+
+  .logo2{
+    width: 175px;
+  }
+
+  .logoContainer{
+    margin-bottom: 35px;
+  }
 
 
-@media only screen and (min-width: 600px) {
+  .addJobContainer{
+    width: 351px;
+    margin: 0 auto;
+    height: 80px;
+  }
+
+  .addJobButton{
+    width: 32px;
+    height: 32px;
+    padding-top: 0px;
+    margin-left: 90%;
+  }
+
+  .addJobInner{
+    font-size: 18px;
+  }
+
+  .navBar {
+    width: 351px;
+    padding-top: 25px;
+    position: relative;
+    height: 86px;
+    margin: 0 auto;
+  }
+
+  .navImage {
+    width: 40px;
+}
+
+.jobsLink {
+  right: -3px;
+}
+
+.settingsLink {
+  left: -3px;
+}
+
+  .app {
+    max-height: 100vh;
+  }
+  .swipeButton {
+    border: solid 10px #eaeaea;
+    width: 109px;
+    height: 109px;
+    padding-top: 0px;
+    margin-left: -15px;
+  }
+ 
+  .welcomeText {
+    position: fixed;
+    left: 0%;
+    top: 45%;
+  }
+  .buttonWrapper {
+    position: fixed;
+    bottom: 5%;
+    left: 0%;
+  }
+}
+
+
+/* @media only screen and (min-width: 600px) {
   body {
     box-sizing: border-box;
     padding-left: 20%;
@@ -1004,4 +1092,4 @@ margin-top: 8%;
     bottom: 5%;
     left: 0%;
   }
-}
+} */

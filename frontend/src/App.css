@@ -592,17 +592,17 @@ margin-top: 8%;
 .innerMoonLoader {
   background-color: white;
   width: 100vw;
-  position: fixed;
-  height: 100%;
+  margin: 0 auto;
+  height: 100vh;
+  position: absolute;
 }
 
 .moonLoader {
-  position: absolute;
+  width: 10%;
   margin: 0 auto;
-  width: max-content;
-  height: 100%;
+  padding-top: 45%;
+  height: 10%;
   background-color: white;
-  top: 45vh;
 }
 
 .addJobButton {
@@ -1022,6 +1022,9 @@ margin-top: 8%;
   body {
     box-sizing: border-box;
     margin: 0 auto;
+    width: 436px;
+  }
+  .innerMoonLoader {
     width: 436px;
   }
   .stackContainer{

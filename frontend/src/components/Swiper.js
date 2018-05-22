@@ -97,7 +97,7 @@ class Swiper extends Component {
   allPicturesLoaded = (totalPics) =>{
     this.numberOfPicturesLoaded++;
     if (this.numberOfPicturesLoaded >= totalPics) {
-      this.props.dispatch({type: 'TOGGLE_LOADING'});
+      // this.props.dispatch({type: 'TOGGLE_LOADING'});
     }
   }
 >>>>>>> 66e2a58f4be732bfd5eea67e7531c2c6b31f0dae

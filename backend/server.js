@@ -11,9 +11,7 @@ const sha1 = require('sha1');
 // const http = require('http').Server(app, '/messages');
 const io = require('socket.io')();
 const fs = require('fs');
-
-// let privateKey = fs.readFileSync('oddjobs.site/privkey.pem', 'utf8');
-// let certificate = fs.readFileSync('oddjobs.site/fullchain.pem', 'utf8');
+const https = require('https');
 
 // let credentials = {key: privateKey, cert: certificate};
 // let httpsServer = https.createServer(credentials, app);
@@ -41,36 +39,35 @@ const makeDeal = oddJobs.offerDeal(Job, User);
 const rejectJob = oddJobs.rejectJob(Job);
 const sendMessage = oddJobs.sendMessage(Job, User);
 const completeJob = oddJobs.completeJob(Job, User);
-// const backOut = oddJobs.backOut(Job, User);
-const fs = require('fs');
-const https = require('https');
+const backOut = oddJobs.backOut(Job, User);
 
 const verbose = (obj) => {
     if (false)console.log(obj);
 };
 
-// let privateKey = fs.readFileSync('oddjobs.site/privkey.pem');
-// let certificate = fs.readFileSync('oddjobs.site/fullchain.pem', 'utf8');
-// let credentials = {key: privateKey, cert: certificate};
-// let httpsServer = https.createServer(credentials, app);
+let privateKey = fs.readFileSync('privkey.pem', 'utf8');
+let certificate = fs.readFileSync('fullchain.pem', 'utf8');
+let credentials = {key: privateKey, cert: certificate};
+let httpsServer = https.createServer(credentials, app);
 
 // app.use(express.json({type: 'application/json'}));
 app.use(bodyParser.raw({type: 'image/*', limit: '12mb'}));
 app.use(express.json({type: '*/*'}));
 app.use(cookieParser());
 app.use(express.static('data/images'));
+app.use(express.static('../frontend/build'));
 
 
 app.post('/login', async (req, res)=>{
     verbose('login user Id: ' + req.body.id);
-    console.log('$$$$$$$$$$$'+req);
+    // console.log('$$$$$$$$$$$'+req);
     let ret = {status: true};
     try {
         let fb = req.body;
         let appToken = req.cookies.token;
         if (appToken) {
             ret.user = await userFromToken(req.cookies.token);
-            ret.user = await oddJobs.deepUser(Job, ret.user, User);
+            if (ret.user) ret.user = await oddJobs.deepUser(Job, ret.user, User );
         }
         if (!ret.user) ret = await login(fb, req.cookies.token, User, ret.user);
         if (ret.status) res.cookie('token', ret.user.appToken);
@@ -172,11 +169,11 @@ app.put('/uploadImage', (req, res)=>{
     res.json(ret);
 });
 
-// app.put('/backOut', async (req, res)=>{
-//     let user = await userFromToken(req.cookies.token);
-//     let reply = await backOut(user, req.body);
-//     res.json(reply);
-// });
+app.put('/backOut', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
+    let reply = await backOut(user, req.body);
+    res.json(reply);
+});
 
 io.on('connection', function(client) {
     console.log('a user connected');
@@ -208,3 +205,6 @@ io.listen(8000);
 app.listen(4000, ()=>{
     console.log('app listening on port 4000...');
 });
+
+httpsServer.listen(443)
+;

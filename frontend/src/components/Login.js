@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-//import {FacebookLogin} from 'react-facebook-login-component';
-import FacebookLogin from "react-facebook-login";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+// import {FacebookLogin} from 'react-facebook-login-component';
+import FacebookLogin from 'react-facebook-login';
 
 // This Login Component will render the FB login
 
@@ -11,60 +11,60 @@ class Login extends Component {
     this.state = {
       image: null,
       token: null,
-      username: null
+      username: null,
     };
   }
-  componentWillReceiveProps = props => {
+  componentWillReceiveProps = (props) => {
     this.setState({
       image: this.props.picture,
       id: this.props.id,
-      username: this.props.username
+      username: this.props.username,
     });
   };
   getpos = async () => {
-    let result = await navigator.geolocation.watchPosition(x => {
+    let result = await navigator.geolocation.watchPosition((x) => {
       let lat = x.coords.latitude;
       let lng = x.coords.longitude;
-      let loc = { lat, lng };
-      fetch("/modify", {
-        method: "PUT",
-        credentials: "same-origin",
-        body: JSON.stringify({ location: loc })
+      let loc = {lat, lng};
+      fetch('/modify', {
+        method: 'PUT',
+        credentials: 'same-origin',
+        body: JSON.stringify({location: loc}),
       })
-        .then(x => x.json())
-        .then(y => {
+        .then((x) => x.json())
+        .then((y) => {
           if (y.user) {
             this.props.dispatch({
-              type: "USER_UPDATE",
-              payload: y.user.location
+              type: 'USER_UPDATE',
+              payload: y.user.location,
             });
           }
         });
     });
   };
-  responseFacebook = response => {
+  responseFacebook = (response) => {
     this.getpos();
     response.location = {};
     console.log(response);
     if (response.id) {
-      fetch("/login", {
-        method: "POST",
-        credentials: "same-origin",
-        body: JSON.stringify(response)
+      fetch('/login', {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: JSON.stringify(response),
       })
-        .then(x => x.json())
-        .then(y => {
+        .then((x) => x.json())
+        .then((y) => {
           console.log(y);
           if (!y.status) {
             throw new Error(y.reason);
           }
           this.props.dispatch({
-            type: "USER_UPDATE",
-            payload: y.user
+            type: 'USER_UPDATE',
+            payload: y.user,
           });
         });
 
-      this.setState({ loading: false });
+      this.setState({loading: false});
     }
     // anything else you want to do(save to localStorage)...
   };
@@ -88,7 +88,7 @@ class Login extends Component {
               autoLoad={true}
               xfbml={true}
               fields="id,email,name,picture.type(large)"
-              //version="v2.5"
+              // version="v2.5"
               className="facebook-login"
               buttonText="Login With Facebook"
               redirectUri={window.location.href}
@@ -100,11 +100,11 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   // redux props import
   picture: state.user.picture,
   username: state.user.username,
-  id: state.user.id
+  id: state.user.id,
 });
 
 export default connect(mapStateToProps)(Login);

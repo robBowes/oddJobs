@@ -6,7 +6,7 @@ const geolib = require('geolib');
 
 const deepUser = async (Job, user, User) => {
     let findUserInner = findUser(User);
-    var userIsPatron = await Job.find({patronId: user.id}).lean();
+    let userIsPatron = await Job.find({patronId: user.id}).lean();
     let userIsPair = await Job.find({pairedHelpers: user.id}).lean();
     let returnUser = user.toObject();
     let cleanPairs = userIsPair.map((job)=>{
@@ -237,6 +237,25 @@ const completeJob = (Job, User) => async (user, body) => {
     return {status: true, job, user: await deepUser(Job, user, User)};
 };
 
+const backOut = (Job, User) => async (user, body) => {
+    if (!user) return {status: false, reason: 'no user information'};
+    if (!body) return {status: false, reason: 'no job information'};
+    if (!Job) return {status: false, reason: 'server error'};
+    try {
+        job.backOut(user.id, body.id);
+        job.save((err)=> {
+            if (err) console.log(err);
+        });
+        user.backOut(body.id);
+        user.save((err)=>{
+            if (err) console.log(err);
+        });
+    } catch (error) {
+        console.log(error);
+        return {status: false, reason: error};
+    }
+};
+
 module.exports = {
     modify,
     newJob,
@@ -251,6 +270,7 @@ module.exports = {
     sendMessage,
     deepUser,
     completeJob,
+    backOut,
 };
 
 

@@ -118,15 +118,14 @@ button:focus {
 }
 
 #chatbar {
-  width: 80vw;
+  width: 100%;
   padding: 1vw;
-  border: solid 2px #ccc;
+  border: solid 1px #ccc;
 }
 
 .chatWindow {
   overflow-y: scroll;
   height: 67vh;
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.712);
 }
 
 ::-webkit-scrollbar {
@@ -136,11 +135,10 @@ button:focus {
 
 .chatInput {
   bottom: 0vh;
-  position: absolute;
+  position: relative;
   padding-bottom: 4vh;
   padding-top: 2%;
-  padding-left: 8vw;
-  padding-right: 8vw;
+  width: 100%
 }
 
 ul {

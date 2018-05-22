@@ -982,7 +982,7 @@ input[type="checkbox"]:checked + label {
   top: 24%;
   border: none;
   background-color: transparent;
-  font-weight: bold;
+  font-weight: 300;
 }
 
 .jobDetailsHeader {

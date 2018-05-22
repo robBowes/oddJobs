@@ -83,14 +83,14 @@ app.post('/login', async (req, res)=>{
 
 app.put('/modify', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
-    verbose(user + ' request modify');
+    verbose(user?user.name:null + ' request modify');
     let reply = await oddJobs.modify(user, req.body);
     res.json(reply);
 });
 
 app.post('/allJobs', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
-    verbose(user + 'allJobs');
+    verbose(user?user.name:null + ' allJobs');
     let reply = await allJobs(user, req.body.location);
     if (!reply.status) console.log('all jobs request failed: ' + reply.reason);
     res.json(reply);
@@ -98,7 +98,7 @@ app.post('/allJobs', async (req, res)=>{
 
 app.put('/pair', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
-    verbose(user + 'pair');
+    verbose(user?user.name:null + 'pair');
     let job = await pairJob(user, req.body);
     if (!job.status) console.log('pair failed: '+ job.reason);
     res.json(job);
@@ -106,7 +106,7 @@ app.put('/pair', async (req, res)=>{
 
 app.put('/deal', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
-    verbose(user + 'deal');
+    verbose(user?user.name:null + 'deal');
     let job = await makeDeal(user, req.body);
     if (!job) throw new Error('error on deal');
     if (!job.status) console.log('Deal failed: ' + job.reason);
@@ -115,7 +115,7 @@ app.put('/deal', async (req, res)=>{
 
 app.put('/completeJob', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
-    verbose(user + 'complete job');
+    verbose(user?user.name:null + 'complete job');
     let reply = await completeJob(user, req.body);
     if (!reply.status) console.log(reply.reason);
     res.json(reply);
@@ -124,7 +124,7 @@ app.put('/completeJob', async (req, res)=>{
 app.put('/rejectJob', async (req, res)=>{
     try {
         let user = await userFromToken(req.cookies.token);
-        verbose(user + 'reject job');
+        verbose(user?user.name:null + 'reject job');
         let ret = await rejectJob(user, req.body.id);
         if (!ret.status) console.log('Reject job failed: ' + ret.reason);
         res.json(ret);
@@ -135,7 +135,7 @@ app.put('/rejectJob', async (req, res)=>{
 
 app.put('/addJob', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
-    verbose(user + 'allJobs');
+    verbose(user?user.name:null + 'allJobs');
     let job = await createNewJob(user, req.body);
     if (!job.status) console.log('add job failed: ' + job.reason);
     res.json(job);
@@ -144,7 +144,7 @@ app.put('/addJob', async (req, res)=>{
 app.post('/user', async (req, res)=>{
     let ret;
     let user = await userFromToken(req.cookies.token);
-    verbose(user + 'user');
+    verbose(user?user.name:null + 'user');
     if (user.id ===req.body.id) {
         ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
     } else ret = await findUser(req.body);
@@ -152,20 +152,21 @@ app.post('/user', async (req, res)=>{
 });
 
 app.post('/job', async (req, res)=>{
-    verbose('job');
+    verbose(user?user.name:null + ' job');
     let ret = await findJob(req.body);
     res.json(ret);
 });
 
 app.put('/sendMessage', async (req, res)=>{
     let user = await userFromToken(req.cookies.token);
-    verbose('send message');
+    verbose(user?user.name:null + ' send message');
     let reply = await sendMessage(user, req.body);
     res.json(reply);
 });
 
 app.put('/uploadImage', (req, res)=>{
     let ret = oddJobs.uploadImage(req);
+    verbose('upload image ' + ret.status?ret.name:null);
     res.json(ret);
 });
 

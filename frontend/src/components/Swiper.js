@@ -219,8 +219,8 @@ class Swiper extends Component {
 
   render() {
     return this.state.loading ? (
-      <div style={{left: '40vw', top: '30vh', position: 'absolute'}}>
-        <MoonLoader color="#05ff05" className='moonLoader' loading={this.state.loading} />
+      <div className='moonLoader' >
+        <MoonLoader color="#05ff05" loading={this.state.loading} />
       </div>
     ) : (
       <div className="swipeContainer">

@@ -536,7 +536,9 @@ input[type="checkbox"]:checked + label {
 }
 
 .moonLoader {
-  margin: 0 auto;
+  margin: 50% auto;
+  width: 10%;
+  height: 10%;
 }
 
 .addJobButton {

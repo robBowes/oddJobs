@@ -132,6 +132,7 @@ class Swiper extends Component {
       }
       return true;
     });
+    if (jobsShown.length === 0) this.allCardsLoaded(0);
     for (let i = 0; i < jobsShown.length; i++) {
       newStack = newStack.concat(
         <div

@@ -21,7 +21,7 @@ class ChatList extends Component {
       let job = helperJobs.find((x) => x.id === this.props.id);
       console.log('1', job);
       return (
-        <div className="ChatCard">
+        <div className="ChatCard listedJobCard">
            <button name={job.patronId} className="removeChat" onClick={this.removeChat}>x</button>
            <img height="100px" width="100px" className="chatUserPic" src={job.patron.picture.data.url} alt="Chat List User Image"/>
            <h2 className="chatTitleHeader">{job.patron.name}</h2>
@@ -32,7 +32,7 @@ class ChatList extends Component {
     let pairedHelpers = job.pairedHelpers;
     return pairedHelpers.map((x) => {
       return (
-        <div className="ChatCard">
+        <div className="ChatCard listedJobCard">
            <button name={x.id} className="removeChat" onClick={this.removeChat}>x</button>
            <img height="100px" width="100px" className="chatUserPic" src={x.picture.data.url} alt="Chat List User Image"/>
            <h2 className="chatTitleHeader">{x.name}</h2>
@@ -58,7 +58,7 @@ class ChatList extends Component {
   }
   render() {
     return !this.props.user.loggedIn?<div className="moonLoader"><MoonLoader color="#05FF05"/></div>:(
-      <div className="chatsPage">
+      <div className="chatsPage pairsPage">
       <button className="backButton" onClick={this.goBack}>Back</button>
       <h1 className="pageTitle">{this.getTitle()+' - Active Chats'}</h1>
       <div className="split">

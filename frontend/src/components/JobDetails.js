@@ -64,8 +64,7 @@ class JobDetails extends Component {
           <div className='jobDetailsStyling'>Details:</div>
           <span className='jobDetailDescription'>{this.props.jobs ? this.state.job.jobDescription : null}</span>
 
-          <div className='smallTextId'>
-          {this.props.id}</div>
+         
           </div>
         </div></Animate>;
   }

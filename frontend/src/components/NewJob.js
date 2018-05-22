@@ -188,7 +188,7 @@ class NewJob extends Component {
       <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
       <div className="newJobPage">
 
-      <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
+      <button className="backButton" onClick={this.goBack}>{'❮ Back'}</button>
 
         <h1 className="pageTitle">
           New Job

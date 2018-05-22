@@ -285,7 +285,7 @@ class Chat extends Component {
       <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
     <div>
         <div />
-        <button className='backButton' onClick={this.goBack}>{'< Back'}</button>
+        <button className='backButton' onClick={this.goBack}>{'❮ Back'}</button>
         <div className="dealButtonsContainer">
          {// <button className='cornerButton rejectButton'>Reject</button>
          }

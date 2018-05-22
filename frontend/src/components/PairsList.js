@@ -106,7 +106,7 @@ componentWillMount =()=>{
     return !this.props.user.loggedIn?<div className="moonLoader" ><MoonLoader color="#05FF05"/></div>:(
       <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
      <div className="pairsPage">  
-      <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
+      <button className="backButton" onClick={this.goBack}>{'❮ Back'}</button>
       <h1 className="pageTitle">{'Current & Pending Jobs'}</h1>
       <div className="split">
          <hr/>

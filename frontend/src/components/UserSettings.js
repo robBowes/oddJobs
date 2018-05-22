@@ -114,7 +114,7 @@ class UserSettings extends Component {
       <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
       <div className="welcomeStage2">
         <button className="backButton" onClick={this.goBack}>
-        {'< Home'}
+        {'❮ Home'}
         </button>
 
         <div className="userPictureContainer">

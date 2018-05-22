@@ -79,6 +79,7 @@ const JobSchema = new mongoose.Schema({
     jobDescription: {type: String, required: true},
     jobTitle: {type: String, required: true},
     jobPay: {type: String, default: '0'},
+    categories: [String],
     patronId: {type: String, required: true},
     picture: {type: String, required: true},
     helperId: {type: String, default: ''},

@@ -809,12 +809,14 @@ margin-top: 8%;
   font-size: 2em;
   width: 100%;
   text-align: center;
-  padding-top: 15%;
+  padding-top: 11%;
+  margin-bottom: 0%;
 }
 
 .split {
   width: 50%;
   margin: 0 auto;
+  margin-bottom: 6%;
 }
 
 /* Job Pairs Page */
@@ -920,6 +922,11 @@ margin-top: 8%;
   padding-top: 25%;
   text-align: center;
 }
+
+/* Chatslist */
+
+
+
 
 @media only screen and (min-width: 600px) {
   body {

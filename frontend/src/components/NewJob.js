@@ -12,6 +12,7 @@ class NewJob extends Component {
       jobAddress: '',
       jobDetails: '',
       image: '',
+      categories: [],
       geolocation: {},
       locationHasLoaded: false,
       imageHasLoaded: false,
@@ -29,6 +30,7 @@ class NewJob extends Component {
         location: this.state.geolocation,
         jobPay: this.state.jobPay,
         picture: this.state.image,
+        categories: this.state.categories,
       }),
     })
     .then((x) => x.json())
@@ -94,6 +96,39 @@ class NewJob extends Component {
       });
     });
   }
+  tickChange = (event) => {
+    if (event.target.checked) {
+      let newCategories = [...this.state.categories];
+      newCategories = newCategories.concat(event.target.name);
+      this.setState({categories: newCategories});
+      return;
+    }
+    this.setState({
+      categories: this.state.categories.filter((x) => x !== event.target.name),
+    });
+  };
+  mapCheckBoxes = (categories) => {
+    return categories.map((x, i) => {
+      // if (!this.props.categories) return;
+      let isSelected = this.state.categories.some((e) => e === x);
+      return (
+        <div className="tickBox">
+          <input
+            onChange={this.tickChange}
+            key={i}
+            id={x}
+            className="categoryCheckBox"
+            type="checkbox"
+            name={x}
+            checked={isSelected}
+          />
+          <label className="tickLabel" htmlFor={x}>
+            {x}
+          </label>
+        </div>
+      );
+    });
+  };
   uploadPicture = (event) => {
     let image = event.target.files[0];
     let filename = image.name;
@@ -173,6 +208,22 @@ class NewJob extends Component {
             type="text"
             placeholder="This is what the job is all about"
           />
+
+          <div className="interestsWrapper">
+            <h2 className="welcomeHeader"> This job is: </h2>
+            <div className="interestsButtonWrapper">
+              {this.mapCheckBoxes(['general',
+        'lawncare',
+        'automotive',
+        'cleaning',
+        'plumbing',
+        'housekeeping',
+        'carpentry',
+        'pet care',
+        'it',
+      ])}
+            </div>
+          </div>
 
           <h2 className="formHeader"> Details: </h2>
           <input

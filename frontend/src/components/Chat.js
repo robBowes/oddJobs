@@ -302,13 +302,7 @@ class Chat extends Component {
 
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
-<<<<<<< HEAD
             <input type="text" placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true}/>
-||||||| merged common ancestors
-            <input type="text" onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true}/>
-=======
-            <input type="text" onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} placeholder='Type something...'/>
->>>>>>> 9c97d84ee6797b9632bb8cf59fbac71370e8366e
           </form>
         </div>
       </div>;

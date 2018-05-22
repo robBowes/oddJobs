@@ -62,12 +62,12 @@ class Chat extends Component {
             messages: chatFound ? chatFound.messages : [],
             job: jobFound,
             offered: offerCheck,
-              
+
             offer:
               offerCheck2,
             deal: jobFound.dealMade,
           });
-          this.getAllMsgs();
+          setTimeout(this.getAllMsgs, 1000);
         }
       });
   };
@@ -193,7 +193,6 @@ class Chat extends Component {
                 ) : null;
                 this.sendDeal();
           }
-
         }
       });
   };

@@ -56,7 +56,7 @@ class Chat extends Component {
                       return x === this.props.userid;
                     }
                   );
-          let oldmsg = [...this.state.messages]      
+          let oldmsg = [...this.state.messages];
           this.setState({
             complete: (jobFound.completedByHelper&&jobFound.completedByPatron),
             loading: false,
@@ -68,10 +68,11 @@ class Chat extends Component {
               offerCheck2,
             deal: jobFound.dealMade,
           });
-          if(chatFound){
-          if(chatFound.messages>oldmsg){
+          if (chatFound) {
+          if (chatFound.messages>oldmsg) {
             this.updateScroll();
-          }}
+          }
+}
           setTimeout(this.getAllMsgs, 1000);
         }
       });
@@ -251,7 +252,7 @@ class Chat extends Component {
   }
 
   renderMessages = () => {
-    let oldmsg = this.state.messages
+    let oldmsg = this.state.messages;
     if (this.state.messages.length > 0) {
       return this.state.messages.map((x, i) => {
         return <div className="messages" style={{flexDirection: this.props.user.id === x.userId ? 'row-reverse' : 'row'}}>
@@ -262,15 +263,15 @@ class Chat extends Component {
           </div>;
       });
     }
-    
+
       this.updateScroll();
   };
 
   updateScroll=()=>{
-    var objDiv = document.getElementsByClassName("chatWindow")[0];
-    console.log(objDiv)
-    if(this.state.messages.length>0){
-    objDiv.scrollTop = objDiv.scrollHeight}
+    let objDiv = document.getElementsByClassName('chatWindow')[0];
+    if (this.state.messages.length>0) {
+    objDiv.scrollTop = objDiv.scrollHeight
+;}
   }
   render() {
     return this.state.loading ? <div>LOAD</div> : <div>

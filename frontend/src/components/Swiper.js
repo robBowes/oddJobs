@@ -151,7 +151,7 @@ class Swiper extends Component {
           <Link to={'/job' + jobsShown[i].id}>
             <div className="bottomBar">
               <div className="jobDetails">
-                <span className="jobDistance">{'20km'}</span>
+                <span className="jobDistance">{Math.floor(jobsShown[i].distance/100)/10} km</span>
                 <span className="jobTitle">{jobsShown[i].jobTitle}</span>
                 <span className="jobPay">{'$' + jobsShown[i].jobPay}</span>
               </div>

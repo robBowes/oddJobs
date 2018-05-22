@@ -19,7 +19,11 @@ class Swiper extends Component {
       cards: [],
       loading: true,
     };
+<<<<<<< HEAD
     //this.cardsLoaded = 0;
+=======
+    this.numberOfPicturesLoaded = 0;
+>>>>>>> 66e2a58f4be732bfd5eea67e7531c2c6b31f0dae
   }
   componentWillReceiveProps = (props) => {
     //
@@ -84,10 +88,19 @@ class Swiper extends Component {
       // this.removeCard(b)
     }
   };
+<<<<<<< HEAD
   // allCardsLoaded = (numberOfImages) =>{
   //   this.cardsLoaded++;
   //   if (this.cardsLoaded==numberOfImages) this.props.dispatch({type: 'TOGGLE_LOADING'});
   // }
+=======
+  allPicturesLoaded = (totalPics) =>{
+    this.numberOfPicturesLoaded++;
+    if (this.numberOfPicturesLoaded >= totalPics) {
+      this.props.dispatch({type: 'TOGGLE_LOADING'});
+    }
+  }
+>>>>>>> 66e2a58f4be732bfd5eea67e7531c2c6b31f0dae
   removeCard = (e) => {
     // const target = e.target;
     // const el = ReactDOM.findDOMNode(target);
@@ -124,6 +137,8 @@ class Swiper extends Component {
       return true;
     });
 
+    console.log(filterRej);
+
     let jobsShown = filterRej.filter((x)=>{
       for (let i = 0; i<this.props.user.pairs.length; i++) {
         if (this.props.user.pairs[i].id===x.id) {
@@ -132,7 +147,13 @@ class Swiper extends Component {
       }
       return true;
     });
+<<<<<<< HEAD
     //if (jobsShown.length === 0) this.allCardsLoaded(0);
+=======
+
+    console.log(jobsShown);
+
+>>>>>>> 66e2a58f4be732bfd5eea67e7531c2c6b31f0dae
     for (let i = 0; i < jobsShown.length; i++) {
       newStack = newStack.concat(
         <div
@@ -147,12 +168,16 @@ class Swiper extends Component {
             draggable="false"
             src={jobsShown[i].picture}
             alt=""
+<<<<<<< HEAD
             //onLoad={()=>this.allCardsLoaded(jobsShown.length)}
+=======
+            onLoad={()=>this.allPicturesLoaded(jobsShown.length)}
+>>>>>>> 66e2a58f4be732bfd5eea67e7531c2c6b31f0dae
           />
           <Link to={'/job' + jobsShown[i].id}>
             <div className="bottomBar">
               <div className="jobDetails">
-                <span className="jobDistance">{Math.floor(jobsShown[i].distance/100)/10} km</span>
+                <span className="jobDistance">{'20km'}</span>
                 <span className="jobTitle">{jobsShown[i].jobTitle}</span>
                 <span className="jobPay">{'$' + jobsShown[i].jobPay}</span>
               </div>
@@ -200,12 +225,13 @@ class Swiper extends Component {
     })
       .then((x) => x.json())
       .then((y) => {
-        if (!y.status) console.log(y);
+        console.log(y.user);
         this.props.dispatch({
           type: 'USER_UPDATE',
           payload: y.user,
         });
       });
+    console.log('YES THIS JOB');
   };
 
   reject = (e) => {
@@ -217,11 +243,15 @@ class Swiper extends Component {
       type: 'LEFT_SWIPE',
       payload: jobId,
     });
+    console.log('NOT THIS JOB');
   };
 
   render() {
-    return (
-      <div className="swipeContainer" >
+    return this.state.loading ? (
+      <div>
+      </div>
+    ) : (
+      <div className="swipeContainer">
         <div className="addJobContainer">
           <Link to="/listjob">
             <button className="addJobButton"><span className="addJobInner">+</span></button>
@@ -231,7 +261,7 @@ class Swiper extends Component {
           <img className="logo2" src="logo.png" alt="oddjobs logo" />
         </div>
 
-        <div className="stackContainer" >
+        <div className="stackContainer">
           <Swing
             className="stack"
             tagName="div"

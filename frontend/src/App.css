@@ -597,7 +597,7 @@ margin-top: 8%;
 }
 
 .moonLoader {
-  position: relative;
+  position: absolute;
   margin: 0 auto;
   width: max-content;
   height: 100%;

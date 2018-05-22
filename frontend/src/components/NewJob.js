@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Animate from 'react-smooth';
+import {AnimateGroup} from 'react-smooth';
 
 /* global google */
 
@@ -173,7 +175,18 @@ class NewJob extends Component {
     this.getGoogleMaps();
   }
   render() {
+    const leave = {
+      from: 'translateY(-300%)',
+      to: 'translateY(0%)',
+      attributeName: 'transform',
+    };
+    const appear = {
+      from: 'translateY(0%)',
+      to: 'translateY(-300%)',
+      attributeName: 'transform',
+    };
     return (
+      <AnimateGroup leave={leave} appear={appear}>
       <div className="newJobPage">
 
       <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
@@ -269,6 +282,7 @@ class NewJob extends Component {
           </div>
         </form>
       </div>
+      </AnimateGroup>
     );
   }
 }

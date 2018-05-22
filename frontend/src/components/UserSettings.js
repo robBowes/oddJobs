@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Animate from 'react-smooth';
 
 class UserSettings extends Component {
   constructor(props) {
@@ -108,8 +109,9 @@ class UserSettings extends Component {
   };
   render() {
     return this.state.loading ? (
-      <div>Loading</div>
+      <div></div>
     ) : (
+      <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
       <div className="welcomeStage2">
         <button className="backButton" onClick={this.goBack}>
         {'< Home'}
@@ -195,6 +197,7 @@ class UserSettings extends Component {
           </div>
         </form>
       </div>
+      </Animate>
     );
   }
 }

@@ -125,8 +125,13 @@ background:rgb(187, 187, 187);
 
 .chatWindow {
   overflow-y: scroll;
-  max-height: 67vh;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.712);
+  height: 67vh;
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.712);
+}
+
+::-webkit-scrollbar{
+  width:0px;
+  background:transparent
 }
 
 .chatInput {
@@ -511,38 +516,13 @@ input[type="checkbox"]:checked + label {
 /* job Details Page */
 
 .jobDetailsName {
+  margin-top: 3vh;
   color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 330;
-  font-size: 20px;
+  font-weight: 350;
+  font-size: 5vw;
   width: 100%;
   text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  float: left;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  font-size: 4vw;
-}
-.jobDetailsKm {
-  color: #868686;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 330;
-  font-size: 20px;
-  width: 100%;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 87%;
-  width: 100%;
-  float: left;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  font-size: 4vw;
 }
 
 
@@ -555,19 +535,20 @@ input[type="checkbox"]:checked + label {
 }
 
 .jobPictureContainer{
-  width: 100%;
-  text-align: center;
-  border-radius: 10px;
+margin-top: 8%;
 }
 
 .jobPicture{
-  width: 90%;
+  min-width: 90vw;
+  max-width: 90vw;
+  margin-left:5vw;
+  margin-right: 5vw;
   border-radius: 1px;
-  border: 1px solid #ccc
+  border: 1px solid rgb(51, 51, 51);
 }
 
 .jobDetailsStyling{
-  font-size: 5vw;
+  font-size: 3vh;
   color: grey;
   margin-bottom: 1vh;
 }
@@ -581,18 +562,12 @@ input[type="checkbox"]:checked + label {
 
 
 .patronBar{
-  width: 90%;
+  width: 90vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
   position: relative;
+  align-content: center;
   display: flex;
-  margin: 0 auto;
-  padding-left: 4%;
-  padding-top: 1%;
-  margin-top: 2%;
-}
-
-.jobDetailDescription{
-  padding-left: 6%;
-  font-size: 4vw;
 }
 
 *:focus{
@@ -600,9 +575,9 @@ input[type="checkbox"]:checked + label {
 }
 
 .jobDetailsPatronPicture{
-  margin-right: 7%;
-  width: 15vw;
-  max-height: 15vw;
+  margin-right:7%;
+  max-width: 16vw;
+  max-height: 8vh;
   border-radius: 100px;
 }
 
@@ -630,17 +605,17 @@ input[type="checkbox"]:checked + label {
 .innerMoonLoader {
   background-color: white;
   width: 100vw;
-  margin: 0 auto;
-  height: 100vh;
-  position: absolute;
+  position: fixed;
+  height: 100%;
 }
 
 .moonLoader {
-  width: 10%;
+  position: relative;
   margin: 0 auto;
-  padding-top: 45%;
-  height: 10%;
+  width: max-content;
+  height: 100%;
   background-color: white;
+  top: 45vh;
 }
 
 .addJobButton {
@@ -694,6 +669,7 @@ input[type="checkbox"]:checked + label {
 }
 
 .stack {
+  
 }
 
 .bottomBar {
@@ -892,8 +868,8 @@ input[type="checkbox"]:checked + label {
 .pageTitle {
   color: #868686;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 350;
-  font-size: 7vw;
+  font-weight: 380;
+  font-size: 2em;
   width: 100%;
   text-align: center;
   padding-top: 11%;
@@ -986,7 +962,8 @@ input[type="checkbox"]:checked + label {
   top: 24%;
   border: none;
   background-color: transparent;
-  font-weight: 300;
+  font-weight: bold;
+
 }
 
 .jobDetailsHeader {
@@ -1075,9 +1052,6 @@ input[type="checkbox"]:checked + label {
   body {
     box-sizing: border-box;
     margin: 0 auto;
-    width: 436px;
-  }
-  .innerMoonLoader {
     width: 436px;
   }
   .stackContainer{

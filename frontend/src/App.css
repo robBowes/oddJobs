@@ -792,9 +792,12 @@ margin-top: 8%;
 }
 
 .uploadButton {
+  opacity: 0;
+  width: 100%;
+}
+
+.uploadWrapper{
   width: 85%;
-  -webkit-border-radius: 10;
-  -moz-border-radius: 10;
   border-radius: 10px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #ffffff;
@@ -806,6 +809,17 @@ margin-top: 8%;
   text-decoration: none;
   border: none;
 }
+
+.fileText{
+  position: absolute;
+  margin-left: 1%;
+  font-weight: 300;
+}
+
+.fileText:hover{
+  font-weight: 400;
+}
+
 
 .pageTitle {
   color: #868686;
@@ -927,6 +941,7 @@ margin-top: 8%;
   padding-top: 25%;
   text-align: center;
 }
+
 
 /* Chatslist */
 

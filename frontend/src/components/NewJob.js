@@ -240,7 +240,9 @@ class NewJob extends Component {
             </div>
           </div>
 
-          <h2 className="formHeader"> Details: </h2>
+          <h2 className="formHeader"> Upload an Image: </h2>
+          <div className="uploadWrapper">
+          <span className="fileText">Upload File</span>
           <input
           type="file"
           name="pic"
@@ -248,6 +250,7 @@ class NewJob extends Component {
           onChange={this.uploadPicture}
           accept="image/*"
           />
+          </div>
 
           <div className="buttonWrapper2">
           <button

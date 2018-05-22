@@ -51,10 +51,10 @@ class Swiper extends Component {
 
       // get Target Dom Element
       const el = ReactDOM.findDOMNode(target);
-      console.log(el)
+      console.log(el);
       // stack.getCard
       const card = this.state.stack.getCard(el);
-      console.log("CARD",card, "STACK", this.state.stack)
+      console.log('CARD', card, 'STACK', this.state.stack);
       // throwOut method call
       card.throwOut(0, 0, Swing.DIRECTION.RIGHT);
     }
@@ -124,8 +124,6 @@ class Swiper extends Component {
       return true;
     });
 
-    console.log(filterRej);
-
     let jobsShown = filterRej.filter((x) => {
       for (let i = 0; i < this.props.user.pairs.length; i++) {
         if (this.props.user.pairs[i].id === x.id) {
@@ -136,7 +134,6 @@ class Swiper extends Component {
     });
     if (jobsShown.length===0) this.allPicturesLoaded(0);
 
-    console.log(jobsShown);
 
     for (let i = 0; i < jobsShown.length; i++) {
       newStack = newStack.concat(

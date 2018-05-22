@@ -46,7 +46,6 @@ class Login extends Component {
   responseFacebook = (response) => {
     this.getpos();
     response.location = {};
-    console.log(response);
     if (response.id) {
       fetch('/login', {
         method: 'POST',

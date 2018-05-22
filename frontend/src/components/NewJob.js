@@ -12,7 +12,7 @@ class NewJob extends Component {
       jobAddress: '',
       jobDetails: '',
       image: '',
-      categories: [],
+      categories: ['general'],
       geolocation: {},
       locationHasLoaded: false,
       imageHasLoaded: false,

@@ -1064,7 +1064,7 @@ input[type="checkbox"]:checked + label {
   position: absolute;
   top: 54%;
   left: 50%;
-  width: 100%;
+  width: 60%;
   float: left;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);

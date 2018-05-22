@@ -56,7 +56,7 @@ class Chat extends Component {
                       return x === this.props.userid;
                     }
                   );
-          let oldmsg = [...this.state.messages]      
+          let oldmsg = [...this.state.messages];
           this.setState({
             complete: (jobFound.completedByHelper&&jobFound.completedByPatron),
             loading: false,
@@ -68,10 +68,11 @@ class Chat extends Component {
               offerCheck2,
             deal: jobFound.dealMade,
           });
-          if(chatFound){
-          if(chatFound.messages>oldmsg){
+          if (chatFound) {
+          if (chatFound.messages>oldmsg) {
             this.updateScroll();
-          }}
+          }
+}
           setTimeout(this.getAllMsgs, 1000);
         }
       });
@@ -139,6 +140,7 @@ class Chat extends Component {
         this.updateScroll();
       });
     // this.setState({messages: messages})
+    this.refs.chat.blur();
     document.getElementById('chatbar').value = '';
   };
 
@@ -251,7 +253,7 @@ class Chat extends Component {
   }
 
   renderMessages = () => {
-    let oldmsg = this.state.messages
+    let oldmsg = this.state.messages;
     if (this.state.messages.length > 0) {
       return this.state.messages.map((x, i) => {
         return <div className="messages" style={{flexDirection: this.props.user.id === x.userId ? 'row-reverse' : 'row'}}>
@@ -262,16 +264,17 @@ class Chat extends Component {
           </div>;
       });
     }
-    
+
       this.updateScroll();
   };
 
   updateScroll=()=>{
-    var objDiv = document.getElementsByClassName("chatWindow")[0];
-    console.log(objDiv)
-    if(this.state.messages.length>0){
-    objDiv.scrollTop = objDiv.scrollHeight}
+    let objDiv = document.getElementsByClassName('chatWindow')[0];
+    if (this.state.messages.length>0) {
+    objDiv.scrollTop = objDiv.scrollHeight
+;}
   }
+
   render() {
     return this.state.loading ? <div>LOAD</div> : <div>
         <div />
@@ -297,12 +300,19 @@ class Chat extends Component {
         <div className="chatWindow" id='chatwindow'>
           <ul>{this.renderMessages()}</ul>
         </div>
+<<<<<<< HEAD
 
          <div className="splitChat"> <hr/> </div>
 
+||||||| merged common ancestors
+
+         <div className="split"> <hr/> </div>
+
+=======
+>>>>>>> 2690ec0d69da21ce31e8a1a4a350cb2900edc579
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
-            <input type="text" placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true}/>
+            <input type="text" ref='chat' placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
           </form>
         </div>
       </div>;

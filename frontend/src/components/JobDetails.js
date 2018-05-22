@@ -20,12 +20,10 @@ class JobDetails extends Component {
         this.props.dispatch({type: 'TOGGLE_LOADING'});
     }
     componentDidMount=()=>{
-        console.log(this.props.jobs);
         let job = this.props.jobs.filter((x) => {
             console.log(x, this.props);
             return x.id === this.props.id;
           })[0];
-          console.log(job);
         fetch('/user', {
             method: 'POST',
             credentials: 'same-origin',

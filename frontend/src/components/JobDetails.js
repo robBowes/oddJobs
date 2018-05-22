@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {MoonLoader} from 'react-spinners';
+import Animate from 'react-smooth';
 
 // This component renders the details for a given job
 // When viewing job details page
@@ -41,7 +42,8 @@ class JobDetails extends Component {
 });
     }
   render() {
-      return this.state.loading ? <div></div> : <div>
+      return this.state.loading ? <div></div> :  <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
+      <div>
             <div>
           <div className="pageTitle">
             {this.props.jobs ? this.state.job.jobTitle + ' - ' + '$' + this.state.job.jobPay : null}
@@ -65,7 +67,7 @@ class JobDetails extends Component {
           <div className='smallTextId'>
           {this.props.id}</div>
           </div>
-        </div>;
+        </div></Animate>;
   }
 }
 

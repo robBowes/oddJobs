@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Animate from 'react-smooth';
-import {AnimateGroup} from 'react-smooth';
 
 /* global google */
 
@@ -185,8 +184,8 @@ class NewJob extends Component {
       to: 'translateY(-300%)',
       attributeName: 'transform',
     };
-    return (
-      <AnimateGroup leave={leave} appear={appear}>
+    return ( 
+      <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
       <div className="newJobPage">
 
       <button className="backButton" onClick={this.goBack}>{'< Back'}</button>
@@ -282,7 +281,7 @@ class NewJob extends Component {
           </div>
         </form>
       </div>
-      </AnimateGroup>
+      </Animate>
     );
   }
 }

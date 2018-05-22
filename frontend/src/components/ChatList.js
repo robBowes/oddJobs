@@ -11,7 +11,7 @@ class ChatList extends Component {
     };
   }
   removeChat = (event) => {
-
+    
   }
   mapListedChats = () => {
     let userJobs = [...this.props.user.jobsListed];
@@ -23,12 +23,12 @@ class ChatList extends Component {
       return (
         <div className="ChatCard">
            <button name={job.patronId} className="removeChat" onClick={this.removeChat}>x</button>
-           <img height="100px" width="100px" className="chatUserPic" src={''} alt="Chat List User Image"/>
-           <h2 className="chatTitleHeader">{'test'}</h2>
+           <img height="100px" width="100px" className="chatUserPic" src={job.patron.picture.data.url} alt="Chat List User Image"/>
+           <h2 className="chatTitleHeader">{job.patron.name}</h2>
            <Link to={'/chats/'+this.props.id+'/'+job.patronId}> <button name={job.patronId} className="goToChatsArrow">{'>'}</button></Link>
         </div>
       );
-}
+}   
     let pairedHelpers = job.pairedHelpers;
     return pairedHelpers.map((x) => {
       return (
@@ -49,7 +49,6 @@ class ChatList extends Component {
     } else {
       let helperJobs = [...this.props.user.pairs];
       let job = helperJobs.find((x) => x.id === this.props.id);
-      console.log('2', job);
       return job.jobTitle;
     }
   }
@@ -61,7 +60,10 @@ class ChatList extends Component {
     return !this.props.user.loggedIn?<div className="moonLoader"><MoonLoader color="#05FF05"/></div>:(
       <div className="chatsPage">
       <button className="backButton" onClick={this.goBack}>Back</button>
-      <h1 className="chatsPageHeader">{this.getTitle()+' - Active Chats'}</h1>
+      <h1 className="pageTitle">{this.getTitle()+' - Active Chats'}</h1>
+      <div className="split">
+         <hr/>
+         </div>
       <div style={{overflowY: 'scroll', height: '80vh'}} className="chatsList" >
         {this.mapListedChats()}
         </div>

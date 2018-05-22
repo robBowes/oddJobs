@@ -14,13 +14,23 @@ class UserDetails extends Component {
         };
     }
     componentDidMount=()=>{
-        this.setState({loading: false});
-        this.props.dispatch({type: 'TOGGLE_LOADING'});
+        console.log(this.props)
+        fetch('/user',{
+            method:'POST',
+            credentials: 'same-origin',
+            body: JSON.stringify({id: this.props.userid})
+        })
+        .then(x=>x.json())
+        .then(y=>{
+        console.log(y)
+        this.setState({loading: false, user: y.user});
+        this.props.dispatch({type: 'TOGGLE_LOADING'})
+        })
     }
     calcScore = () => {
-        if (!!this.props.user.jobsCompleted) return 100;
-        let jobsComplete = this.props.user.jobsCompleted.length;
-        let jobsDeclined = this.props.user.jobsDeclined;
+        if (!!this.state.user.statistics.jobsCompleted) return 100;
+        let jobsComplete = this.state.user.statistics.jobsCompleted.length;
+        let jobsDeclined = this.state.user.statistics.jobsDeclined;
         let totalJobs = jobsComplete+jobsDeclined;
         if (totalJobs === 0) return 100;
         else return Math.floor((jobsComplete/totalJobs)*100);
@@ -29,26 +39,33 @@ class UserDetails extends Component {
         this.props.dispatch({type: 'TOGGLE_LOADING'});
     }
   render() {
-      return <div className="welcomeStage2">
-        <div className="userDetailsDivider"></div>
-        <div className="userPictureContainer">
-          <img className="userPicture" src={this.props.user.picture ? this.props.user.picture.data.url : 'loading image'} alt="" />
+      return this.state.loading?<div/>:<div className="welcomeStage2">
+          <div className="userDetailsDivider" />
+          <div className="userPictureContainer">
+            <img className="userPicture" src={this.state.user ? this.state.user.picture.data.url : "loading image"} alt="" />
           </div>
-          <h2 className="welcomeName">{this.props.user.name}</h2>
+          <h2 className="welcomeName">{this.state.user?this.state.user.name:''}</h2>
 
-       <div className="descriptionDetailsWrapper">
-          {this.props.user.description}
-</div>
+          <div className="descriptionDetailsWrapper">
+            {this.state.user?this.state.user.description:''}
+          </div>
 
           <div className="userRating">
-          User Score -  <span className = "score">{this.calcScore()+'%'}</span>
+            User Score - <span className="score">
+              {this.calcScore() + "%"}
+            </span>
           </div>
 
-          <div className = "userRating1">
-          Jobs Completed -  <span className = "score">{this.props.user.jobsCompleted.length}</span><br/>
-          Jobs Abandoned -  <span className = "score">{this.props.user.jobsDeclined.length}</span><br/>
+          <div className="userRating1">
+            Jobs Completed - <span className="score">
+              {this.state.user.statistics.jobsCompleted}
+            </span>
+            <br />
+            Jobs Abandoned - <span className="score">
+              {this.state.user.statistics.jobsCanceled}
+            </span>
+            <br />
           </div>
-
         </div>;
   }
 }

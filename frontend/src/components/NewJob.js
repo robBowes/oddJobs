@@ -12,7 +12,7 @@ class NewJob extends Component {
       jobAddress: '',
       jobDetails: '',
       image: '',
-      categories: [],
+      categories: ['general'],
       geolocation: {},
       locationHasLoaded: false,
       imageHasLoaded: false,
@@ -252,7 +252,7 @@ class NewJob extends Component {
           accept="image/*"
           />
           </div>
-
+           <span className="mandatoryText">*All Fields Mandatory</span>
           <div className="buttonWrapper2">
           <button
             type="submit"

@@ -148,6 +148,7 @@ const allJobs = (Job) => async (user, location) => {
         job.distance = distance;
         return job;
     });
+    jobs = jobs.filter(((job)=>job.patronId!=='deleted'));
     jobs = jobs.filter((job)=>!job.dealMade);
     jobs = jobs.filter((job)=>{
        // console.log(user.location);

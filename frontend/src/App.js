@@ -98,7 +98,7 @@ class App extends Component {
         <MoonLoader color="#05ff05" loading={this.props.moonLoader} />
         </div>
       </div>
-      {/* <button onClick={this.resetWelcome}> Reset Welcome </button>   */}
+      <button onClick={this.resetWelcome}> Reset Welcome </button>  
       <Route exact={true} path='/chats/:jobid/:userid' render={this.renderChat} />
       <Route exact={true} path='/' render={this.renderHome}/>
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Animate from 'react-smooth';
 
 // A series of three unique steps for onboarding users on
 // initial login. Will walk users through configuring
@@ -96,6 +97,7 @@ class WelcomeStaging extends Component {
   };
   render() {
     return (
+      <Animate to={"translateX(0%)"} from={"translateX(300%)"} attributeName="transform" duration={500}>
       <div className="welcomeStage2">
         <h1 className="welcomeText2">
           {' '}
@@ -159,6 +161,7 @@ class WelcomeStaging extends Component {
           </div>
         </form>
       </div>
+      </Animate>
     );
   }
 }

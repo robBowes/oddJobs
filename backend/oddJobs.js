@@ -147,7 +147,7 @@ const allJobs = (Job) => async (user, location) => {
     jobs = jobs.filter((job)=>{
        // console.log(user.location);
         let distance = r.distanceBetween(job, user);
-        let max = parseFloat(user.maxDistance)*100000;
+        let max = parseFloat(user.maxDistance)*1000;
         // console.log(distance, max);
         return distance < max;
     });

@@ -619,6 +619,14 @@ input[type="checkbox"]:checked + label {
   height: 10vh;
 }
 
+.mandatoryText{
+  color: #696969;
+  width: 85%;
+  font-size: 15px;
+  padding-top: 4%;
+  margin-left: 6%;
+}
+
 .innerMoonLoader {
   background-color: white;
   width: 100vw;
@@ -1107,6 +1115,7 @@ input[type="checkbox"]:checked + label {
   .addJobInner{
     font-size: 18px;
   }
+
 
   .navBar {
     width: 351px;

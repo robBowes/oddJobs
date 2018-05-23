@@ -1086,6 +1086,14 @@ input[type="checkbox"]:checked + label {
   font-size: 4.6vw;
 }
 
+.completeJobCard{
+  z-index:99;
+  position:absolute;
+  background-color: white;
+  width: 100vw;
+  height:100vh;
+}
+
 @media only screen and (min-width: 436px) {
   body {
     box-sizing: border-box;
@@ -1215,6 +1223,8 @@ input[type="checkbox"]:checked + label {
     margin-left:0%;
   }
 }
+
+
 
 /* @media only screen and (min-width: 600px) {
   body {

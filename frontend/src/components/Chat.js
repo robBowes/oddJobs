@@ -210,7 +210,7 @@ class Chat extends Component {
   sendDeal=()=>{
       let x = {id: this.state.job.id, message:
 
-          this.state.offered?'I Accept the Deal! See you soon!':'I would like to offer a Deal! Click the Confirm button to accept the deal.',
+          this.state.offered?'Amazing! Your job is now in progress. Make sure to come back later and mark complete to get credit':'You\'ve been offered the job! Click Accept up top to commit.',
        partner: this.state.partner};
       fetch('/sendMessage', {
         method: 'PUT',
@@ -233,7 +233,7 @@ class Chat extends Component {
   }
 
   completeJob=()=>{
-      let x = {id: this.state.job.id, message: (this.state.job.completedByHelper||this.state.job.completedByPatron)?'Job Complete Confirmed!':'The job is now Complete! Please confirm by clicking Complete Job!', partner: this.state.partner};
+      let x = {id: this.state.job.id, message: (this.state.job.completedByHelper||this.state.job.completedByPatron)?'Awesome! The job is now complete!':this.props.user.name + ' has marked the job complete. Confirm by clicking the button above!', partner: this.state.partner};
       fetch('/sendMessage', {
         method: 'PUT',
         credentials: 'same-origin',
@@ -298,7 +298,7 @@ class Chat extends Component {
             </button> : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
               Complete Job
             </button> : this.state.offer ? <button className="cornerButton dis" disabled>
-              Deal Sent
+              Job Offered
             </button> : <button className="cornerButton" onClick={this.deal}>
               {this.state.offered ? (this.isPatron? '':'Accept Job'):(this.isPatron? 'Offer Job':'')}
             </button>}

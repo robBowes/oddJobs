@@ -68,7 +68,7 @@ class Chat extends Component {
             job: jobFound,
             offered: offerCheck,
             completeSend: this.props.user.id !== jobFound.patronId ? 
-              jobFound.completedByHelper : jobFound:completedByPatron,
+              jobFound.completedByHelper : jobFound.completedByPatron,
             offer: offerCheck2,
             deal: jobFound.dealMade
           });

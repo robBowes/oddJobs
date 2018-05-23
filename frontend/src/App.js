@@ -99,7 +99,7 @@ class App extends Component {
         </div>
       </div>
       {/* <button onClick={this.resetWelcome}> Reset Welcome </button>   */}
-      <Route exact={true} path='/chats/:jobid/:userid' render={this.renderChat} />
+      {!this.props.user.loggedIn?'':<Route exact={true} path='/chats/:jobid/:userid' render={this.renderChat} />}
       <Route exact={true} path='/' render={this.renderHome}/>
       <Route exact={true} path='/listjob' render={this.renderNewJob}/>
       <Route exact={true} path='/settings' render={this.renderSettings}/>
@@ -128,6 +128,7 @@ const mapStateToProps = (state) => ({
   loggedIn: state.user.loggedIn,
   welcomeStage: state.user.welcomeStage,
   moonLoader: state.data.loading,
+  user: state.user,
 });
 
 export default connect(mapStateToProps)(App);

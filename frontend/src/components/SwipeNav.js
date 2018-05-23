@@ -8,11 +8,14 @@ import {Link} from 'react-router-dom';
 // left will have a button to reject the current job
 
 class SwipeNav extends Component {
+  hasListedPairs = () => {
+    return this.props.user.jobsListed.some(x => x.pairedHelpers.length>0) || this.props.user.pairs.length>0
+  }
   render() {
       return (<div className="swipeNav">
       <div className="navBar">
       <Link className="settingsLink" to='/settings'><button className="imageButton"><img className="navImage" src="/settings.png"/></button></Link>
-      <Link className="jobsLink" to='/currentjobs'><button className="imageButton"><img className="navImage" src="/chats.png"/></button></Link>
+      <Link className="jobsLink" to='/currentjobs'><button className="imageButton"><img className="navImage" src={this.hasListedPairs()?"/chatsglow.png":"/chats.png"}/></button></Link>
       </div>      
       </div>);
   }
@@ -20,6 +23,7 @@ class SwipeNav extends Component {
 
 const mapStateToProps = (state) => ({
   id: state.user.id,
+  user: state.user,
 });
 
 export default connect(mapStateToProps)(SwipeNav);

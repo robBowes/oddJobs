@@ -151,6 +151,7 @@ class Swiper extends Component {
             src={jobsShown[i].picture}
             alt=""
             onLoad={() => this.allPicturesLoaded(jobsShown.length)}
+            onError={() => this.allPicturesLoaded(jobsShown.length)}
           />
           <Link to={'/job' + jobsShown[i].id}>
             <div className="bottomBar">

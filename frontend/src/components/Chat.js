@@ -243,6 +243,9 @@ class Chat extends Component {
       if (this.state.job.completedByHelper && this.state.job.completedByPatron) {
         this.setState({complete: true});
       }
+      else{
+        this.setState({completeSend: true})
+      }
       })
       .then((y)=>{
         fetch('/completeJob', {

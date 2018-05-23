@@ -160,8 +160,9 @@ app.post('/user', async (req, res)=>{
 });
 
 app.post('/job', async (req, res)=>{
+    let user = await userFromToken(req.cookies.token);
     verbose(user?user.name:null + ' job');
-    let ret = await findJob(req.body);
+    let ret = await findJob(req.body, user);
     if (!ret.status) console.log(ret.reason);
     res.json(ret);
 });

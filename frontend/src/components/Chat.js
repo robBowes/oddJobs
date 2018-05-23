@@ -210,7 +210,7 @@ class Chat extends Component {
   sendDeal=()=>{
       let x = {id: this.state.job.id, message:
 
-          this.state.offered?'Amazing! Your job is now in progress. Make sure to come back later and mark complete to get credit':'You\'ve been offered the job! Click Accept up top to commit.',
+          this.state.offered?'Amazing! Your job is now in progress. Make sure to come back later and mark complete to get credit':this.props.user.name + ' has offered you the job! Click Accept up top to commit.',
        partner: this.state.partner};
       fetch('/sendMessage', {
         method: 'PUT',
@@ -316,7 +316,7 @@ class Chat extends Component {
 
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
-            <input type="text" ref='chat' placeholder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
+            <input type="text" ref='chat' placeholder="Work out the details!" onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
           </form>
         </div>
       </div>

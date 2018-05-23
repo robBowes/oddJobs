@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Animate from 'react-smooth';
+import {Link} from 'react-router-dom'
 
 // //The Chat app that connects patron to helper to discuss
 // // job details
@@ -291,11 +292,10 @@ class Chat extends Component {
     return this.state.loading ? <div></div> : (
       <Animate to={'0.99'} from={'0.01'} attributeName="opacity" duration={1000}>
     <div>
+         
         <div />
         <button className='backButton' onClick={this.goBack}>{'❮ Back'}</button>
         <div className="dealButtonsContainer">
-         {// <button className='cornerButton rejectButton'>Reject</button>
-         }
           {this.state.complete ? <button className="cornerButton dis" disabled>
               Complete!
             </button> : this.state.completeSend?<button className="cornerButton dis" disabled>
@@ -304,9 +304,18 @@ class Chat extends Component {
               Complete Job
             </button> : this.state.offer ? <button className="cornerButton dis" disabled>
               Job Offered
-            </button> : <button className="cornerButton" onClick={this.deal}>
-              {this.state.offered ? (this.isPatron? '':'Accept Job'):(this.isPatron? 'Offer Job':'')}
-            </button>}
+            </button> : 
+              
+              this.state.offered ?
+              <button className="cornerButton" onClick={this.deal}>
+              Accept Deal</button>
+              :
+              this.isPatron ?
+              <button className="cornerButton" onClick={this.deal}>
+              Offer Job</button>
+              :
+              ''}
+            
         </div>
         <div className='chatHeader'>
         <div className='pageTitle'>

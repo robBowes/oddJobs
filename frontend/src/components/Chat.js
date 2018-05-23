@@ -16,7 +16,6 @@ class Chat extends Component {
       timestamp: 'no stamp yet',
     };
     this.isPatron = props.user.jobsListed.some((job)=>job.id===props.jobid);
-    console.log(this.isPatron, props.jobid);
   }
   componentDidUpdate = () => {};
   getAllMsgs = () => {
@@ -301,7 +300,6 @@ class Chat extends Component {
             </button> : this.state.offer ? <button className="cornerButton dis" disabled>
               Deal Sent
             </button> : <button className="cornerButton" onClick={this.deal}>
-            {console.log(this.state.offered, this.isPatron)}
               {this.state.offered ? (this.isPatron? '':'Accept Job'):(this.isPatron? 'Offer Job':'')}
             </button>}
         </div>

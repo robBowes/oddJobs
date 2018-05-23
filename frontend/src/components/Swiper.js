@@ -26,25 +26,25 @@ class Swiper extends Component {
   };
 
   componentDidMount = () => {
-    // let pairs = this.props.user.jobsListed.map((jobObj)=>jobsObj.pairs).flatten();
-    // // this.props.dispatch({type: 'SET_PAIRS', payload: pairs});
-    // // todo write action
-    // setInterval(()=>{
-    //   fetch('/user', {
-    //     method: 'POST',
-    //     credentials: 'same-origin',
-    //     body: JSON.stringify({id: this.props.user.id}),
-    //   })
-    //   .then((x)=>x.json())
-    //   .then((y)=>{
-    //     let newPairs = y.user.jobsListed.map((jobObj)=>jobsObj.pairs).flatten();
-    //     if (y.length>pairs.length) {
-    //       // todo add notification
-    //     }
-    //     // this.props.dispatch({type: 'SET_PAIRS', payload: pairs});
-    //   });
-    // },
-    // 30000);
+      // let pairs = this.props.user.jobsListed.map((jobObj)=>jobsObj.pairs).flatten();
+      // // this.props.dispatch({type: 'SET_PAIRS', payload: pairs});
+      // // todo write action
+      // setInterval(()=>{
+      //   fetch('/user', {
+      //     method: 'POST',
+      //     credentials: 'same-origin',
+      //     body: JSON.stringify({id: this.props.user.id}),
+      //   })
+      //   .then((x)=>x.json())
+      //   .then((y)=>{
+      //     let newPairs = y.user.jobsListed.map((jobObj)=>jobsObj.pairs).flatten();
+      //     if (y.length>pairs.length) {
+      //       // todo add notification
+      //     }
+      //     // this.props.dispatch({type: 'SET_PAIRS', payload: pairs});
+      //   });
+      // },
+      // 30000);
   };
 
   swipeRight = (x) => {

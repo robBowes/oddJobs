@@ -15,6 +15,7 @@ class Chat extends Component {
       loading: true,
       timestamp: 'no stamp yet',
     };
+    this.isPatron = props.user.jobsListed.some((job)=>job.id===props.jobid);
   }
   componentDidUpdate = () => {};
   getAllMsgs = () => {
@@ -209,7 +210,7 @@ class Chat extends Component {
   sendDeal=()=>{
       let x = {id: this.state.job.id, message:
 
-          this.state.offered?'I Accept the Deal! See you soon!':'I would like to offer a Deal! Click the Confirm button to accept the deal.',
+          this.state.offered?'Amazing! Your job is now in progress. Make sure to come back later and mark complete to get credit':this.props.user.name + ' has offered you the job! Click Accept up top to commit.',
        partner: this.state.partner};
       fetch('/sendMessage', {
         method: 'PUT',
@@ -232,7 +233,7 @@ class Chat extends Component {
   }
 
   completeJob=()=>{
-      let x = {id: this.state.job.id, message: (this.state.job.completedByHelper||this.state.job.completedByPatron)?'Job Complete Confirmed!':'The job is now Complete! Please confirm by clicking Complete Job!', partner: this.state.partner};
+      let x = {id: this.state.job.id, message: (this.state.job.completedByHelper||this.state.job.completedByPatron)?'Awesome! The job is now complete!':this.props.user.name + ' has marked the job complete. Confirm by clicking the button above!', partner: this.state.partner};
       fetch('/sendMessage', {
         method: 'PUT',
         credentials: 'same-origin',
@@ -257,14 +258,14 @@ class Chat extends Component {
     let oldmsg = this.state.messages;
     if (this.state.messages.length > 0) {
       return this.state.messages.map((x, i) => {
-        return  <Animate from='0' to='1' attributeName='opacity' duration='600'>
-            <div className="messages" style={{ flexDirection: this.props.user.id === x.userId ? "row-reverse" : "row" }}>
-              
-              <li className={this.props.user.id === x.userId ? "userBubble" : "partnerBubble"} id={x.id} key={i}>
+        return <Animate from='0' to='1' attributeName='opacity' duration='600'>
+            <div className="messages" style={{flexDirection: this.props.user.id === x.userId ? 'row-reverse' : 'row'}}>
+
+              <li className={this.props.user.id === x.userId ? 'userBubble' : 'partnerBubble'} id={x.id} key={i}>
                 {// (x.userId===this.props.user.id?this.state.name:this.state.partnerName) + ": " +
                   x.message}
               </li>
-              
+
             </div>
           </Animate>;
       });
@@ -277,12 +278,13 @@ class Chat extends Component {
     let objDiv = document.getElementsByClassName('chatWindow')[0];
     if (this.state.messages.length>0) {
     objDiv.scrollTop = objDiv.scrollHeight
-;}
+;
+}
   }
 
   render() {
     return this.state.loading ? <div></div> : (
-      <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
+      <Animate to={'0.99'} from={'0.01'} attributeName="opacity" duration={1000}>
     <div>
         <div />
         <button className='backButton' onClick={this.goBack}>{'❮ Back'}</button>
@@ -293,12 +295,12 @@ class Chat extends Component {
               Complete!
             </button> : this.state.completeSend?<button className="cornerButton dis" disabled>
               Awaiting Reply...
-            </button>  : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
+            </button> : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
               Complete Job
             </button> : this.state.offer ? <button className="cornerButton dis" disabled>
-              Deal Sent
+              Job Offered
             </button> : <button className="cornerButton" onClick={this.deal}>
-              {this.state.offered ? 'Confirm' : 'Send Deal'}
+              {this.state.offered ? (this.isPatron? '':'Accept Job'):(this.isPatron? 'Offer Job':'')}
             </button>}
         </div>
         <div className='chatHeader'>
@@ -314,11 +316,11 @@ class Chat extends Component {
 
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
-            <input type="text" ref='chat' placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
+            <input type="text" ref='chat' placeholder="Work out the details!" onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
           </form>
         </div>
       </div>
-      </Animate>)
+      </Animate>);
   }
 }
 

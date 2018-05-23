@@ -78,10 +78,12 @@ button:focus {
 .cornerButton {
   background-color: transparent;
   border: none;
-  font-size: 1.3em;
+  font-size: 1em;
   color: #82da05;
-  padding-top: 2vh;
-  font-weight: bold;
+  border: solid 2px #82da05;
+  margin-top: 2vh;
+  font-weight: 300;
+  border-radius: 5px;
 }
 
 .rejectButton {
@@ -98,6 +100,7 @@ button:focus {
 .dis {
   color: rgb(138, 138, 138);
   text-shadow: -1px -1px -1px rgba(0, 0, 0, 0.342);
+  border: solid 2px #929292;
 }
 
 .chatHeader {

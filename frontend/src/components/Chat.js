@@ -15,7 +15,8 @@ class Chat extends Component {
       loading: true,
       timestamp: 'no stamp yet',
     };
-    this.isPatron = props.user.jobsListed.some((job)=>job.id===props.jobId);
+    this.isPatron = props.user.jobsListed.some((job)=>job.id===props.jobid);
+    console.log(this.isPatron, props.jobid);
   }
   componentDidUpdate = () => {};
   getAllMsgs = () => {
@@ -300,7 +301,8 @@ class Chat extends Component {
             </button> : this.state.offer ? <button className="cornerButton dis" disabled>
               Deal Sent
             </button> : <button className="cornerButton" onClick={this.deal}>
-              {this.state.offered ? this.isPatron? 'Offer Job':'Accept Job':''}
+            {console.log(this.state.offered, this.isPatron)}
+              {this.state.offered ? (this.isPatron? '':'Accept Job'):(this.isPatron? 'Offer Job':'')}
             </button>}
         </div>
         <div className='chatHeader'>
@@ -316,7 +318,7 @@ class Chat extends Component {
 
         <div className="chatInput">
           <form onSubmit={this.handleSubmit}>
-            <input type="text" ref='chat' placeHolder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
+            <input type="text" ref='chat' placeholder="Enter a message..." onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
           </form>
         </div>
       </div>

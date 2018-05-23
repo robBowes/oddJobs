@@ -106,7 +106,7 @@ const newJob = (Job) => async (user, jobDetails = {}) => {
     return {status, job, reason};
 };
 
-const findJob = (Job) => async (body) => {
+const findJob = (Job) => async (body, user) => {
     if (!body.id) return {status: false, reason: 'no body included'};
     if (!Job) return {status: false, reason: 'server error'};
     const job = await Job.findOne(body).lean();

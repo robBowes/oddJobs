@@ -26,22 +26,25 @@ class Swiper extends Component {
   };
 
   componentDidMount = () => {
+    // let pairs = this.props.user.jobsListed.map((jobObj)=>jobsObj.pairs).flatten();
+    // // this.props.dispatch({type: 'SET_PAIRS', payload: pairs});
+    // // todo write action
     // setInterval(()=>{
-    //   fetch('/user',{
-    //     method:'POST',
+    //   fetch('/user', {
+    //     method: 'POST',
     //     credentials: 'same-origin',
-    //     body: JSON.stringify({id: this.props.user.id})
+    //     body: JSON.stringify({id: this.props.user.id}),
     //   })
-    //   .then(x=>x.json())
-    //   .then(y=>{
-    //     console.log('update', y)
-    //     this.props.dispatch({
-    //       type:'USER_UPDATE',
-    //       payload: y.user
-    //     })
-    //   })
+    //   .then((x)=>x.json())
+    //   .then((y)=>{
+    //     let newPairs = y.user.jobsListed.map((jobObj)=>jobsObj.pairs).flatten();
+    //     if (y.length>pairs.length) {
+    //       // todo add notification
+    //     }
+    //     // this.props.dispatch({type: 'SET_PAIRS', payload: pairs});
+    //   });
     // },
-    // 30000)
+    // 30000);
   };
 
   swipeRight = (x) => {
@@ -139,29 +142,29 @@ class Swiper extends Component {
     for (let i = 0; i < jobsShown.length; i++) {
       newStack = newStack.concat(
         <div
-          key={i}
-          className={'card ' + (parseInt(i) + 1)}
-          ref={'card' + (parseInt(i) + 1)}
-          id={i}
-          jobid={jobsShown[i].id}
+        key={i}
+        className={'card ' + (parseInt(i) + 1)}
+        ref={'card' + (parseInt(i) + 1)}
+        id={i}
+        jobid={jobsShown[i].id}
         >
-          <img
-            className="cardImage"
-            draggable="false"
-            src={jobsShown[i].picture}
-            alt=""
-            onLoad={() => this.allPicturesLoaded(jobsShown.length)}
-            onError={() => this.allPicturesLoaded(jobsShown.length)}
-          />
-          <Link to={'/job' + jobsShown[i].id}>
-            <div className="bottomBar">
-              <div className="jobDetails">
-                <span className="jobDistance">{Math.ceil(jobsShown[i].distance/100)/10} km</span>
-                <span className="jobTitle">{jobsShown[i].jobTitle}</span>
-                <span className="jobPay">{'$' + jobsShown[i].jobPay}</span>
-              </div>
-            </div>
-          </Link>
+        <img
+        className="cardImage"
+        draggable="false"
+        src={jobsShown[i].picture}
+        alt=""
+        onLoad={() => this.allPicturesLoaded(jobsShown.length)}
+        onError={() => this.allPicturesLoaded(jobsShown.length)}
+        />
+        <Link to={'/job' + jobsShown[i].id}>
+        <div className="bottomBar">
+        <div className="jobDetails">
+        <span className="jobDistance">{Math.ceil(jobsShown[i].distance/100)/10} km</span>
+        <span className="jobTitle">{jobsShown[i].jobTitle}</span>
+        <span className="jobPay">{'$' + jobsShown[i].jobPay}</span>
+        </div>
+        </div>
+        </Link>
         </div>
       );
     }
@@ -181,16 +184,16 @@ class Swiper extends Component {
       credentials: 'same-origin',
       body: JSON.stringify({location: this.props.user.location}),
     })
-      .then((x) => x.json())
-      .then((y) => {
-        if (!y.status) console.log(y);
-        this.props.dispatch({
-          type: 'UPDATE_JOBS',
-          payload: y.content,
-        });
-        this.renderCards();
-        this.setState({loading: false});
+    .then((x) => x.json())
+    .then((y) => {
+      if (!y.status) console.log(y);
+      this.props.dispatch({
+        type: 'UPDATE_JOBS',
+        payload: y.content,
       });
+      this.renderCards();
+      this.setState({loading: false});
+    });
   };
   accept = (e) => {
     const target = e.target;
@@ -203,14 +206,14 @@ class Swiper extends Component {
       credentials: 'same-origin',
       body: JSON.stringify({id: jobId}),
     })
-      .then((x) => x.json())
-      .then((y) => {
-        if (!y.status) console.log(y);
-        this.props.dispatch({
-          type: 'USER_UPDATE',
-          payload: y.user,
-        });
+    .then((x) => x.json())
+    .then((y) => {
+      if (!y.status) console.log(y);
+      this.props.dispatch({
+        type: 'USER_UPDATE',
+        payload: y.user,
       });
+    });
   };
 
   reject = (e) => {
@@ -239,46 +242,46 @@ class Swiper extends Component {
           <img className="logo2" src="logo.png" alt="oddjobs logo" />
         </div>
 
-        <div className="stackContainer">
-          <Swing
-            className="stack"
-            tagName="div"
-            setStack={(stack) => this.setState({stack: stack})}
-            ref="stack"
-            throwoutend={this.removeCard}
-            throwoutleft={this.reject}
-            throwoutright={this.accept}
-          >
-            <div className="noCards" />
-            {this.state.cards ? (
-              this.state.cards.map((x) => {
-                return x;
-              })
-            ) : (
-              <div />
-            )}
-          </Swing>
-        </div>
-        <SwipeNav />
-        <div className="acceptReject">
-          <button
-            id="x"
-            className="swipeButton"
-            type="button"
-            onClick={this.swipeLeft}
-          />
-          <button
-            id="check"
-            className="swipeButton"
-            type="button"
-            name="accept"
-            onClick={this.swipeRight}
-          />
-        </div>
-      </div>
-      </Animate>
-    );
-  }
+    <div className="stackContainer">
+    <Swing
+    className="stack"
+    tagName="div"
+    setStack={(stack) => this.setState({stack: stack})}
+    ref="stack"
+    throwoutend={this.removeCard}
+    throwoutleft={this.reject}
+    throwoutright={this.accept}
+    >
+    <div className="noCards" />
+    {this.state.cards ? (
+      this.state.cards.map((x) => {
+        return x;
+      })
+    ) : (
+      <div />
+    )}
+    </Swing>
+    </div>
+    <SwipeNav />
+    <div className="acceptReject">
+    <button
+    id="x"
+    className="swipeButton"
+    type="button"
+    onClick={this.swipeLeft}
+    />
+    <button
+    id="check"
+    className="swipeButton"
+    type="button"
+    name="accept"
+    onClick={this.swipeRight}
+    />
+    </div>
+    </div>
+    </Animate>
+  );
+}
 }
 
 const mapStateToProps = (state) => ({

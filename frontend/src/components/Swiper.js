@@ -231,7 +231,6 @@ class Swiper extends Component {
         <div className="addJobContainer">
           <Link to="/listjob">
             <button className="addJobButton">
-              <span className="addJobInner">+</span>
             </button>
           </Link>
         </div>

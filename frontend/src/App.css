@@ -664,7 +664,6 @@ input[type="checkbox"]:checked + label {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #ffffff;
   font-size: 1.5em;
-  background: #82da05;
   text-align: center;
   width: 7%;
   padding-top: 7%;
@@ -675,6 +674,9 @@ input[type="checkbox"]:checked + label {
   margin-left: 82%;
   margin-top: 10%;
   line-height: 0px;
+  background-image: url(/plus.png);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
 }
 
 .addJobInner {

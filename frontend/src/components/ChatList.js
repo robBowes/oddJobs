@@ -26,9 +26,10 @@ class ChatList extends Component {
            <div className='chatFlex'>
            <Link to={'/user'+job.patronId}>
            <img height="100px" width="100px" className="chatUserPic" src={job.patron.picture.data.url} alt="Chat List User Image"/>
-           </Link>
-           <div className="headerWrapper"><span className="chatTitleHeader">{job.patron.name}</span></div></div>
-           <Link to={'/chats/'+this.props.id+'/'+job.patronId}> <button name={job.patronId} className="goToChatsArrow">{'⟩'}</button></Link>
+           </Link> 
+           <Link to={'/chats/'+this.props.id+'/'+job.patronId}>
+           <div className="headerWrapper"><span className="chatTitleHeader">{job.patron.name}</span></div>
+           <button name={job.patronId} className="goToChatsArrow">{'⟩'}</button></Link></div>
         </div>
       );
 }
@@ -40,9 +41,9 @@ class ChatList extends Component {
            <div className='chatFlex'>
            <Link to={'/user'+x.id}>
            <img height="100px" width="100px" className="chatUserPic" src={x.picture.data.url} alt="Chat List User Image"/>
-           </Link>
-           <div className="headerWrapper"><span className="chatTitleHeader">{x.name}</span></div></div>
-          <Link to={'/chats/'+this.props.id+'/'+x.id}> <button name={x.id} className="goToChatsArrow">{'⟩'}</button></Link>
+           </Link>  <Link to={'/chats/'+this.props.id+'/'+x.id}>
+           <div className="headerWrapper"><span className="chatTitleHeader">{x.name}</span></div>
+         <button name={x.id} className="goToChatsArrow">{'⟩'}</button></Link></div>
         </div>
       );
     });

@@ -17,8 +17,27 @@ class PairsList extends Component {
     super(props);
     this.state = {
       loggedIn: true,
+      loading:true,
     };
   }
+  componentDidUpdate=()=>{
+    if(this.state.loading===true){
+    fetch("/user", {
+    method: "POST",
+    credentials: "same-origin",
+    body: JSON.stringify({ id: this.props.user.id })
+  })
+    .then(x => x.json())
+    .then(y => {
+      if (!y.status){
+        return
+      }
+      else {
+        console.log("IN DISPATCH", y);
+        this.props.dispatch({ type: "USER_UPDATE", payload: y.user });
+      }
+    })
+  }}
   removeJob = (event) => {
     console.log(event.target.name);
   fetch('rejectJob', {
@@ -81,9 +100,12 @@ class PairsList extends Component {
     event.preventDefault();
     window.history.back();
   }
-  // componentDidMount = () => {
-  // }
-componentWillMount =()=>{
+  componentDidMount = () => {
+    this.setState({loading: false})
+   }
+componentWillMount=()=>{
+  if(this.props.user.id){
+    console.log(this.props.user)
   fetch("/user", {
     method: "POST",
     credentials: "same-origin",
@@ -91,15 +113,18 @@ componentWillMount =()=>{
   })
     .then(x => x.json())
     .then(y => {
-      if (!y.status) throw new Error(y.reason);
+      if (!y.status){
+        return
+      }
       else {
         console.log("IN DISPATCH", y);
         this.props.dispatch({ type: "USER_UPDATE", payload: y.user });
       }
+      this.setState({loading: false})
     })
-    .then(z=>{
-      this.setState({userUpd: true})  
-    })
+    
+  
+  } 
 }
 
   render() {

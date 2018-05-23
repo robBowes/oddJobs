@@ -60,15 +60,17 @@ class Chat extends Component {
                   );
           let oldmsg = [...this.state.messages];
           this.setState({
-            complete: (jobFound.completedByHelper&&jobFound.completedByPatron),
+            complete:
+              jobFound.completedByHelper &&
+              jobFound.completedByPatron,
             loading: false,
             messages: chatFound ? chatFound.messages : [],
             job: jobFound,
             offered: offerCheck,
-
-            offer:
-              offerCheck2,
-            deal: jobFound.dealMade,
+            completeSend: this.props.user.id !== jobFound.patronId ? 
+              jobFound.completedByHelper : jobFound:completedByPatron,
+            offer: offerCheck2,
+            deal: jobFound.dealMade
           });
           if (chatFound) {
           if (chatFound.messages>oldmsg) {

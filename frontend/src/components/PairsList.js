@@ -51,7 +51,7 @@ class PairsList extends Component {
            <h3 className="jobDetailsHeader">{'$'+x.jobPay + ' - Patron' }</h3>
            <h2 className="jobTitleHeader">{x.jobTitle}<br/>{(x.completedByPatron&&x.completedByHelper)?'(Completed)':x.dealMade?'(In Progress)':'(Pending)'}</h2>
            </div>
-           <Link to={'/chats/'+x.id}><button name={x.id} className="goToChatsArrow">{'>'}</button></Link>
+           <Link to={'/chats/'+x.id}><button name={x.id} className="goToChatsArrow">{'⟩'}</button></Link>
         </div>
       );
     });
@@ -72,7 +72,7 @@ class PairsList extends Component {
            <h3 className="jobDetailsHeader">{'$'+x.jobPay + ' - '+Math.floor(x.distance/1000)+'km' }</h3>
            <h2 className="jobTitleHeader">{x.jobTitle}<br/>{(x.completedByPatron&&x.completedByHelper)?'(Completed)':x.dealMade?'(In Progress)':'(Pending)'}</h2>
            </div>
-           <Link to={'/chats/'+x.id}><button name={x.id} className="goToChatsArrow">{'>'}</button></Link>
+           <Link to={'/chats/'+x.id}><button name={x.id} className="goToChatsArrow">{'⟩'}</button></Link>
         </div>
       );
     });

@@ -11,6 +11,7 @@ class UserDetails extends Component {
         super(props);
         this.state ={
             loading: true,
+            score: 100,
         };
     }
     componentDidMount=()=>{
@@ -25,15 +26,17 @@ class UserDetails extends Component {
         if (!y.status) console.log(y);
         this.setState({loading: false, user: y.user});
         this.props.dispatch({type: 'TOGGLE_LOADING'});
+        this.calcScore();
         });
     }
     calcScore = () => {
-        if (!!this.state.user.statistics.jobsCompleted) return 100;
-        let jobsComplete = this.state.user.statistics.jobsCompleted.length;
-        let jobsDeclined = this.state.user.statistics.jobsDeclined;
+        if (!this.state.user.statistics.jobsCompleted) return 100;
+        this.state.user.statistics.jobsCompleted;
+        let jobsComplete = this.state.user.statistics.jobsCompleted;
+        let jobsDeclined = this.state.user.statistics.jobsCanceled;
         let totalJobs = jobsComplete+jobsDeclined;
         if (totalJobs === 0) return 100;
-        else return Math.floor((jobsComplete/totalJobs)*100);
+        else this.setState({ score: Math.floor((jobsComplete/totalJobs)*100)})
     }
     componentWillMount = () => {
         this.props.dispatch({type: 'TOGGLE_LOADING'});
@@ -52,7 +55,7 @@ class UserDetails extends Component {
 
           <div className="userRating">
             User Score - <span className="score">
-              {this.calcScore() + '%'}
+              {this.state.score + '%'}
             </span>
           </div>
 

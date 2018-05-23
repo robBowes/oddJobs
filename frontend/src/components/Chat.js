@@ -15,6 +15,7 @@ class Chat extends Component {
       loading: true,
       timestamp: 'no stamp yet',
     };
+    this.isPatron = props.user.jobsListed.some((job)=>job.id===props.jobId);
   }
   componentDidUpdate = () => {};
   getAllMsgs = () => {
@@ -257,14 +258,14 @@ class Chat extends Component {
     let oldmsg = this.state.messages;
     if (this.state.messages.length > 0) {
       return this.state.messages.map((x, i) => {
-        return  <Animate from='0' to='1' attributeName='opacity' duration='600'>
-            <div className="messages" style={{ flexDirection: this.props.user.id === x.userId ? "row-reverse" : "row" }}>
-              
-              <li className={this.props.user.id === x.userId ? "userBubble" : "partnerBubble"} id={x.id} key={i}>
+        return <Animate from='0' to='1' attributeName='opacity' duration='600'>
+            <div className="messages" style={{flexDirection: this.props.user.id === x.userId ? 'row-reverse' : 'row'}}>
+
+              <li className={this.props.user.id === x.userId ? 'userBubble' : 'partnerBubble'} id={x.id} key={i}>
                 {// (x.userId===this.props.user.id?this.state.name:this.state.partnerName) + ": " +
                   x.message}
               </li>
-              
+
             </div>
           </Animate>;
       });
@@ -277,12 +278,13 @@ class Chat extends Component {
     let objDiv = document.getElementsByClassName('chatWindow')[0];
     if (this.state.messages.length>0) {
     objDiv.scrollTop = objDiv.scrollHeight
-;}
+;
+}
   }
 
   render() {
     return this.state.loading ? <div></div> : (
-      <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
+      <Animate to={'0.99'} from={'0.01'} attributeName="opacity" duration={1000}>
     <div>
         <div />
         <button className='backButton' onClick={this.goBack}>{'❮ Back'}</button>
@@ -293,12 +295,12 @@ class Chat extends Component {
               Complete!
             </button> : this.state.completeSend?<button className="cornerButton dis" disabled>
               Awaiting Reply...
-            </button>  : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
+            </button> : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
               Complete Job
             </button> : this.state.offer ? <button className="cornerButton dis" disabled>
               Deal Sent
             </button> : <button className="cornerButton" onClick={this.deal}>
-              {this.state.offered ? 'Confirm' : 'Send Deal'}
+              {this.state.offered ? this.isPatron? 'Offer Job':'Accept Job':''}
             </button>}
         </div>
         <div className='chatHeader'>
@@ -318,7 +320,7 @@ class Chat extends Component {
           </form>
         </div>
       </div>
-      </Animate>)
+      </Animate>);
   }
 }
 

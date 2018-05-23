@@ -231,17 +231,16 @@ class Swiper extends Component {
     return this.state.loading ? (
       <div />
     ) : (<Animate to={'0.99'} from={'0.01'} attributeName="opacity" duration={1000}>
-    <div className="swipeContainer">
-    <div className="addJobContainer">
-    <Link to="/listjob">
-    <button className="addJobButton">
-    <span className="addJobInner">+</span>
-    </button>
-    </Link>
-    </div>
-    <div className="logoContainer">
-    <img className="logo2" src="logo.png" alt="oddjobs logo" />
-    </div>
+      <div className="swipeContainer">
+        <div className="addJobContainer">
+          <Link to="/listjob">
+            <button className="addJobButton">
+            </button>
+          </Link>
+        </div>
+        <div className="logoContainer">
+          <img className="logo2" src="logo.png" alt="oddjobs logo" />
+        </div>
 
     <div className="stackContainer">
     <Swing

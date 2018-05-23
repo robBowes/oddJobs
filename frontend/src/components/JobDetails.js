@@ -71,7 +71,7 @@ class JobDetails extends Component {
           </div>
           <div className="patronBar">
             <img className="jobDetailsPatronPicture" src={this.state.patron.picture.data.url} />
-            <div className="jobDetailsName">{this.state.patron.name} </div><div className='jobDetailsKm'> {this.props.jobs?Math.floor(this.state.job.distance/100)/10 + 'km':null} </div>
+            <div className="jobDetailsName">{this.state.patron.name} </div><div className='jobDetailsKm'> {this.state.job?Math.floor(this.state.job.distance/100)/10 + 'km':null} </div>
           </div>
           <div className="jobDescriptionDetailsWrapper">
 

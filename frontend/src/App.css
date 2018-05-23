@@ -557,7 +557,7 @@ input[type="checkbox"]:checked + label {
   position: absolute;
   top: 50%;
   left: 87%;
-  width: 100%;
+  width: 20%;
   float: left;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -1094,6 +1094,8 @@ input[type="checkbox"]:checked + label {
   height:100vh;
 }
 
+
+
 @media only screen and (min-width: 436px) {
   body {
     box-sizing: border-box;
@@ -1200,8 +1202,11 @@ input[type="checkbox"]:checked + label {
   .jobDetailsName,
   .jobDetailsKm {
     font-size: 20px;
+  
   }
 
+  
+  
   .pageTitle {
     font-size: 26px;
   }

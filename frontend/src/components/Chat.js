@@ -68,10 +68,10 @@ class Chat extends Component {
             messages: chatFound ? chatFound.messages : [],
             job: jobFound,
             offered: offerCheck,
-            completeSend: this.props.user.id !== jobFound.patronId ? 
+            completeSend: this.props.user.id !== jobFound.patronId ?
               jobFound.completedByHelper : jobFound.completedByPatron,
             offer: offerCheck2,
-            deal: jobFound.dealMade
+            deal: jobFound.dealMade,
           });
           if (chatFound) {
           if (chatFound.messages>oldmsg) {
@@ -245,9 +245,8 @@ class Chat extends Component {
       .then((x)=>{
       if (this.state.job.completedByHelper && this.state.job.completedByPatron) {
         this.setState({complete: true});
-      }
-      else{
-        this.setState({completeSend: true})
+      } else {
+        this.setState({completeSend: true});
       }
       })
       .then((y)=>{
@@ -264,7 +263,7 @@ class Chat extends Component {
     let oldmsg = this.state.messages;
     if (this.state.messages.length > 0) {
       return this.state.messages.map((x, i) => {
-        return <Animate from='0' to='1' attributeName='opacity' duration='600'>
+        return <Animate from='0' to='1' attributeName='opacity' duration={600}>
             <div className="messages" style={{flexDirection: this.props.user.id === x.userId ? 'row-reverse' : 'row'}}>
 
               <li className={this.props.user.id === x.userId ? 'userBubble' : 'partnerBubble'} id={x.id} key={i}>

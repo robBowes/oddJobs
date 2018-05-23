@@ -106,10 +106,11 @@ const newJob = (Job) => async (user, jobDetails = {}) => {
     return {status, job, reason};
 };
 
-const findJob = (Job) => async (body) => {
+const findJob = (Job) => async (body, user) => {
     if (!body.id) return {status: false, reason: 'no body included'};
     if (!Job) return {status: false, reason: 'server error'};
-    const job = await Job.findOne(body);
+    const job = await Job.findOne(body).lean();
+    if (job) job.distance = r.distanceBetween(user, job);
     if (job) return {status: true, job};
     else return {status: false, reason: 'job could not be found'};
 };
@@ -207,6 +208,10 @@ const rejectJob = (Job, User) => async (user, jobId) => {
     if (!Job) return {status: false, reason: 'server error'};
     let job = await Job.findOne({id: jobId});
     if (!job) return {status: false, reason: 'job not found'};
+    if (job.dealMade) {
+        user.statistics.jobsCanceled++;
+        user.save();
+    }
     if (user.id ===job.patronId) {
         job.removePatron();
         return {status: true, user: await deepUser(Job, user, User)};

@@ -152,7 +152,7 @@ app.post('/user', async (req, res)=>{
     let ret;
     let user = await userFromToken(req.cookies.token);
     verbose(user?user.name:null + ' requests user information');
-    if (user.id && user.id ===req.body.id) {
+    if (user && user.id ===req.body.id) {
         ret = {status: true, user: await oddJobs.deepUser(Job, user, User)};
     } else ret = await findUser(req.body);
     if (!ret.status) console.log(ret.reason);

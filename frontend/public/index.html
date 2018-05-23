@@ -19,17 +19,6 @@
     work correctly both with client-side routing and a non-root public URL.
     Learn how to configure a non-root public URL by running `npm run build`.
   -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('myServiceWorker')
-      .then(function(registration) {
-        console.log('###Service Worker## successful with scope: ' + registration.scope)
-      })
-      .catch(err=>{
-        console.log('##service worker error###: ' + err)
-      })
-    }
-  </script>
   
   <title>Odd Jobs</title>
 </head>

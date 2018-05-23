@@ -133,7 +133,7 @@ JobSchema.methods.addDeal = async function(userId, counterParty) {
     if (!!match) {
         this.helperId = match;
         this.dealDate = Date.now();
-        this.pairs = [this.helperId];
+        this.pairedHelpers = [this.helperId];
         this.dealsOfferedByHelpers = [];
         this.dealsOfferedByPatron = [];
         this.dealMade = true;

@@ -120,6 +120,7 @@ class Chat extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
+    if(this.state.message.length>0){
     let x = {
       id: this.state.job.id,
       message: this.state.message,
@@ -147,6 +148,7 @@ class Chat extends Component {
     // this.setState({messages: messages})
     this.refs.chat.blur();
     document.getElementById('chatbar').value = '';
+    }
   };
 
   findJob = (z) => {
@@ -288,52 +290,51 @@ class Chat extends Component {
   }
 
   render() {
-    return this.state.loading ? <div></div> : (
-      <Animate to={'0.99'} from={'0.01'} attributeName="opacity" duration={1000}>
-    <div>
-         
-        <div />
-        <button className='backButton' onClick={this.goBack}>{'❮ Back'}</button>
-        <div className="dealButtonsContainer">
-          {this.state.complete ? <button className="cornerButton dis" disabled>
-              Complete!
-            </button> : this.state.completeSend?<button className="cornerButton dis" disabled>
-              Awaiting Reply...
-            </button> : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
-              Complete Job
-            </button> : this.state.offer ? <button className="cornerButton dis" disabled>
-              Job Offered
-            </button> : 
-              
-              this.state.offered ?
-              <button className="cornerButton" onClick={this.deal}>
-              Accept Deal</button>
-              :
-              this.isPatron ?
-              <button className="cornerButton" onClick={this.deal}>
-              Offer Job</button>
-              :
-              ''}
-            
-        </div>
-        <div className='chatHeader'>
-        <div className='pageTitle'>
-          {this.state.partnerName + ' - "' + this.state.job.jobTitle + '"'}
-        <div className='split chatSplit'><hr/></div>
-        </div></div>
-        <div className="chatWindow" id='chatwindow'>
-          <ul>{this.renderMessages()}</ul>
-        </div>
+    return this.state.loading ? <div /> : <Animate to={"0.99"} from={"0.01"} attributeName="opacity" duration={1000}>
+        <div>
+          <div />
+          <button className="backButton" onClick={this.goBack}>
+            {"❮ Back"}
+          </button>
+          <div className="dealButtonsContainer">
+            {this.state.complete ? <button className="cornerButton dis" disabled>
+                Complete!
+              </button> : this.state.completeSend ? <button className="cornerButton dis" disabled>
+                Awaiting Reply...
+              </button> : this.state.deal ? <button className="cornerButton" onClick={this.completeJob}>
+                Complete Job
+              </button> : this.state.offer ? <button className="cornerButton dis" disabled>
+                Job Offered
+              </button> : this.state.offered ? <button className="cornerButton" onClick={this.deal}>
+                Accept Deal
+              </button> : this.isPatron ? <button className="cornerButton" onClick={this.deal}>
+                Offer Job
+              </button> : ""}
+          </div>
+          <div className="chatHeader">
+            <div className="pageTitle">
+              {this.state.partnerName + ' - "' + this.state.job.jobTitle + '"'}
+              <div className="split chatSplit">
+                <hr />
+              </div>
+            </div>
+          </div>
+          <div className="chatWindow" id="chatwindow">
+            <ul>{this.renderMessages()}</ul>
+          </div>
 
-         <div className="splitChat"> <hr/> </div>
+          <div className="splitChat">
+            {" "}
+            <hr />{" "}
+          </div>
 
-        <div className="chatInput">
-          <form onSubmit={this.handleSubmit}>
-            <input type="text" ref='chat' placeholder="Work out the details!" onChange={this.handleChange} id="chatbar" autocomplete='off' autoFocus={true} />
-          </form>
+          <div className="chatInput">
+            <form onSubmit={this.handleSubmit}>
+              <input type="text" ref="chat" placeholder="Work out the details!" onChange={this.handleChange} id="chatbar" autocomplete="off" autoFocus={true}  />
+            </form>
+          </div>
         </div>
-      </div>
-      </Animate>);
+      </Animate>;
   }
 }
 

@@ -710,6 +710,7 @@ input[type="checkbox"]:checked + label {
   width: 80%;
   padding-top: 80%;
   margin: 0 auto;
+  z-index: 10;
 }
 
 .stack {
